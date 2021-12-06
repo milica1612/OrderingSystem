@@ -1,0 +1,10 @@
+package beans;
+
+public enum OrderStatus {
+	PROCESSING,
+	PREPARING,
+	WAITING_FOR_DELIVERY,
+	IN_TRANSPORT,
+	DELIVERED,
+	CANCELED
+}

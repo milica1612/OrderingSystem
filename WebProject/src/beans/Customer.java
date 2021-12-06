@@ -3,7 +3,7 @@ package beans;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Custumer extends User{
+public class Customer extends User{
 
 	private ArrayList<Order> orders = new ArrayList<Order>();
 	private Cart cart;
@@ -11,11 +11,11 @@ public class Custumer extends User{
 	private CustomerType customerType;
 	
 	
-	public Custumer() {
+	public Customer() {
 		super();
 	}
 	
-	public Custumer(String username, String password, String name, String lastName, Gender gender, Date dateOfBirth,
+	public Customer(String username, String password, String name, String lastName, Gender gender, Date dateOfBirth,
 			UserType userType) {
 		super(username, password, name, lastName, gender, dateOfBirth, userType);
 	}
