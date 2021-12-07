@@ -6,7 +6,7 @@ import java.util.Date;
 public class Customer extends User{
 
 	private ArrayList<Order> orders = new ArrayList<Order>();
-	private Cart cart;
+	private Cart cart = new Cart();
 	private int points;
 	private CustomerType customerType;
 	

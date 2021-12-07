@@ -27,6 +27,7 @@ public class CustomerController {
 			try {
 				Customer newCustomer = gson.fromJson(req.body(), Customer.class);
 				newCustomer.setUserType(UserType.CUSTOMER);
+				newCustomer.getCart().setCustomer(newCustomer.getUsername());
 				
 				if(customerService.getAll() != null) {
 					for (Customer customer : customerService.getAll()) {

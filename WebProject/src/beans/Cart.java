@@ -5,19 +5,24 @@ import java.util.HashSet;
 
 public class Cart {
 
-	private HashMap<Item, Integer> items;
-	private Customer customer;
+	private HashMap<Item, Integer> items = new HashMap<Item, Integer>();
+	private String customer;
 	private Double total;
 	
 	public Cart() {
 	}
 	
 	
-	public Cart(HashMap<Item, Integer> items, Customer customer, Double total) {
+	public Cart(HashMap<Item, Integer> items, String customer, Double total) {
 		super();
 		this.items = items;
 		this.customer = customer;
 		this.total = total;
+	}
+
+
+	public Cart(String username) {
+		this.customer = username;
 	}
 
 
@@ -31,12 +36,12 @@ public class Cart {
 	}
 
 
-	public Customer getCustomer() {
+	public String getCustomer() {
 		return customer;
 	}
 
 
-	public void setCustomer(Customer customer) {
+	public void setCustomer(String customer) {
 		this.customer = customer;
 	}
 
