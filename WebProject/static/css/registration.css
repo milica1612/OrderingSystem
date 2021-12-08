@@ -2,10 +2,11 @@
 
 #reg {
 	background-image: url('./images/background.jpg');
-	height: 100%;
 	width: 100%;
 	position: absolute;
 	bottom: 0px;
+	margin-top: 0px;
+	height: 90%;
 }
 
 #title {
@@ -29,4 +30,8 @@
 
 #btn:hover {
 	background-color: white;
+}
+
+#nav {
+	margin-bottom: 0px;
 }
