@@ -21,10 +21,12 @@
 }
 
 #btn {
+	background-color: lightcoral;
 	font-size: 20px;
 	font-family: 'Times New Roman', Times, serif;
 	font-weight: bold;
-	border: 2px solid yellow;
+	border: 2px solid lightcoral;
+	margin: 8px;
 
 }
 
@@ -34,4 +36,9 @@
 
 #nav {
 	margin-bottom: 0px;
+}
+
+.nav-wrapper{
+	background-color: lightcoral;
+	-webkit-text-fill-color: black;
 }
