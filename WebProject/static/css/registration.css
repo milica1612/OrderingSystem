@@ -9,7 +9,7 @@
 }
 
 #title {
-	font-size: xxx-large;
+	font-size: xx-large;
 	font-family: 'Times New Roman', Times, serif;
 	font-weight: bolder;
 }
@@ -17,5 +17,16 @@
 #form {
 	background-color: white;
 	width: 50%;
-	
+}
+
+#btn {
+	font-size: 20px;
+	font-family: 'Times New Roman', Times, serif;
+	font-weight: bold;
+	border: 2px solid yellow;
+
+}
+
+#btn:hover {
+	background-color: white;
 }

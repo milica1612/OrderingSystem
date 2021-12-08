@@ -1,4 +1,4 @@
-const Registration = { template: '<Registration></Registration>' }
+const Registration = { template: '<registration></registration>' }
 
 const router = new VueRouter({
 	  mode: 'hash',
