@@ -16,7 +16,7 @@ Vue.component("registration", {
 	},
 	
 	template: `
-	<div id="reg">
+	<div class="reg">
 		<div class="container">
 			<p id="title" class="text-center">REGISTRATION</p>
 			<div id="form" class="container">
