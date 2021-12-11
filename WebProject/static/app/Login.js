@@ -12,6 +12,7 @@ Vue.component("login", {
 		login() {
 			if(this.username == "" || this.password == ""){
 				this.not_filled = true
+				this.error_message = false
 			}else{
 				this.not_filled = false
 			}
