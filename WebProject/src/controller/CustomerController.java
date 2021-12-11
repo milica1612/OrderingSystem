@@ -3,12 +3,17 @@ package controller;
 import com.google.gson.Gson;
 
 import beans.Customer;
+import beans.Gender;
 import beans.User;
 import beans.UserType;
+import dto.RegistrationDTO;
 import service.CustomerService;
 import service.UserService;
 
 import static spark.Spark.post;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class CustomerController {
 	
@@ -24,7 +29,18 @@ public class CustomerController {
 			res.type("application/json");
 			
 			try {
-				Customer newCustomer = gson.fromJson(req.body(), Customer.class);
+				RegistrationDTO dto = gson.fromJson(req.body(), RegistrationDTO.class);
+				System.out.println(dto.getDateOfBirth());
+				System.out.println(dto.getGender());
+				Customer newCustomer = new Customer();
+				newCustomer.setUsername(dto.getUsername());
+				newCustomer.setName(dto.getName());
+				newCustomer.setLastName(dto.getLastName());
+				newCustomer.setPassword(dto.getPassword());
+				newCustomer.setGender(Gender.values()[Integer.valueOf(dto.getGender())]);
+				Date date=new SimpleDateFormat("yyyy-MM-dd").parse(dto.getDateOfBirth());  
+				System.out.println(date);
+				newCustomer.setDateOfBirth(date);
 				newCustomer.setUserType(UserType.CUSTOMER);
 				newCustomer.getCart().setCustomer(newCustomer.getUsername());
 				

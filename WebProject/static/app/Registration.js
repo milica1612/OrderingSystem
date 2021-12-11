@@ -21,7 +21,7 @@ Vue.component("registration", {
                     let params = {
                         username: this.username,
                         password: this.password,
-                        firstName: this.firstName,
+                        name: this.firstName,
                         lastName: this.lastName,
                         gender: this.gender,
                         dateOfBirth: this.dateOfBirth
@@ -74,9 +74,9 @@ Vue.component("registration", {
 				<div>
 				  <label>Gender</label>
 			  	  <select id="gender_select"  class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="gender">
-				  	<option value="1" >Male</option>
-				  	<option value="2">Female</option>
-				  	<option value="3">Other</option>
+				  	<option value="0" >Male</option>
+				  	<option value="1">Female</option>
+				  	<option value="2">Other</option>
 				  </select>			
 				</div>
 				<div>
