@@ -2,12 +2,43 @@ Vue.component("login", {
 
     data() {
         return {
-			username: null,
-			password: null
+			username: "",
+			password: "",
+			error_message: false,
+			not_filled: false
         }
     },
 	methods: {
-		
+		login() {
+			if(this.username == "" || this.password == ""){
+				this.not_filled = true
+			}else{
+				this.not_filled = false
+			}
+			if(this.not_filled == false){
+				let params = {
+						username : this.username,
+						password : this.password
+				}
+				axios.post('users/login',JSON.stringify(params)
+				).then(response => {
+					console.log(response);
+					if (response.data == "") {
+						//alert("Wrong username or password");
+						this.error_message = true;
+					}else {
+						localStorage.setItem("username", response.data.username);
+						localStorage.setItem("role", response.data.userType);
+						this.error_message = false;
+						//this.$router.push("events")
+					}
+				}).catch(err => {
+					console.log(err);
+				});
+			}
+		},
+	},
+	computed:{
 	},
 	
 	template: `
@@ -17,16 +48,20 @@ Vue.component("login", {
 			<div id="form_login" class="container">
 			    <div>
 				  <label>Username</label>
-				  <input type="text" class="form-control">
+				  <input type="text" class="form-control" v-model="username">
 			    </div>
 			    <div>
 				  <label>Password</label>
-				  <input type="password" class="form-control">
+				  <input type="password" class="form-control" v-model="password">
 			    </div>
+			</div>
+			<div class="text-center">
+				<p class="error" v-if="error_message">Invalid credentials!</p>
+				<p class="error" v-if="not_filled">Please fill all fields</p>
 			</div>
 			<div class="d-grid gap-2 col-6 mx-auto">
 				<div class="text-center">
-  					<button id="btn_login" class="btn btn-warning" type="button">LOG IN</button>
+  					<button id="btn_login" class="btn btn-warning" type="button" @click="login">LOG IN</button>
   				</div>
  			</div>
  			<div class="text-center" id="acc_div">

@@ -26,3 +26,8 @@
     font-family: 'Times New Roman', Times, serif;
     font-size: larger;
 }
+.error {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: larger;
+    color: red;
+}

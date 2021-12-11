@@ -32,7 +32,7 @@ public class UserController {
 					session.attribute("logged", logged);
 					return gson.toJson(logged);
 				} else {
-					return "Invalid credentials";
+					return "";
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
