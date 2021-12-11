@@ -1,1 +1,1 @@
-[{"orders":[],"points":0,"username":"milica"},{"orders":[],"points":0,"username":"milica","userType":"CUSTOMER"},{"orders":[],"points":0,"username":"zorana","userType":"CUSTOMER"}]
+[{"orders":[],"cart":{"items":{}},"points":0,"username":"milica"},{"orders":[],"cart":{"items":{}},"points":0,"username":"milica","userType":"CUSTOMER"},{"orders":[],"cart":{"items":{}},"points":0,"username":"zorana","userType":"CUSTOMER"},{"orders":[],"cart":{"items":{},"customer":"zoss"},"points":0,"username":"zoss","password":"zoss98","userType":"CUSTOMER"}]

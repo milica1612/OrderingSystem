@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import beans.Customer;
+import beans.User;
 
 public class CustomerDAO {
 
@@ -51,6 +52,18 @@ public class CustomerDAO {
          }
          
          return gson.fromJson(br, token);
+	}
+
+	public Customer getByUsername(String username) {
+		ArrayList<Customer> customers = getAll();
+		if(customers != null) {
+			for (Customer customer : customers) {
+				if(customer.getUsername().equals(username)) {
+					return customer;
+				}
+			}
+		}
+		return null;
 	}
 
 }

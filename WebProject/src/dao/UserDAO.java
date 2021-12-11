@@ -42,6 +42,18 @@ public class UserDAO {
         
         return gson.fromJson(br, token);
 	}
+
+	public User getByUsername(String username) {
+		ArrayList<User> users = getAll();
+		if(users != null) {
+			for (User user : users) {
+				if(user.getUsername().equals(username)) {
+					return user;
+				}
+			}
+		}
+		return null;
+	}
 	
 
 }

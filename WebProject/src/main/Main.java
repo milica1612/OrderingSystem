@@ -10,6 +10,7 @@ import java.io.IOException;
 import com.google.gson.Gson;
 
 import controller.CustomerController;
+import controller.UserController;
 import dao.CustomerDAO;
 import dao.UserDAO;
 import service.CustomerService;
@@ -31,9 +32,9 @@ public class Main {
 		UserDAO userDAO = new UserDAO("./files/users.json");
 		UserService userService = new UserService(userDAO);
 		
-		
 		CustomerDAO customerDAO = new CustomerDAO("./files/customers.json");
 		CustomerService customerService = new CustomerService(customerDAO);
+		UserController userController = new UserController(customerService, userService);
 		CustomerController customerController = new CustomerController(customerService, userService);
 	}
 

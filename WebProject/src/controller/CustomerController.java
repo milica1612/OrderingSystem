@@ -9,7 +9,6 @@ import service.CustomerService;
 import service.UserService;
 
 import static spark.Spark.post;
-import spark.Session;
 
 public class CustomerController {
 	
@@ -54,5 +53,7 @@ public class CustomerController {
 			}
 			
 		});
+		
+		
 	}
 }
