@@ -55,7 +55,7 @@ Vue.component("login", {
 				  <input type="password" class="form-control" v-model="password">
 			    </div>
 			</div>
-			<div class="text-center">
+			<div class="text-center" id="err_div">
 				<p class="error" v-if="error_message">Invalid credentials!</p>
 				<p class="error" v-if="not_filled">Please fill all fields</p>
 			</div>

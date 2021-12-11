@@ -31,3 +31,7 @@
     font-size: larger;
     color: red;
 }
+
+#err_div {
+    height: 40px;
+}
