@@ -4,10 +4,16 @@ import com.google.gson.Gson;
 
 import beans.User;
 import dto.LoginDTO;
+import dto.UserDTO;
 import service.CustomerService;
 import service.UserService;
 
 import static spark.Spark.post;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import static spark.Spark.get;
 import spark.Session;
 
 public class UserController {
@@ -34,6 +40,22 @@ public class UserController {
 				} else {
 					return "";
 				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				return "";
+			}
+		});
+		
+		get("/users/logged", (req, res) -> {
+			res.type("application/json");
+			try {
+				Session session = req.session(true);
+				User logged = session.attribute("logged");
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  
+				UserDTO userDTO = new UserDTO(logged.getUsername(), logged.getPassword(),logged.getName(), logged.getLastName(),
+						logged.getGender().ordinal(), dateFormat.format(logged.getDateOfBirth())) ;
+				System.out.println(dateFormat.format(logged.getDateOfBirth()));
+				return gson.toJson(userDTO);
 			} catch (Exception e) {
 				e.printStackTrace();
 				return "";
