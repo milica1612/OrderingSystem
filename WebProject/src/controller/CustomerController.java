@@ -39,7 +39,6 @@ public class CustomerController {
 				newCustomer.setPassword(dto.getPassword());
 				newCustomer.setGender(Gender.values()[Integer.valueOf(dto.getGender())]);
 				Date date=new SimpleDateFormat("yyyy-MM-dd").parse(dto.getDateOfBirth());  
-				System.out.println(date);
 				newCustomer.setDateOfBirth(date);
 				newCustomer.setUserType(UserType.CUSTOMER);
 				newCustomer.getCart().setCustomer(newCustomer.getUsername());

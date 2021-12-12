@@ -1,12 +1,14 @@
 package service;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import beans.Customer;
 import beans.User;
 import dao.CustomerDAO;
 import dto.LoginDTO;
+import dto.UserDTO;
 
 public class CustomerService {
 	
@@ -34,6 +36,10 @@ public class CustomerService {
 			}
 		}
 		return null;
+	}
+
+	public User editCustomer(User logged, UserDTO userDTO) throws ParseException {
+		return customerDAO.update(logged, userDTO);
 	}
 
 }

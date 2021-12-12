@@ -1,10 +1,12 @@
 package service;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import beans.User;
 import dao.UserDAO;
 import dto.LoginDTO;
+import dto.UserDTO;
 
 public class UserService {
 	private UserDAO userDAO;
@@ -31,6 +33,10 @@ public class UserService {
 			}
 		}
 		return null;
+	}
+
+	public User editUser(User logged, UserDTO userDTO) throws ParseException {
+		return userDAO.update(logged, userDTO);
 	}
 
 }
