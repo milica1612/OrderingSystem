@@ -44,6 +44,19 @@ Vue.component("userProfile", {
                 this.user = response.data
             })
     },
+    computed:{
+        notFilled(){
+            if(this.user.username == "" || this.user.name == "" || this.user.lastName == ""|| this.user.dateOfBirth == "" || this.user.gender == "") {
+                return true
+            }
+            return false
+        },
+        isUsernameTaken(){
+            this.axios.get().then(response => {
+                this.user = response.data
+            })
+        }
+    },
     template:`
     <div class="reg">
 		<div class="container">
@@ -73,10 +86,13 @@ Vue.component("userProfile", {
 				  <label>Username</label>
 				  <input type="text" class="form-control" v-model="user.username" :disabled="disabled_edit">
 				</div>
+				<div class="text-center" id="err_div">
+				    <p class="error" v-if="notFilled">All fields should be filled!</p>
+			    </div>
 				</div>
 				<div class="d-grid gap-2 col-6 mx-auto">
   					<button id="btn" class="btn btn-warning" type="button" @click="enable" v-if="disabled_edit">EDIT</button>
-  					<button id="btn" class="btn btn-warning" type="button" @click="save" v-if="enabled_edit">SAVE</button>
+  					<button id="btn" class="btn btn-warning" type="button" @click="save" v-if="enabled_edit" :disabled="notFilled">SAVE</button>
  				</div>
 		</div>
 	</div>
