@@ -37,7 +37,7 @@ public class UserDAO {
 	
 	public ArrayList<User> getAll(){
 		 Gson gson = new Gson();
-	     Type token = new TypeToken<ArrayList<Customer>>(){}.getType();
+	     Type token = new TypeToken<ArrayList<User>>(){}.getType();
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(this.file));
@@ -77,6 +77,5 @@ public class UserDAO {
 		}
 		return null;
 	}
-	
 
 }

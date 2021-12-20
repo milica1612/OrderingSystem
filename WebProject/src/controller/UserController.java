@@ -13,6 +13,7 @@ import static spark.Spark.put;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import static spark.Spark.get;
 import spark.Session;
@@ -62,6 +63,17 @@ public class UserController {
 			}
 		});
 		
+		get("/users/getAllUsers", (req, res) -> {
+			res.type("application/json");
+			try {
+				ArrayList<User> all = userService.getAllUsers();
+				all.addAll(customerService.getAll());
+				return gson.toJson(all);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
 
 		put("/users/edit", (req,res) -> {
 			res.type("application/json");

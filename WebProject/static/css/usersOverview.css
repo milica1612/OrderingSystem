@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+#table_id {
+	background-color: white;
+	width: 50%;
+	text-align: center;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.td_class {
+  text-align: center;
+}
