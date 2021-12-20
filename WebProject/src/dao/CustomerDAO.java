@@ -71,10 +71,10 @@ public class CustomerDAO {
 		return null;
 	}
 
-	public User update(User logged, UserDTO userDTO) throws ParseException {
+	public User update(User logged, UserDTO userDTO) throws ParseException, IOException {
 		ArrayList<Customer> users = getAll();
 		if(users != null) {
-			for (User user : users) {
+			for (Customer user : users) {
 				if(user.getUsername().equals(logged.getUsername())) {
 					user.setUsername(userDTO.getUsername());
 					user.setName(userDTO.getName());
@@ -82,6 +82,7 @@ public class CustomerDAO {
 					user.setGender(Gender.values()[userDTO.getGender()]);
 					Date date=new SimpleDateFormat("yyyy-MM-dd").parse(userDTO.getDateOfBirth());
 					user.setDateOfBirth(date);
+					saveAll(users);
 					return user;
 				}
 			}

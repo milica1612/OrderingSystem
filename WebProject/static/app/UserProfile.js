@@ -5,6 +5,9 @@ Vue.component("userProfile", {
             user: {},
             disabled_edit: true,
             enabled_edit: false,
+            taken: "",
+            not_filled: "",
+            username_taken: ""
         }
     },
     methods: {
@@ -47,14 +50,33 @@ Vue.component("userProfile", {
     computed:{
         notFilled(){
             if(this.user.username == "" || this.user.name == "" || this.user.lastName == ""|| this.user.dateOfBirth == "" || this.user.gender == "") {
+                this.not_filled = true
+                return true
+            }
+            this.not_filled = false
+            return false
+        },
+        isUsernameTaken() {
+            axios.get('users/' + this.user.username).then(response => {
+                this.taken = response.data
+                console.log(response)
+
+            }).catch(err => {
+                console.log(err)
+            });
+            if(this.taken != "" && this.taken.username != localStorage.getItem("username")){
+                this.username_taken = true
+                return true
+            }
+            this.username_taken = false
+            return false
+
+        },
+        notOK(){
+            if(this.not_filled == true || this.username_taken == true){
                 return true
             }
             return false
-        },
-        isUsernameTaken(){
-            this.axios.get().then(response => {
-                this.user = response.data
-            })
         }
     },
     template:`
@@ -88,11 +110,12 @@ Vue.component("userProfile", {
 				</div>
 				<div class="text-center" id="err_div">
 				    <p class="error" v-if="notFilled">All fields should be filled!</p>
+				     <p class="error" v-if="isUsernameTaken">Username already taken!</p>
 			    </div>
 				</div>
 				<div class="d-grid gap-2 col-6 mx-auto">
   					<button id="btn" class="btn btn-warning" type="button" @click="enable" v-if="disabled_edit">EDIT</button>
-  					<button id="btn" class="btn btn-warning" type="button" @click="save" v-if="enabled_edit" :disabled="notFilled">SAVE</button>
+  					<button id="btn" class="btn btn-warning" type="button" @click="save" v-if="enabled_edit" :disabled="notOK">SAVE</button>
  				</div>
 		</div>
 	</div>

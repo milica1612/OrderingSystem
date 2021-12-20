@@ -82,6 +82,24 @@ public class UserController {
 				return null;
 			}
 		});
+		
+		get("/users/:username", (req, res) -> {
+			res.type("application/json");
+			try {
+				User user = userService.getUserByUsername(req.params("username"));
+				if(user == null) {
+					user = customerService.getUserByUsername(req.params("username"));
+				}
+				if(user == null) {
+					return "";
+				}else {
+					return gson.toJson(user);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				return "";
+			}
+		});
 	}
 	
 	
