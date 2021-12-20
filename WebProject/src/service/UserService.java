@@ -1,5 +1,6 @@
 package service;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -35,8 +36,12 @@ public class UserService {
 		return null;
 	}
 
-	public User editUser(User logged, UserDTO userDTO) throws ParseException {
+	public User editUser(User logged, UserDTO userDTO) throws ParseException, IOException {
 		return userDAO.update(logged, userDTO);
+	}
+
+	public User getUserByUsername(String params) {
+		return userDAO.getByUsername(params);
 	}
 
 }

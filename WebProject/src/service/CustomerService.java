@@ -38,8 +38,12 @@ public class CustomerService {
 		return null;
 	}
 
-	public User editCustomer(User logged, UserDTO userDTO) throws ParseException {
+	public User editCustomer(User logged, UserDTO userDTO) throws ParseException, IOException {
 		return customerDAO.update(logged, userDTO);
+	}
+
+	public User getUserByUsername(String params) {
+		return customerDAO.getByUsername(params);
 	}
 
 }

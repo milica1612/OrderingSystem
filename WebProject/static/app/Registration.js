@@ -9,7 +9,9 @@ Vue.component("registration", {
             lastName: "",
             gender: "",
             dateOfBirth: "",
-            not_filled: ""
+            passwords_not_same: "",
+            not_filled: "",
+            taken: ""
         }
     },
 	methods: {
@@ -45,17 +47,41 @@ Vue.component("registration", {
     computed:{
         passwordsNotSame(){
             if(this.password != this.password2) {
+                this.passwords_not_same = true
                 return true
             }
+            this.passwords_not_same = false
             return false
         },
         notFilled(){
             if(this.username == "" || this.password == "" || this.password2 == "" || this.firstName == "" ||
                 this.lastName == ""|| this.dateOfBirth == "" || this.gender =="") {
+                this.not_filled = true
+                return true
+            }
+            this.not_filled = false
+            return false
+        },
+        isUsernameTaken() {
+            axios.get('users/' + this.username).then(response => {
+                this.taken = response.data
+                console.log(response)
+
+            }).catch(err => {
+                console.log(err)
+            });
+            if(this.taken == ""){
+                return false
+            }
+            return true
+
+        },
+        notOK(){
+            if(this.passwords_not_same == true || this.not_filled == true || this.taken != ""){
                 return true
             }
             return false
-        },
+        }
     },
 	
 	template: `
@@ -98,10 +124,11 @@ Vue.component("registration", {
 				<div class="text-center" id="err_div">
 				    <p class="error" v-if="passwordsNotSame">Password and confirm password should match!</p>
 				    <p class="error" v-if="notFilled">All fields should be filled!</p>
+				    <p class="error" v-if="isUsernameTaken">Username already taken!</p>
 			    </div>
 				</div>
 				<div class="d-grid gap-2 col-6 mx-auto">
-  					<button id="btn" class="btn btn-warning" type="button" @click="register">REGISTER</button>
+  					<button id="btn" class="btn btn-warning" type="button" @click="register" :disabled="notOK">REGISTER</button>
  				</div>
 			
 		</div>

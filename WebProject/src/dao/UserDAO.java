@@ -60,7 +60,7 @@ public class UserDAO {
 		return null;
 	}
 
-	public User update(User logged, UserDTO userDTO) throws ParseException {
+	public User update(User logged, UserDTO userDTO) throws ParseException, IOException {
 		ArrayList<User> users = getAll();
 		if(users != null) {
 			for (User user : users) {
@@ -71,6 +71,7 @@ public class UserDAO {
 					user.setGender(Gender.values()[userDTO.getGender()]);
 					Date date=new SimpleDateFormat("yyyy-MM-dd").parse(userDTO.getDateOfBirth());
 					user.setDateOfBirth(date);
+					saveAll(users);
 					return user;
 				}
 			}
