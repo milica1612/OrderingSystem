@@ -112,6 +112,17 @@ public class UserController {
 				return "";
 			}
 		});
+		
+		get("/users/logout", (req, res) -> {
+			res.type("application/json");
+			Session session = req.session(true);
+			User logged = session.attribute("logged");
+			
+			if (logged != null) {
+				session.invalidate();
+			}
+			return true;
+		});
 	}
 	
 	

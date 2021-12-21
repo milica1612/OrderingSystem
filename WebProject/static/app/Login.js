@@ -32,11 +32,12 @@ Vue.component("login", {
 						localStorage.setItem("role", response.data.userType);
 						this.error_message = false;
 						this.$router.push("/userProfile");
-						//this.$router.push("events")
 					}
 				}).catch(err => {
 					console.log(err);
 				});
+
+
 			}
 		},
 	},
@@ -67,7 +68,7 @@ Vue.component("login", {
   				</div>
  			</div>
  			<div class="text-center" id="acc_div">
- 				Don't have account? <a href="Registration.js">Sign up</a>
+ 				Don't have account? <a href="#/registration">Sign up</a>
  			</div>
 		</div>
 	</div>
