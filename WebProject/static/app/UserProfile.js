@@ -49,7 +49,7 @@ Vue.component("userProfile", {
     },
     computed:{
         notFilled(){
-            if(this.user.username == "" || this.user.name == "" || this.user.lastName == ""|| this.user.dateOfBirth == "" || this.user.gender == "") {
+            if(this.user.username == "" || this.user.name == "" || this.user.lastName == ""|| this.user.dateOfBirth == "") {
                 this.not_filled = true
                 return true
             }
