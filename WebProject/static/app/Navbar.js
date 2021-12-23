@@ -21,6 +21,8 @@ Vue.component("navbar", {
 	    <div class="nav-wrapper" >
 	      <ul id="nav-mobile" class="right hide-on-med-and-down">
 	        <li><a v-if="role != 'ADMIN' && role != 'MANAGER' && role != 'CUSTOMER' && role != 'DELIVERER'" href="#/login">Sign In</a></li>
+			<li><a v-if="role == 'ADMIN'" href="#/employeeRegistration">Register Employee</a></li>
+			<li><a v-if="role == 'ADMIN'" href="#/usersOverview">All users</a></li>
 	        <li><a v-if="role == 'ADMIN' | role == 'MANAGER' | role == 'CUSTOMER' | role == 'DELIVERER'" href="#/userProfile">My Profile</a></li>
 	        <li><a v-if="role == 'ADMIN' | role == 'MANAGER' | role == 'CUSTOMER' | role == 'DELIVERER'" href="#/login" @click ="logOut">Log Out</a></li>
 	      </ul>
