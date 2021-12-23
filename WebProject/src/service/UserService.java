@@ -20,9 +20,8 @@ public class UserService {
 		return userDAO.getAll();
 	}
 
-	public void register(User newUser) {
-		// TODO Auto-generated method stub
-		
+	public User create(User newUser) throws IOException {
+		return userDAO.create(newUser);
 	}
 
 	public User login(LoginDTO loginDTO) {

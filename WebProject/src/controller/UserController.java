@@ -2,10 +2,16 @@ package controller;
 
 import com.google.gson.Gson;
 
+import beans.Customer;
+import beans.Gender;
 import beans.User;
+import beans.UserType;
 import dto.LoginDTO;
+import dto.RegistrationDTO;
 import dto.UserDTO;
 import service.CustomerService;
+import service.DelivererService;
+import service.ManagerService;
 import service.UserService;
 
 import static spark.Spark.post;
@@ -14,19 +20,25 @@ import static spark.Spark.put;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static spark.Spark.get;
 import spark.Session;
 
 public class UserController {
 	private CustomerService customerService;
+	private ManagerService managerService;
+	private DelivererService delivererService;
 	private UserService userService;
 	private static Gson gson = new Gson();
 	
-	public UserController(CustomerService customerService, UserService userService) {
+	public UserController(CustomerService customerService, UserService userService, ManagerService managerService, DelivererService delivererService) {
 		super();
+		
 		this.customerService = customerService;
 		this.userService = userService;
+		this.managerService = managerService;
+		this.delivererService = delivererService;
 		
 		post("/users/login", (req, res) -> {
 			res.type("application/json");
@@ -68,6 +80,8 @@ public class UserController {
 			try {
 				ArrayList<User> all = userService.getAllUsers();
 				all.addAll(customerService.getAll());
+				all.addAll(managerService.getAll());
+				all.addAll(delivererService.getAll());
 				return gson.toJson(all);
 			} catch (Exception e) {
 				e.printStackTrace();

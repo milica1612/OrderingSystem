@@ -10,6 +10,16 @@ import java.io.IOException;
 import com.google.gson.Gson;
 
 import controller.CustomerController;
+import controller.DelivererController;
+import controller.ManagerController;
+import controller.UserController;
+import dao.CustomerDAO;
+import dao.DelivererDAO;
+import dao.ManagerDAO;
+import dao.UserDAO;
+import service.CustomerService;
+import service.DelivererService;
+import service.ManagerService;
 import controller.RestaurantController;
 import controller.UserController;
 import dao.CustomerDAO;
@@ -37,12 +47,23 @@ public class Main {
 		
 		CustomerDAO customerDAO = new CustomerDAO("./files/customers.json");
 		CustomerService customerService = new CustomerService(customerDAO);
-		UserController userController = new UserController(customerService, userService);
-		CustomerController customerController = new CustomerController(customerService, userService);
+		
+		ManagerDAO managerDAO = new ManagerDAO("./files/managers.json");
+		ManagerService managerService = new ManagerService(managerDAO);
+		
+		DelivererDAO delivererDAO = new DelivererDAO("./files/deliverers.json");
+		DelivererService delivererService = new DelivererService(delivererDAO);
+		
+		
+		UserController userController = new UserController(customerService, userService, managerService, delivererService);
+		CustomerController customerController = new CustomerController(customerService, userService, managerService, delivererService);
+		ManagerController managerController = new ManagerController(managerService, userService, customerService, delivererService);
+		DelivererController delivererController = new DelivererController(delivererService, userService, managerService, customerService);
 		
 		RestaurantDAO restaurantDAO = new RestaurantDAO("./files/restaurants.json");
 		RestaurantService restaurantService = new RestaurantService(restaurantDAO);
 		RestaurantController restaurantController = new RestaurantController(restaurantService);
+		
 	}
 
 }
