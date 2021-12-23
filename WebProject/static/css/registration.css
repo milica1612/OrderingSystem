@@ -1,7 +1,6 @@
 @charset "utf-8";
 
 .reg {
-	background-image: url('./images/background.jpg');
 	width: 100%;
 	position: absolute;
 	bottom: 0px;
