@@ -20,6 +20,13 @@ import dao.UserDAO;
 import service.CustomerService;
 import service.DelivererService;
 import service.ManagerService;
+import controller.RestaurantController;
+import controller.UserController;
+import dao.CustomerDAO;
+import dao.RestaurantDAO;
+import dao.UserDAO;
+import service.CustomerService;
+import service.RestaurantService;
 import service.UserService;
 
 public class Main {
@@ -52,6 +59,10 @@ public class Main {
 		CustomerController customerController = new CustomerController(customerService, userService, managerService, delivererService);
 		ManagerController managerController = new ManagerController(managerService, userService, customerService, delivererService);
 		DelivererController delivererController = new DelivererController(delivererService, userService, managerService, customerService);
+		
+		RestaurantDAO restaurantDAO = new RestaurantDAO("./files/restaurants.json");
+		RestaurantService restaurantService = new RestaurantService(restaurantDAO);
+		RestaurantController restaurantController = new RestaurantController(restaurantService);
 		
 	}
 
