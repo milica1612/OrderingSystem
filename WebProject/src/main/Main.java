@@ -54,14 +54,13 @@ public class Main {
 		DelivererDAO delivererDAO = new DelivererDAO("./files/deliverers.json");
 		DelivererService delivererService = new DelivererService(delivererDAO);
 		
+		RestaurantDAO restaurantDAO = new RestaurantDAO("./files/restaurants.json");
+		RestaurantService restaurantService = new RestaurantService(restaurantDAO);
 		
 		UserController userController = new UserController(customerService, userService, managerService, delivererService);
 		CustomerController customerController = new CustomerController(customerService, userService, managerService, delivererService);
-		ManagerController managerController = new ManagerController(managerService, userService, customerService, delivererService);
+		ManagerController managerController = new ManagerController(managerService, userService, customerService, delivererService, restaurantService);
 		DelivererController delivererController = new DelivererController(delivererService, userService, managerService, customerService);
-		
-		RestaurantDAO restaurantDAO = new RestaurantDAO("./files/restaurants.json");
-		RestaurantService restaurantService = new RestaurantService(restaurantDAO);
 		RestaurantController restaurantController = new RestaurantController(restaurantService);
 		
 	}

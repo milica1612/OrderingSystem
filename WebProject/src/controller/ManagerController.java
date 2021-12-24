@@ -1,8 +1,11 @@
 package controller;
 
+import static spark.Spark.get;
 import static spark.Spark.post;
+import static spark.Spark.put;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.gson.Gson;
@@ -11,13 +14,17 @@ import beans.Customer;
 import beans.Deliverer;
 import beans.Gender;
 import beans.Manager;
+import beans.Restaurant;
 import beans.User;
 import beans.UserType;
 import dto.RegistrationDTO;
+import dto.UserDTO;
 import service.CustomerService;
 import service.DelivererService;
 import service.ManagerService;
+import service.RestaurantService;
 import service.UserService;
+import spark.Session;
 
 public class ManagerController {
 
@@ -26,13 +33,15 @@ public class ManagerController {
 	private CustomerService customerService;
 	private DelivererService delivererService;
 	private UserService userService;
+	private RestaurantService restaurantService;
 	private static Gson gson = new Gson();
 	
-	public ManagerController(ManagerService managerService, UserService userService, CustomerService customerService, DelivererService delivererService) {
+	public ManagerController(ManagerService managerService, UserService userService, CustomerService customerService, DelivererService delivererService, RestaurantService restaurantService) {
 		this.managerService = managerService;
 		this.userService = userService;
 		this.customerService = customerService;
 		this.delivererService = delivererService;
+		this.restaurantService = restaurantService;
 		
 		post("/managers/registration", (req,res) -> {
 			res.type("application/json");
@@ -91,6 +100,35 @@ public class ManagerController {
 			
 		});
 		
+		
+		get("/managers/getAllAvailable", (req, res) -> {
+			res.type("application/json");
+			try {
+				Session session = req.session(true);
+				User logged = session.attribute("logged");
+				ArrayList<Manager> managers = managerService.getAllAvailable();
+				return gson.toJson(managers);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
+		
+		put("/managers/restaurant/:name", (req,res) -> {
+			res.type("application/json");
+			try {
+				String name = req.params("name");
+				Manager manager = gson.fromJson(req.body(), Manager.class);
+				Restaurant restaurant = restaurantService.getByName(name);
+				Manager newManager = managerService.addRestaurant(manager, restaurant);	
+				
+				return gson.toJson(newManager);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
 		
 	}
 }
