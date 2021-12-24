@@ -6,10 +6,10 @@ Vue.component("usersOverview", {
  			sort: {
         		key: '',
         		isAsc: false
-      		}
+      		},
+			searchParam: ''
         }
 	},
-	
 	mounted () {
           axios.get('/users/getAllUsers')
           	.then(response => {
@@ -41,7 +41,34 @@ Vue.component("usersOverview", {
     	sortBy (key) {
       		this.sort.isAsc = this.sort.key === key ? !this.sort.isAsc : false;
       		this.sort.key = key;
-    	}
+    	},
+		searchUsersByName(){
+			axios.get('users/getByName/' + this.searchParam).then(response => {
+                this.users = response.data
+                console.log(response)
+
+            }).catch(err => {
+                console.log(err)
+            });
+		},
+		searchUsersByLastName(){
+			axios.get('users/getByLastName/' + this.searchParam).then(response => {
+                this.users = response.data
+                console.log(response)
+
+            }).catch(err => {
+                console.log(err)
+            });
+		},
+		searchUsersByUsername(){
+			axios.get('users/getByUsername/' + this.searchParam).then(response => {
+                this.users = response.data
+                console.log(response)
+
+            }).catch(err => {
+                console.log(err)
+            });
+		}
 	},
 	template:`
 	<div class="reg">
@@ -51,10 +78,10 @@ Vue.component("usersOverview", {
 	<div id="search_id" class="container">
 		<table>
 			<tr>
-		  		<td><input type="search" placeholder="Search..."></td>
-				<td><button class="btn_search" type="button">Search By Name</button></td>
-				<td><button class="btn_search" type="button">Search By Last Name</button></td>
-				<td><button class="btn_search" type="button">Search By Username</button></td>
+		  		<td><input type="search" v-model="searchParam" placeholder="Search..."></td>
+				<td><button class="btn_search" type="button" v-on:click="searchUsersByName" >Search By Name</button></td>
+				<td><button class="btn_search" type="button" v-on:click="searchUsersByLastName">Search By Last Name</button></td>
+				<td><button class="btn_search" type="button" v-on:click="searchUsersByUsername">Search By Username</button></td>
 			</tr>
 		
 			<tr><td colspan="2">

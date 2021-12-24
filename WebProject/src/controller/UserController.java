@@ -94,7 +94,40 @@ public class UserController {
 				return null;
 			}
 		});
+		
+		get("/users/getByName/:name", (req, res) -> {
+			res.type("application/json");
+			try {
+				ArrayList<User> users = userService.getUsersByName(req.params("name"));
+				return gson.toJson(users);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
+		
+		get("/users/getByLastName/:lastName", (req, res) -> {
+			res.type("application/json");
+			try {
+				ArrayList<User> users = userService.getUsersByLastName(req.params("lastName"));
+				return gson.toJson(users);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
 
+		get("/users/getByUsername/:username", (req, res) -> {
+			res.type("application/json");
+			try {
+				ArrayList<User> users = userService.getUsersByUsername(req.params("username"));
+				return gson.toJson(users);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
+		
 		put("/users/edit", (req,res) -> {
 			res.type("application/json");
 			
