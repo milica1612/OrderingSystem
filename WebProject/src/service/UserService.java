@@ -42,5 +42,48 @@ public class UserService {
 	public User getUserByUsername(String params) {
 		return userDAO.getByUsername(params);
 	}
+	
+	public ArrayList<User> getUsersByName(String name){
+		
+		ArrayList<User> all = getAllUsers();
+		ArrayList<User> result = new ArrayList<User>();
+		
+		for (User user : all) {
+			 if(user.getName().toLowerCase().contains(name.toLowerCase().trim())) {
+				 result.add(user);
+			 }
+		}
+		
+		return result;
+	}
+	
+	public ArrayList<User> getUsersByLastName(String lastName){
+			
+			ArrayList<User> all = getAllUsers();
+			ArrayList<User> result = new ArrayList<User>();
+			
+			for (User user : all) {
+				 if(user.getLastName().toLowerCase().contains(lastName.toLowerCase().trim())) {
+					 result.add(user);
+				 }
+			}
+			
+			return result;
+		}
+	
+	public ArrayList<User> getUsersByUsername(String username){
+		
+		ArrayList<User> all = getAllUsers();
+		ArrayList<User> result = new ArrayList<User>();
+		
+		for (User user : all) {
+			 if(user.getName().toLowerCase().contains(username.toLowerCase().trim())) {
+				 result.add(user);
+			 }
+		}
+		
+		return result;
+	}
 
+	
 }
