@@ -19,7 +19,7 @@ Vue.component("userProfile", {
             this.disabled_edit = true
             this.enabled_edit = false
 
-            if (this.user.username != "" && this.user.name != "" && this.user.lastName != "" && this.user.dateOfBirth != "" && this.user.gender != "") {
+            if (this.user.username != "" && this.user.name != "" && this.user.lastName != "" && this.user.dateOfBirth != "") {
                 let params = {
                     username: this.user.username,
                     name: this.user.name,

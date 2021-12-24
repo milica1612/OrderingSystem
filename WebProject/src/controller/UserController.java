@@ -47,6 +47,12 @@ public class UserController {
 				if(logged == null) {
 					logged = customerService.login(gson.fromJson(req.body(), LoginDTO.class));
 				}
+				if(logged == null) {
+					logged = managerService.login(gson.fromJson(req.body(), LoginDTO.class));
+				}
+				if(logged == null){
+					logged = delivererService.login(gson.fromJson(req.body(), LoginDTO.class));
+				}
 				if (logged != null) {
 					Session session = req.session(true);
 					session.attribute("logged", logged);
@@ -100,6 +106,12 @@ public class UserController {
 				if(newUser == null) {
 					newUser = customerService.editCustomer(logged, userDTO);
 				}
+				if(newUser == null) {
+					newUser = managerService.editManager(logged, userDTO);
+				}
+				if(newUser == null){
+					newUser = delivererService.editDeliverer(logged, userDTO);
+				}
 				session.attribute("logged", newUser);
 				return gson.toJson(newUser);
 				
@@ -115,6 +127,12 @@ public class UserController {
 				User user = userService.getUserByUsername(req.params("username"));
 				if(user == null) {
 					user = customerService.getUserByUsername(req.params("username"));
+				}
+				if(user == null) {
+					user = managerService.getUserByUsername(req.params("username"));
+				}
+				if(user == null) {
+					user = delivererService.getUserByUsername(req.params("username"));
 				}
 				if(user == null) {
 					return "";
