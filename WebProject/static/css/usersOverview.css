@@ -14,3 +14,18 @@
 .td_class {
   text-align: center;
 }
+
+.btn_search{
+	background-color: lightcoral;
+	font-size: 12px;
+	font-family: 'Times New Roman', Times, serif;
+	font-weight: bold;
+	border: 2px solid lightcoral;
+	width: 140px;
+}
+
+#search_id {
+	background-color: white;
+	width: 50%;
+	
+}
