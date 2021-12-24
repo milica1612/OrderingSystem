@@ -2,7 +2,11 @@ Vue.component("usersOverview", {
 
     data() {
         return {
-           users: null
+           	users: [],
+ 			sort: {
+        		key: '',
+        		isAsc: false
+      		}
         }
 	},
 	
@@ -11,13 +15,34 @@ Vue.component("usersOverview", {
           	.then(response => {
 				 if (response.data != null) {
 					this.users = response.data
+				    console.log(this.users);
 			 }
 		   })
     },
-	methods: {
-		
+	computed: {
+		sortedItems () {
+      		const list = this.users.slice();
+			console.log(list); 
+      		if (this.sort.key !="") {
+        		list.sort((a, b) => {
+          		a = a[this.sort.key]
+          		b = b[this.sort.key]
+          		return (a === b ? 0 : a > b ? 1 : -1) * (this.sort.isAsc ? 1 : -1)
+        	});
+      	}
+      return list;
+    }
 	},
 	
+	methods: {
+		sortedClass (key) {
+     		return this.sort.key === key ? `sorted ${this.sort.isAsc ? 'asc' : 'desc' }` : '';
+    	},
+    	sortBy (key) {
+      		this.sort.isAsc = this.sort.key === key ? !this.sort.isAsc : false;
+      		this.sort.key = key;
+    	}
+	},
 	template:`
 	<div class="reg">
 		<div class="container">
@@ -54,16 +79,16 @@ Vue.component("usersOverview", {
 		<table id="table_id" class="center">
 	    <thead class="thead-dark">
 	      <tr class="clickable-row">
-	        <th>Username</th>
-	        <th>First Name</th>
-	        <th>Last Name</th>
-	        <th>User Type</th>
-	        <th>Customer Points</th>
+	        <th :class="sortedClass('username')" @click="sortBy('username')">Username</th>
+	        <th :class="sortedClass('name')" @click="sortBy('name')">First Name</th>
+	        <th :class="sortedClass('lastName')" @click="sortBy('lastName')">Last Name</th>
+	        <th :class="sortedClass('userType')" @click="sortBy('userType')">User Type</th>
+	        <th :class="sortedClass('points')" @click="sortBy('points')">Customer Points</th>
 	      </tr>
 	    </thead>
 		<tbody>
 	      <tr
-	        v-for="user in users"
+	        v-for="user in sortedItems"
 	        :key="user.username"
 	      >
 	        <td class="td_class">{{ user.username }}</td>
