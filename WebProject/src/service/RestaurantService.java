@@ -22,6 +22,18 @@ public class RestaurantService {
 	public Restaurant create(Restaurant newRestaurant) throws IOException {
 		return restaurantDAO.create(newRestaurant);
 	}
+
+	public Restaurant getByName(String name) {
+		ArrayList<Restaurant> restaurants = getAll();
+		if(restaurants != null) {
+			for (Restaurant restaurant : restaurants) {
+				if(restaurant.getName().equals(name)) {
+					return restaurant;
+				}
+			}
+		}
+		return null;
+	}
 	
 	
 }

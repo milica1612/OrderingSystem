@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import beans.Customer;
 import beans.Manager;
+import beans.Restaurant;
 import beans.User;
 import dao.CustomerDAO;
 import dao.ManagerDAO;
@@ -29,6 +30,19 @@ private ManagerDAO managerDAO;
 		return managerDAO.getAll();
 	}
 
+	public ArrayList<Manager> getAllAvailable(){
+		ArrayList<Manager> managers = getAll();
+		ArrayList<Manager> result = new ArrayList<Manager>();
+		if(managers != null) {
+			for (Manager manager : managers) {
+				if(manager.getRestaurant() == null) {
+					result.add(manager);
+				}
+			}
+			return result;
+		}
+		return null;
+	}
 	public Manager login(LoginDTO loginDTO) {
 		Manager logged = managerDAO.getByUsername(loginDTO.getUsername());
 		
@@ -46,6 +60,21 @@ private ManagerDAO managerDAO;
 
 	public User getUserByUsername(String params) {
 		return managerDAO.getByUsername(params);
+	}
+
+	public Manager addRestaurant(Manager manager, Restaurant restaurant) throws IOException {
+		ArrayList<Manager> managers = getAll();
+		if(managers != null) {
+			for (Manager m : managers) {
+				if(m.getUsername().equals(manager.getUsername())) {
+					m.setRestaurant(restaurant);
+					managerDAO.saveAll(managers);
+					return m;
+				}
+			}
+		}
+		return null;
+		
 	}
 
 }

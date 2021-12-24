@@ -24,7 +24,7 @@ public class RestaurantController {
 		super();
 		this.restaurantService = restaurantService;
 		
-		post("/restaurants/add", (req,res) -> {
+		post("/restaurants/create", (req,res) -> {
 			res.type("application/json");
 			
 			try {
