@@ -3,6 +3,8 @@ Vue.component("usersOverview", {
     data() {
         return {
            	users: [],
+			filtratedUsers: [],
+			filter: "",
  			sort: {
         		key: '',
         		isAsc: false
@@ -43,26 +45,69 @@ Vue.component("usersOverview", {
       		this.sort.key = key;
     	},
 		searchUsersByName(){
-			axios.get('users/getByName/' + this.searchParam).then(response => {
-                this.users = response.data
-                console.log(response)
-
-            }).catch(err => {
-                console.log(err)
-            });
+			if(this.searchParam == ""){
+				 axios.get('/users/getAllUsers')
+          		.then(response => {
+				 if (response.data != null) {
+					this.users = response.data
+				    console.log(this.users);
+			 }
+		   })
+			}
+			else{
+				axios.get('users/getByName/' + this.searchParam).then(response => {
+	                this.users = response.data
+	                console.log(response)
+	
+	            }).catch(err => {
+	                console.log(err)
+	            });
+			}
 		},
 		searchUsersByLastName(){
-			axios.get('users/getByLastName/' + this.searchParam).then(response => {
-                this.users = response.data
-                console.log(response)
-
-            }).catch(err => {
-                console.log(err)
-            });
+			if(this.searchParam == ""){
+				 axios.get('/users/getAllUsers')
+          		.then(response => {
+				 if (response.data != null) {
+					this.users = response.data
+				    console.log(this.users);
+			 }
+		   })
+			}
+			else{
+				axios.get('users/getByLastName/' + this.searchParam).then(response => {
+	                this.users = response.data
+	                console.log(response)
+	
+	            }).catch(err => {
+	                console.log(err)
+	            });
+			}
 		},
 		searchUsersByUsername(){
-			axios.get('users/getByUsername/' + this.searchParam).then(response => {
-                this.users = response.data
+			if(this.searchParam == ""){
+				 axios.get('/users/getAllUsers')
+          		.then(response => {
+				 if (response.data != null) {
+					this.users = response.data
+				    console.log(this.users);
+			 }
+		   })
+			}
+			else{
+				axios.get('users/getByUsername/' + this.searchParam).then(response => {
+	                this.users = response.data
+	                console.log(response)
+	
+	            }).catch(err => {
+	                console.log(err)
+	            });
+			}
+		},
+		filtrateUsers(filter){
+			axios.put('users/filtrate/' + filter, JSON.stringify(this.users)
+                    ).then(response => {
+                        this.users = response.data
                 console.log(response)
 
             }).catch(err => {
@@ -86,7 +131,8 @@ Vue.component("usersOverview", {
 		
 			<tr><td colspan="2">
 			<label>Filtrate</label>
-			<select id="gender_select"  class="form-select form-select-sm" aria-label=".form-select-sm example">
+			<select id="gender_select"  class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="filter"
+			@change="filtrateUsers(filter)">
 				<option value="0">ADMIN</option>
 				<option value="1">MANAGER</option>
 				<option value="2">CUSTOMER</option>

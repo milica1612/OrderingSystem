@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import beans.User;
+import beans.UserType;
 import dao.UserDAO;
 import dto.LoginDTO;
 import dto.UserDTO;
@@ -85,5 +86,16 @@ public class UserService {
 		return result;
 	}
 
+	public ArrayList<User> filtrateUsers(UserType userType, ArrayList<User> allResults){
+		ArrayList<User> result = new ArrayList<User>();
+		
+		for (User user : allResults) {
+			 if(user.getUserType().equals(userType)) {
+				 result.add(user);
+			 }
+		}
+		
+		return result;
+	}
 	
 }
