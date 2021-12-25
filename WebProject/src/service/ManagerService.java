@@ -62,11 +62,11 @@ private ManagerDAO managerDAO;
 		return managerDAO.getByUsername(params);
 	}
 
-	public Manager addRestaurant(Manager manager, Restaurant restaurant) throws IOException {
+	public Manager addRestaurant(String manager, Restaurant restaurant) throws IOException {
 		ArrayList<Manager> managers = getAll();
 		if(managers != null) {
 			for (Manager m : managers) {
-				if(m.getUsername().equals(manager.getUsername())) {
+				if(m.getUsername().equals(manager)) {
 					m.setRestaurant(restaurant);
 					managerDAO.saveAll(managers);
 					return m;

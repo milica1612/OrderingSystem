@@ -17,7 +17,7 @@ Vue.component("newRestaurant", {
     },
     methods:{
         create(){
-            if(this.managers != null){
+
                 let params = {
                     name: this.name,
                     type: this.restaurant_type,
@@ -37,14 +37,19 @@ Vue.component("newRestaurant", {
                 axios.post('/restaurants/create', JSON.stringify(params)).then(
                     response => {
                         console.log(response)
-                        axios.put('/managers/restaurant/' + this.name, JSON.stringify(this.manager)).then(
-                            response => {
-                                console.log(response)
-                        })
+                        if (this.managers != null) {
+                            axios.put('/managers/restaurant/' + this.name, JSON.stringify(this.manager.username)).then(
+                                response => {
+                                    console.log(response)
+                                })
+                        }else{
+                            localStorage.setItem("restaurant", this.name)
+                            this.$router.push("/managerRegistration");
+                        }
                     }
                 )
 
-            }
+
         }
     },
     mounted(){
