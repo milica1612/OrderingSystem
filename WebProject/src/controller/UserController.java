@@ -1,6 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import beans.Customer;
 import beans.Gender;
@@ -126,6 +127,22 @@ public class UserController {
 				e.printStackTrace();
 				return null;
 			}
+		});
+		
+		put("/users/filtrate/:filter", (req,res) -> {
+			res.type("application/json");
+			try {
+				String param = req.params("filter");
+				UserType usertype = UserType.values()[Integer.valueOf(param)];
+				System.out.println(usertype.toString());
+				ArrayList<User> results = gson.fromJson(req.body(), new TypeToken<ArrayList<User>>(){}.getType());
+				ArrayList<User> filtratedUsers = userService.filtrateUsers(usertype, results);
+				return gson.toJson(filtratedUsers);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			
 		});
 		
 		put("/users/edit", (req,res) -> {
