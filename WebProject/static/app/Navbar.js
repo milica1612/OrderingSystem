@@ -10,6 +10,9 @@ Vue.component("navbar", {
 		console.log(this.role);
 	},
 	methods: {
+		refresh(){
+			this.$forceUpdate()
+		},
 		logOut(){
 			localStorage.removeItem("role");
 			localStorage.removeItem("username");
