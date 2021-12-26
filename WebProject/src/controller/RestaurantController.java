@@ -1,8 +1,10 @@
 package controller;
 
+import static spark.Spark.get;
 import static spark.Spark.post;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.gson.Gson;
@@ -29,6 +31,7 @@ public class RestaurantController {
 			
 			try {
 				Restaurant newRestaurant = gson.fromJson(req.body(), Restaurant.class);
+				newRestaurant.setIsOpen(true);
 				if(restaurantService.getAll() != null) {
 					for (Restaurant restaurant : restaurantService.getAll()) {
 						if(restaurant.getName().equals(newRestaurant.getName())) {
@@ -46,6 +49,28 @@ public class RestaurantController {
 				return null;
 			}
 			
+		});
+		
+		get("/restaurants/getAll", (req, res) -> {
+			res.type("application/json");
+			try {
+				ArrayList<Restaurant> all = restaurantService.getAll();
+				ArrayList<Restaurant> result = new ArrayList<Restaurant>();
+				for (Restaurant restaurant : all) {
+					if(restaurant.getIsOpen().equals(true)) {
+						result.add(restaurant);
+					}
+				}
+				for(Restaurant r : all) {
+					if(r.getIsOpen().equals(false)) {
+						result.add(r);
+					}
+				}
+				return gson.toJson(result);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
 		});
 	}
 	
