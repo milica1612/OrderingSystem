@@ -1,0 +1,21 @@
+@charset "utf-8";
+
+
+#restaurant_view {
+    background-color: white;
+	width: 50%;
+	text-align: center;
+}
+
+.restaurant_name{
+	font-size: 22px;
+	font-family: 'Times New Roman', Times, serif;
+	font-weight: bold;
+}
+
+.restaurant_data{
+	font-size: 18px;
+	font-family: 'Times New Roman', Times, serif;
+	font-weight: bold;
+	color: silver;
+}

@@ -10,12 +10,13 @@ public class Restaurant {
 	private Boolean isOpen; 
 	private Location location;
 	private String logo;
+	private double rating;
 	
 	public Restaurant() {
 		
 	}
 	
-	public Restaurant(String name, String type, ArrayList<Item> items, Boolean isOpen, Location location, String logo) {
+	public Restaurant(String name, String type, ArrayList<Item> items, Boolean isOpen, Location location, String logo, double rating) {
 		super();
 		this.name = name;
 		this.type = type;
@@ -23,6 +24,7 @@ public class Restaurant {
 		this.isOpen = isOpen;
 		this.location = location;
 		this.logo = logo;
+		this.rating = rating;
 	}
 
 	public String getName() {
@@ -73,5 +75,12 @@ public class Restaurant {
 		this.logo = logo;
 	}
 	
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
 	
 }
