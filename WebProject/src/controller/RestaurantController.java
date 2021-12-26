@@ -32,6 +32,7 @@ public class RestaurantController {
 			try {
 				Restaurant newRestaurant = gson.fromJson(req.body(), Restaurant.class);
 				newRestaurant.setIsOpen(true);
+				newRestaurant.setRating(5);
 				if(restaurantService.getAll() != null) {
 					for (Restaurant restaurant : restaurantService.getAll()) {
 						if(restaurant.getName().equals(newRestaurant.getName())) {

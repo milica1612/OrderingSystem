@@ -27,7 +27,7 @@ Vue.component("newRestaurant", {
                         address:{
                             city: this.city,
                             street: this.street,
-                            streetNumber: this.streetNumber,
+                            streetNumber: this.street_number,
                             zipcode: this.zipcode
                         },
                         latitude: this.latitude,
