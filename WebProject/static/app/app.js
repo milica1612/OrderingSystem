@@ -5,6 +5,7 @@ const UsersOverview = {template: '<usersOverview></usersOverview>' }
 const NewRestaurant = {template: '<newRestaurant></newRestaurant>' }
 const EmployeeRegistration = {template: '<employeeRegistration></employeeRegistration>' }
 const CreateOrder = {template: '<createOrder></createOrder>' }
+const ManagerRegistration = {template: '<managerRegistration></managerRegistration>'}
 
 const router = new VueRouter({
 	  mode: 'hash',
@@ -15,7 +16,8 @@ const router = new VueRouter({
 		{ path: '/usersOverview', component: UsersOverview },
 		{ path: '/newRestaurant', component: NewRestaurant },
 		{ path: '/employeeRegistration', component: EmployeeRegistration },
-		{ path: '/createOrder', component: CreateOrder }
+		{ path: '/createOrder', component: CreateOrder },
+		{ path: '/managerRegistration', component: ManagerRegistration }
 	]
 });
 

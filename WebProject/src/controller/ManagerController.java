@@ -118,7 +118,8 @@ public class ManagerController {
 			res.type("application/json");
 			try {
 				String name = req.params("name");
-				Manager manager = gson.fromJson(req.body(), Manager.class);
+				String manager = gson.fromJson(req.body(), String.class);
+				System.out.println(manager.toString());
 				Restaurant restaurant = restaurantService.getByName(name);
 				Manager newManager = managerService.addRestaurant(manager, restaurant);	
 				
