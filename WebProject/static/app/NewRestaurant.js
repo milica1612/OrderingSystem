@@ -12,7 +12,8 @@ Vue.component("newRestaurant", {
             logo: "",
             manager: {},
             managers: null,
-            button_text: ""
+            button_text: "",
+            img_name: ""
         }
     },
     methods:{
@@ -37,7 +38,7 @@ Vue.component("newRestaurant", {
                 axios.post('/restaurants/create', JSON.stringify(params)).then(
                     response => {
                         console.log(response)
-                        if (this.managers != null) {
+                        if (this.managers != null && this.managers.length != 0) {
                             axios.put('/managers/restaurant/' + this.name, JSON.stringify(this.manager.username)).then(
                                 response => {
                                     console.log(response)
@@ -50,7 +51,21 @@ Vue.component("newRestaurant", {
                 )
 
 
-        }
+        },
+        setFiles: function(event){
+            const file = event.target.files[0];
+            this.createBase64Image(file);
+            this.logo = URL.createObjectURL(file);
+        },
+        createBase64Image(file){
+            const reader= new FileReader();
+
+            reader.onload = (e) =>{
+                let img = e.target.result;
+                this.logo = img;
+            }
+            reader.readAsDataURL(file);
+        },
     },
     mounted(){
         axios.get('/managers/getAllAvailable').then(
@@ -67,7 +82,7 @@ Vue.component("newRestaurant", {
     },
     computed:{
         availableManagers(){
-            if(this.managers == null){
+            if(this.managers == null || this.managers.length == 0){
                 return false
             }
             return true
@@ -102,7 +117,7 @@ Vue.component("newRestaurant", {
 				</div>
 				<div>
 				  <label>Logo</label>
-				  <input type="file" class="form-control" v-model="logo" accept="image/*">
+				  <input type="file" class="form-control" accept="image/*" @change="setFiles" v-model="img_name">
 				</div>
 				<div v-if="availableManagers">
 				<label>Manager</label>

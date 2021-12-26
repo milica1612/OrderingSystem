@@ -9,10 +9,12 @@ import dao.RestaurantDAO;
 
 public class RestaurantService {
 	private RestaurantDAO restaurantDAO;
+	private ImageService imageService;
 
-	public RestaurantService(RestaurantDAO restaurantDAO) {
+	public RestaurantService(RestaurantDAO restaurantDAO, ImageService imageService) {
 		super();
 		this.restaurantDAO = restaurantDAO;
+		this.imageService = imageService;
 	}
 
 	public ArrayList<Restaurant> getAll() {
@@ -20,6 +22,9 @@ public class RestaurantService {
 	}
 
 	public Restaurant create(Restaurant newRestaurant) throws IOException {
+		String filePath = "images/logo/" + newRestaurant.getName() + ".jpg";
+		imageService.Base64DecodeAndSave(newRestaurant.getLogo(), filePath);
+		newRestaurant.setLogo(filePath);
 		return restaurantDAO.create(newRestaurant);
 	}
 
