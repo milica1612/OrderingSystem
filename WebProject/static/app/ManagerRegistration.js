@@ -39,6 +39,7 @@ Vue.component("managerRegistration", {
                             axios.put('/managers/restaurant/' + this.name, JSON.stringify(this.username)).then(
                                 response => {
                                     console.log(response)
+                                    localStorage.removeItem("restaurant");
                                 })
                         }).catch(err => {
                             console.log(err);
