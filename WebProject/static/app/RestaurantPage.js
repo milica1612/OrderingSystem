@@ -19,6 +19,9 @@ Vue.component("restaurantPage", {
 	template: `
 	<div class="reg">
 		<div class="container" id="restaurant_info">
+			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+			  <button class="btn_manager" type="button">Add new item</button>
+			</div>
 			<img v-bind:src= "restaurant.logo" alt="" id="restaurant_logo" class="rounded float-start" style="margin-top: 5px">
 			<label  class="restaurant_name">{{restaurant.name}}</label></br>
 			<label class="restaurant_data">{{restaurant.type}}</label></br> 
@@ -28,6 +31,8 @@ Vue.component("restaurantPage", {
 			<label class="restaurant_data">{{restaurant.location.address.city}} {{restaurant.location.address.zipcode}}</label></br>  
 			<label class="restaurant_data">{{restaurant.rating}} &#10027;</label></br>
 		</div>
+			
+
 	</div>
 	`});
  

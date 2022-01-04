@@ -33,3 +33,9 @@
     height: 160px;
  	border-radius: 35px;  
 }
+
+.btn_manager{
+	width: 180px;	
+	border-radius: 25px;  
+	 background-color: rgb(255, 128, 128);
+}
