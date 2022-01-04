@@ -2,12 +2,14 @@ package controller;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
+import static spark.Spark.put;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import beans.Customer;
 import beans.Gender;
@@ -116,6 +118,34 @@ public class RestaurantController {
 				e.printStackTrace();
 				return null;
 			}
+		});
+		
+		put("/restaurants/filtrate/type/:filter", (req,res) -> {
+			res.type("application/json");
+			try {
+				String param = req.params("filter");
+				ArrayList<Restaurant> results = gson.fromJson(req.body(), new TypeToken<ArrayList<Restaurant>>(){}.getType());
+				ArrayList<Restaurant> filtratedRestaurants = restaurantService.filtrateRestauntantsByType(param, results);
+				return gson.toJson(filtratedRestaurants);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			
+		});
+		
+		put("/restaurants/filtrate/open", (req,res) -> {
+			res.type("application/json");
+			try {
+				String param = req.params("filter");
+				ArrayList<Restaurant> results = gson.fromJson(req.body(), new TypeToken<ArrayList<Restaurant>>(){}.getType());
+				ArrayList<Restaurant> filtratedRestaurants = restaurantService.filtrateOpenRestauntants(results);
+				return gson.toJson(filtratedRestaurants);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			
 		});
 	}
 	

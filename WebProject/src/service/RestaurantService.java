@@ -92,6 +92,26 @@ public class RestaurantService {
 		}
 		return result;
 	}
+
+	public ArrayList<Restaurant> filtrateRestauntantsByType(String param, ArrayList<Restaurant> results) {
+		ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+		for (Restaurant restaurant : results) {
+			if(restaurant.getType().toLowerCase().contains(param.toLowerCase().trim())) {
+				restaurants.add(restaurant);
+			}
+		}
+		return restaurants;
+	}
+
+	public ArrayList<Restaurant> filtrateOpenRestauntants(ArrayList<Restaurant> results) {
+		ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+		for (Restaurant restaurant : results) {
+			if(restaurant.getIsOpen() == true) {
+				restaurants.add(restaurant);
+			}
+		}
+		return restaurants;
+	}
 	
 	
 }
