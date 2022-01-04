@@ -39,6 +39,59 @@ public class RestaurantService {
 		}
 		return null;
 	}
+
+	public ArrayList<Restaurant> getRestaurantsByName(String params) {
+		ArrayList<Restaurant> restaurants = getAll();
+		ArrayList<Restaurant> result = new ArrayList<Restaurant>();
+		if(restaurants != null) {
+			for (Restaurant restaurant : restaurants) {
+				if(restaurant.getName().toLowerCase().contains(params.toLowerCase().trim())) {
+					result.add(restaurant);
+				}
+			}
+		}
+		return result;
+	}
+
+	public ArrayList<Restaurant> getRestaurantsByType(String params) {
+		ArrayList<Restaurant> restaurants = getAll();
+		ArrayList<Restaurant> result = new ArrayList<Restaurant>();
+		if(restaurants != null) {
+			for (Restaurant restaurant : restaurants) {
+				if(restaurant.getType().toLowerCase().contains(params.toLowerCase().trim())) {
+					result.add(restaurant);
+				}
+			}
+		}
+		return result;
+	}
+
+	public ArrayList<Restaurant> getRestaurantsByLocation(String params) {
+		ArrayList<Restaurant> restaurants = getAll();
+		ArrayList<Restaurant> result = new ArrayList<Restaurant>();
+		if(restaurants != null) {
+			for (Restaurant restaurant : restaurants) {
+				if(restaurant.getLocation().getAddress().getCity().toLowerCase().contains(params.toLowerCase().trim())) {
+					result.add(restaurant);
+				}
+			}
+		}
+		return result;
+	}
+
+	public ArrayList<Restaurant> getRestaurantsByRating(String params) {
+		Double rating = Double.parseDouble(params);
+		ArrayList<Restaurant> restaurants = getAll();
+		ArrayList<Restaurant> result = new ArrayList<Restaurant>();
+		if(restaurants != null) {
+			for (Restaurant restaurant : restaurants) {
+				if(restaurant.getRating() > rating) {
+					result.add(restaurant);
+				}
+			}
+		}
+		return result;
+	}
 	
 	
 }

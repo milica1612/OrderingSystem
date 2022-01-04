@@ -73,6 +73,50 @@ public class RestaurantController {
 				return null;
 			}
 		});
+		
+		get("/restaurants/getByName/:name", (req, res) -> {
+			res.type("application/json");
+			try {
+				ArrayList<Restaurant> restaurants = restaurantService.getRestaurantsByName(req.params("name"));
+				return gson.toJson(restaurants);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
+		
+		get("/restaurants/getByType/:type", (req, res) -> {
+			res.type("application/json");
+			try {
+				ArrayList<Restaurant> restaurants = restaurantService.getRestaurantsByType(req.params("type"));
+				return gson.toJson(restaurants);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
+		
+		get("/restaurants/getByLocation/:location", (req, res) -> {
+			res.type("application/json");
+			try {
+				ArrayList<Restaurant> restaurants = restaurantService.getRestaurantsByLocation(req.params("location"));
+				return gson.toJson(restaurants);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
+		
+		get("/restaurants/getByRating/:rating", (req, res) -> {
+			res.type("application/json");
+			try {
+				ArrayList<Restaurant> restaurants = restaurantService.getRestaurantsByRating(req.params("rating"));
+				return gson.toJson(restaurants);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
 	}
 	
 }
