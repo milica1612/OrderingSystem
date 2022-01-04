@@ -87,6 +87,16 @@ public class RestaurantController {
 			}
 		});
 		
+		get("/restaurantPage/:name", (req, res) -> {
+			res.type("application/json");
+			try {
+				return gson.toJson(restaurantService.getRestaurant(req.params("name")));
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
+		
 		get("/restaurants/getByType/:type", (req, res) -> {
 			res.type("application/json");
 			try {

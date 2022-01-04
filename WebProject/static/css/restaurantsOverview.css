@@ -3,7 +3,15 @@
 
 #restaurant_view {
     background-color: white;
+ 	border-radius: 25px;  
 	width: 50%;
+	text-align: center;
+}
+
+#restaurant_info{
+    background-color: white;
+ 	border-radius: 25px;  
+	width: 100%;
 	text-align: center;
 }
 
@@ -23,4 +31,5 @@
 #restaurant_logo{
 	width: 160px;
     height: 160px;
+ 	border-radius: 35px;  
 }
