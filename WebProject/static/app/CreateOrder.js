@@ -18,7 +18,7 @@ Vue.component("createOrder", {
 	},
 	methods: {
 		viewRestaurant : function (restaurant) {
-			window.location.href = "#/restaurant?id=" + restaurant.name;
+		window.location.href = "#/restaurantPage?name=" + restaurant.name;
 		},
 		searchByName(){
 			if(this.searchParam == ""){
@@ -102,7 +102,7 @@ Vue.component("createOrder", {
 		</div>
 		<br>
       				<div class="container" id="restaurant_view" v-for="r in restaurants" :key="r.name" v-on:click="viewRestaurant(r)">
-						<img v-bind:src= "r.logo" alt="" id="restaurant_logo" class="rounded float-start">
+						<img v-bind:src= "r.logo" alt="" id="restaurant_logo" class="rounded float-start" style="margin-top: 20px">
        					<label class="restaurant_name">{{r.name}}</label></br>
 			        	<label class="restaurant_data">{{r.type}}</label></br> 
 						<label class="restaurant_data">{{r.location.address.street}} {{r.location.address.streetNumber}}</label></br>

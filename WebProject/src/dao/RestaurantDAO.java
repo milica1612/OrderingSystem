@@ -9,10 +9,12 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import beans.Customer;
 import beans.Restaurant;
+import beans.User;
 
 public class RestaurantDAO {
 	private String file;
@@ -51,5 +53,17 @@ public class RestaurantDAO {
 		restaurants.add(newRestaurant);
 		saveAll(restaurants);
 		return newRestaurant;
+	}
+
+	public Restaurant getRestaurant(String name) throws JsonSyntaxException, IOException {
+		ArrayList<Restaurant> restaurants = getAll();
+		if(restaurants != null) {
+			for (Restaurant restaurant: restaurants) {
+				if(restaurant.getName().equals(name)) {
+					return restaurant;
+				}
+			}
+		}
+		return null;
 	}
 }
