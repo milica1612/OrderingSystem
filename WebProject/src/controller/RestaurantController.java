@@ -176,6 +176,17 @@ public class RestaurantController {
 			}
 		});
 		
+		get("/restaurants/getTypes", (req, res) -> {
+			res.type("application/json");
+			try {
+				ArrayList<String> types = restaurantService.getRestaurantTypes();
+				return gson.toJson(types);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
+		
 		put("/restaurants/filtrate/type/:filter", (req,res) -> {
 			res.type("application/json");
 			try {

@@ -145,5 +145,16 @@ public class RestaurantService {
 		return newItem;
 	}
 	
+	public ArrayList<String> getRestaurantTypes() {
+		ArrayList<Restaurant> restaurants = getAll();
+		ArrayList<String> types = new ArrayList<String>();
+		for (Restaurant restaurant : restaurants) {
+			if(!types.contains(restaurant.getType())){
+				types.add(restaurant.getType());
+			}
+		}
+		return types;
+	}
+	
 	
 }

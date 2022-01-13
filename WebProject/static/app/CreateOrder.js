@@ -4,7 +4,9 @@ Vue.component("createOrder", {
         return {
 			restaurants: [],
 			restaurant: null,
-			searchParam: ""
+			searchParam: "",
+			types: [],
+			filter: ""
         }
     },
 	mounted () {
@@ -15,6 +17,11 @@ Vue.component("createOrder", {
 				    console.log(this.restaurants);
 			 }
 		   })
+			axios.get('/restaurants/getTypes').then(
+				response =>{
+					this.types = response.data
+				}
+			).catch()
 	},
 	methods: {
 		viewRestaurant : function (restaurant) {
@@ -32,6 +39,26 @@ Vue.component("createOrder", {
 			}
 			else{
 				axios.get('restaurants/getByName/' + this.searchParam).then(response => {
+					this.restaurants = response.data
+					console.log(response)
+
+				}).catch(err => {
+					console.log(err)
+				});
+			}
+		},
+		searchByType(){
+			if(this.searchParam == ""){
+				axios.get('/restaurants/getAll')
+					.then(response => {
+						if (response.data != null) {
+							this.restaurants = response.data
+							console.log(this.users);
+						}
+					})
+			}
+			else{
+				axios.get('restaurants/getByType/' + this.searchParam).then(response => {
 					this.restaurants = response.data
 					console.log(response)
 
@@ -83,6 +110,22 @@ Vue.component("createOrder", {
 				alert("Please enter a number between 1 and 5!")
 			}
 		},
+		filtrateOpen(){
+			axios.put('/restaurants/filtrate/open', JSON.stringify(this.restaurants)).then(response => {
+				this.restaurants = response.data
+				console.log(response)
+			})
+		},
+		filtrateByType(filter){
+			axios.put('/restaurants/filtrate/type/' + filter, JSON.stringify(this.restaurants)
+			).then(response => {
+				this.restaurants = response.data
+				console.log(response)
+
+			}).catch(err => {
+				console.log(err)
+			});
+		}
 	},
 	computed:{},
 	template: `
@@ -94,9 +137,26 @@ Vue.component("createOrder", {
 			<table>
 			<tr>
 			<td><input type="search"  placeholder="Search..." v-model="searchParam"></td>
-			<td><button class="btn_search" type="button" v-on:click="searchByName">Search By Name</button></td>
-			<td><button class="btn_search" type="button" v-on:click="searchByLocation">Search By Location</button></td>
-			<td><button class="btn_search" type="button" v-on:click="searchByRating">Search By Rating</button></td>
+			<td><button class="btn_search_res" type="button" v-on:click="searchByName">Search By Name</button></td>
+			<td><button class="btn_search_res" type="button" v-on:click="searchByType">Search By Type</button></td>
+			<td><button class="btn_search_res" type="button" v-on:click="searchByLocation">Search By Location</button></td>
+			<td><button class="btn_search_res" type="button" v-on:click="searchByRating">Search By Rating</button></td>
+			</tr>
+			<tr>
+			<td colspan="2"><label>Filtrate</label></td>
+			<td></td>
+			<td colspan="2"><label>Filtrate By Type</label></td>
+			<tr>
+			<td colspan="2">
+			<button class="btn_filtrate" type="button" v-on:click="filtrateOpen">Open restaurants</button>
+			</td>
+			<td></td>
+			<td colspan="2">
+			<select  class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="filter"
+			 @change="filtrateByType(filter)">
+                     <option v-for="type in types" :value="type">{{type}}</option>
+			</select>	
+			</td>
 			</tr>
 			</table>
 		</div>
