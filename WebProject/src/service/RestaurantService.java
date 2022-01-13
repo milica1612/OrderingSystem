@@ -118,6 +118,17 @@ public class RestaurantService {
 	public Restaurant getRestaurant(String name) throws JsonSyntaxException, IOException {
 		return restaurantDAO.getRestaurant(name);
 	}
+
+	public ArrayList<String> getRestaurantTypes() {
+		ArrayList<Restaurant> restaurants = getAll();
+		ArrayList<String> types = new ArrayList<String>();
+		for (Restaurant restaurant : restaurants) {
+			if(!types.contains(restaurant.getType())){
+				types.add(restaurant.getType());
+			}
+		}
+		return types;
+	}
 	
 	
 }
