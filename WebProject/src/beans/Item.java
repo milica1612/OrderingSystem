@@ -5,7 +5,6 @@ public class Item {
 	private String name;
 	private Double price;
 	private ItemType type;
-	private Restaurant restaurant;
 	private String quantity;
 	private String description;
 	private String photo;
@@ -14,13 +13,12 @@ public class Item {
 		
 	}
 	
-	public Item(String name, Double price, ItemType type, Restaurant restaurant, String quantity, String description,
+	public Item(String name, Double price, ItemType type, String quantity, String description,
 			String photo) {
 		super();
 		this.name = name;
 		this.price = price;
 		this.type = type;
-		this.restaurant = restaurant;
 		this.quantity = quantity;
 		this.description = description;
 		this.photo = photo;
@@ -48,14 +46,6 @@ public class Item {
 
 	public void setType(ItemType type) {
 		this.type = type;
-	}
-
-	public Restaurant getRestaurant() {
-		return restaurant;
-	}
-
-	public void setRestaurant(Restaurant restaurant) {
-		this.restaurant = restaurant;
 	}
 
 	public String getQuantity() {

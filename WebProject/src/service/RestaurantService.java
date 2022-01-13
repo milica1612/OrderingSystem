@@ -1,11 +1,13 @@
 package service;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import com.google.gson.JsonSyntaxException;
 
 import beans.Customer;
+import beans.Item;
 import beans.Restaurant;
 import dao.RestaurantDAO;
 
@@ -117,6 +119,30 @@ public class RestaurantService {
 
 	public Restaurant getRestaurant(String name) throws JsonSyntaxException, IOException {
 		return restaurantDAO.getRestaurant(name);
+	}
+
+	public Item addNewItem(String restaurantName, Item newItem) throws FileNotFoundException, IOException {
+		String filePath = "images/items/" + newItem.getName() + restaurantName + ".jpg";
+		System.out.println(filePath);
+		imageService.Base64DecodeAndSave(newItem.getPhoto(), filePath);
+		newItem.setPhoto(filePath);
+		ArrayList<Restaurant> restaurants = getAll();
+		for(Restaurant restaurant : restaurants) {
+			if(restaurant.getName().equals(restaurantName)) {
+				ArrayList<Item> items = restaurant.getItems();	
+				if(items != null) {
+					for(Item item: items) {
+						if(!item.getName().equals(newItem.getName())) {
+							items.add(newItem);
+						}
+					}
+				}
+		restaurant.setItems(items);
+			}
+		}
+		
+		restaurantDAO.saveAll(restaurants);
+		return newItem;
 	}
 	
 	

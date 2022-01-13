@@ -8,8 +8,11 @@ Vue.component("restaurantPage", {
 	mounted () {
 		axios.get('/restaurantPage/' + this.$route.query.name)
           .then(response => {
-				 	this.restaurant = response.data 
-					console.log(this.restaurant);
+				 	this.restaurant = response.data
+					let name = this.restaurant.name 
+					localStorage.setItem("restaurant", name)
+					console.log(name);
+					
 		   })
 	},
 	methods: {

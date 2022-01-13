@@ -15,17 +15,33 @@ Vue.component("newItem", {
 		
 	},
 	methods: {
+        create(){
+            let params = {
+                name: this.name,
+				price: this.price,
+                type: this.type,
+				photo: this.photo,
+				description: this.description,
+				quantity: this.quantity
+            }
+            axios.post('/restaurantPage/addNewItem/' + localStorage.getItem("restaurant"), JSON.stringify(params)).then(
+                response => {
+                    console.log(response)
+                   	window.location.href = "#/restaurantPage?name=" + localStorage.getItem("restaurant");
+                }
+            ) 
+        },
 		setFiles: function(event){
             const file = event.target.files[0];
             this.createBase64Image(file);
-            this.logo = URL.createObjectURL(file);
+            this.photo = URL.createObjectURL(file);
         },
         createBase64Image(file){
             const reader= new FileReader();
 
             reader.onload = (e) =>{
                 let img = e.target.result;
-                this.logo = img;
+                this.photo = img;
             }
             reader.readAsDataURL(file);
         }

@@ -13,6 +13,7 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import beans.Customer;
+import beans.Item;
 import beans.Restaurant;
 import beans.User;
 
