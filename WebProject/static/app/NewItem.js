@@ -8,7 +8,8 @@ Vue.component("newItem", {
 			photo:"",
 			description: "",
 			quantity: "",
-			img_name: ""
+			img_name: "",
+			not_filled: false
         }
     },
 	mounted () {
@@ -16,20 +17,22 @@ Vue.component("newItem", {
 	},
 	methods: {
         create(){
-            let params = {
-                name: this.name,
-				price: this.price,
-                type: this.type,
-				photo: this.photo,
-				description: this.description,
-				quantity: this.quantity
-            }
-            axios.post('/restaurantPage/addNewItem/' + localStorage.getItem("restaurant"), JSON.stringify(params)).then(
-                response => {
-                    console.log(response)
-                   	window.location.href = "#/restaurantPage?name=" + localStorage.getItem("restaurant");
-                }
-            ) 
+				if(this.name != "" && this.price != 0.0 && this.type != "" && this.photo != ""){
+		        let params = {
+	                name: this.name,
+					price: this.price,
+	                type: this.type,
+					photo: this.photo,
+					description: this.description,
+					quantity: this.quantity
+	            }
+	            axios.post('/restaurantPage/addNewItem/' + localStorage.getItem("restaurant"), JSON.stringify(params)).then(
+	                response => {
+	                    console.log(response)
+	                   	window.location.href = "#/restaurantPage?name=" + localStorage.getItem("restaurant");
+	                }
+	            ) 
+			}
         },
 		setFiles: function(event){
             const file = event.target.files[0];
@@ -47,7 +50,16 @@ Vue.component("newItem", {
         }
 		
 	},
-	computed:{},
+	computed:{
+		notFilled(){
+          if(this.name == "" || this.price == 0.0 || this.type == "" || this.photo == ""){
+		             this.not_filled = true
+                return true
+            }
+            this.not_filled = false
+            return false
+        },
+	},
 	template: `
 	<div class="reg">
 		<p id="title" class="text-center">NEW ITEM</p>
@@ -79,6 +91,10 @@ Vue.component("newItem", {
 				  <label>Quantity</label>
 				  <input type="text" class="form-control" v-model="quantity">
 				</div>
+				<div class="text-center" id="err_div">
+				    <p class="error" v-if="notFilled">Name, type, price and photo field should be filled!</p>
+					<p class="error" v-else></p>
+			    </div>
                 <div class="d-grid gap-2 col-6 mx-auto"">
                     <button id="btn" class="btn btn-warning" type="button" @click="create" :key="button_text">CREATE</button>
                 </div>

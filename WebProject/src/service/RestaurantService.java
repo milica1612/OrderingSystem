@@ -132,10 +132,14 @@ public class RestaurantService {
 				ArrayList<Item> items = restaurant.getItems();	
 				if(items != null) {
 					for(Item item: items) {
-						if(!item.getName().equals(newItem.getName())) {
-							items.add(newItem);
+						if(item.getName().equals(newItem.getName())) {
+							return null;
 						}
 					}
+					items.add(newItem);
+				}else {
+					items = new ArrayList<Item>();
+					items.add(newItem);
 				}
 		restaurant.setItems(items);
 			}

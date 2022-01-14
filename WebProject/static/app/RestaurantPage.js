@@ -33,9 +33,18 @@ Vue.component("restaurantPage", {
 			<label class="restaurant_data">{{restaurant.location.address.street}} {{restaurant.location.address.streetNumber}}</label></br>
 			<label class="restaurant_data">{{restaurant.location.address.city}} {{restaurant.location.address.zipcode}}</label></br>  
 			<label class="restaurant_data">{{restaurant.rating}} &#10027;</label></br>
+		</div> </br>
+		<div class="container" id="restaurant_items">
+			<div class="row">
+				<div class="col-2" v-for="item in restaurant.items" :key="item.name">
+				<img v-bind:src= "item.photo" alt="" id="restaurant_logo" class="rounded float-start" style="margin-top: 5px"></br>
+				<label  class="restaurant_name">{{item.name}}</label></br>
+				<label  class="restaurant_name">{{item.price}} din.</label></br>
+				<label  class="restaurant_name">{{item.description}}</label>
+				</div>
+			</div>
+			</div>
 		</div>
-			
-
 	</div>
 	`});
  

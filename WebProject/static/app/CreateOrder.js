@@ -161,17 +161,17 @@ Vue.component("createOrder", {
 			</table>
 		</div>
 		<br>
-      				<div class="container" id="restaurant_view" v-for="r in restaurants" :key="r.name" v-on:click="viewRestaurant(r)">
-						<img v-bind:src= "r.logo" alt="" id="restaurant_logo" class="rounded float-start" style="margin-top: 20px">
-       					<label class="restaurant_name">{{r.name}}</label></br>
-			        	<label class="restaurant_data">{{r.type}}</label></br> 
-						<label class="restaurant_data">{{r.location.address.street}} {{r.location.address.streetNumber}}</label></br>
-						<label class="restaurant_data">{{r.location.address.city}} {{r.location.address.zipcode}}</label></br>  
-						<label class="restaurant_data">{{r.rating}}  &#10027;</label></br>
-						<label class="restaurant_data" v-if="r.isOpen == true">OPEN</label>
-						<label class="restaurant_data" v-else>CLOSE</label>
-						<hr style="height:10px">
-			        </div>
+		<div class="container" id="restaurant_view" v-for="r in restaurants" :key="r.name" v-on:click="viewRestaurant(r)">
+			<img v-bind:src= "r.logo" alt="" id="restaurant_logo" class="rounded float-start" style="margin-top: 20px">
+			<label class="restaurant_name">{{r.name}}</label></br>
+        	<label class="restaurant_data">{{r.type}}</label></br> 
+			<label class="restaurant_data">{{r.location.address.street}} {{r.location.address.streetNumber}}</label></br>
+			<label class="restaurant_data">{{r.location.address.city}} {{r.location.address.zipcode}}</label></br>  
+			<label class="restaurant_data">{{r.rating}}  &#10027;</label></br>
+			<label class="restaurant_data" v-if="r.isOpen == true">OPEN</label>
+			<label class="restaurant_data" v-else>CLOSE</label>
+			<hr style="height:10px">
+        </div>
 	</div>
 	`});
   

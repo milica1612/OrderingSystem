@@ -15,6 +15,12 @@
 	text-align: center;
 }
 
+#restaurant_items{
+    background-color: white;
+ 	border-radius: 25px; 
+	text-align: center; 
+}
+
 .restaurant_name{
 	font-size: 22px;
 	font-family: 'Times New Roman', Times, serif;
