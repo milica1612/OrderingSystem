@@ -6,7 +6,14 @@ Vue.component("createOrder", {
 			restaurant: null,
 			searchParam: "",
 			types: [],
-			filter: ""
+			filter: "",
+			btn_txt_name: "Sort By Name",
+			btn_txt_loc: "Sort By Loaction",
+			btn_txt_rate: "Sort By Rating",
+			sort: {
+				key: '',
+				isAsc: false
+			},
         }
     },
 	mounted () {
@@ -22,6 +29,8 @@ Vue.component("createOrder", {
 					this.types = response.data
 				}
 			).catch()
+	},
+	computed: {
 	},
 	methods: {
 		viewRestaurant : function (restaurant) {
@@ -125,6 +134,36 @@ Vue.component("createOrder", {
 			}).catch(err => {
 				console.log(err)
 			});
+		},
+		sortedClass (key) {
+			return this.sort.key === key ? `sorted ${this.sort.isAsc ? 'asc' : 'desc' }` : '';
+		},
+		sortBy (key) {
+			this.sort.isAsc = this.sort.key === key ? !this.sort.isAsc : false;
+			this.sort.key = key;
+			this.sortedItems()
+		},
+		sortedItems () {
+			const list = this.restaurants.slice();
+			console.log(list);
+			if (this.sort.key !="") {
+				list.sort((a, b) => {
+					a = a[this.sort.key]
+					b = b[this.sort.key]
+					return (a === b ? 0 : a > b ? 1 : -1) * (this.sort.isAsc ? 1 : -1)
+				});
+			}
+			this.restaurants = list
+			if (this.sort.isAsc){
+			this.btn_txt_name = "Sort By Name desc"
+				this.btn_txt_loc = "Sort By Location desc"
+				this.btn_txt_rate = "Sort By Rating desc"
+			}else{
+				this.btn_txt_name = "Sort By Name asc"
+				this.btn_txt_loc = "Sort By Location asc"
+				this.btn_txt_rate = "Sort By Rating asc"
+			}
+			this.$forceUpdate()
 		}
 	},
 	computed:{},
@@ -156,6 +195,19 @@ Vue.component("createOrder", {
 			 @change="filtrateByType(filter)">
                      <option v-for="type in types" :value="type">{{type}}</option>
 			</select>	
+			</td>
+			</tr>
+			</table>
+			<table>
+			<tr>
+			<td>
+				<button class="btn_sort" type="button" :class="sortedClass('name')" @click="sortBy('name')">{{this.btn_txt_name}}</button>
+			</td>
+			<td>
+				<button class="btn_sort" type="button" :class="sortedClass('location')" @click="sortBy('name')">{{this.btn_txt_loc}}</button>
+			</td>
+			<td>
+				<button class="btn_sort" type="button" :class="sortedClass('rating')" @click="sortBy('name')">{{this.btn_txt_rate}}</button>
 			</td>
 			</tr>
 			</table>

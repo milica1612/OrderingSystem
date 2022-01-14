@@ -54,3 +54,12 @@
 	font-weight: bold;
 	border: 2px solid lightcoral;
 }
+
+.btn_sort{
+	background-color: lightcoral;
+	font-size: 12px;
+	font-family: 'Times New Roman', Times, serif;
+	font-weight: bold;
+	border: 2px solid lightcoral;
+	width: 200px;
+}
