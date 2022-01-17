@@ -214,6 +214,20 @@ public class RestaurantController {
 			}
 			
 		});
-	}
 	
+	get("/restaurants/:name", (req, res) -> {
+		res.type("application/json");
+		try {
+			Restaurant restaurant = restaurantService.getByName(req.params("name"));
+			if(restaurant == null) {
+				return "";
+			}else {
+				return gson.toJson(restaurant);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+	});
+	}
 }

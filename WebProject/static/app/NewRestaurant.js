@@ -10,10 +10,12 @@ Vue.component("newRestaurant", {
             longitude: "",
             latitude: "",
             logo: "",
-            manager: {},
+            manager: null,
             managers: null,
             button_text: "",
-            img_name: ""
+            img_name: "",
+            taken: "",
+            not_filled: false
         }
     },
     methods:{
@@ -71,7 +73,7 @@ Vue.component("newRestaurant", {
         axios.get('/managers/getAllAvailable').then(
             response =>{
                 this.managers = response.data
-                if(this.managers == null){
+                if(this.managers.length == 0){
                     this.button_text = "CREATE AND REGISTER NEW MANAGER"
                 }else{
                     this.button_text = "CREATE"
@@ -86,6 +88,48 @@ Vue.component("newRestaurant", {
                 return false
             }
             return true
+        },
+        isNameTaken() {
+            axios.get('restaurants/' + this.name).then(response => {
+                this.taken = response.data
+                console.log(response)
+
+            }).catch(err => {
+                console.log(err)
+            });
+            if(this.taken == ""){
+                return false
+            }
+            return true
+
+        },
+        notFilled(){
+            if(this.managers.length == 0) {
+                if (this.name == "" || this.restaurant_type == "" || this.city == "" || this.street == "" ||
+                    this.street_number == "" || this.zipcode == "" || this.longitude == "" || this.latitude == ""
+                    || this.logo == "") {
+                    this.not_filled = true
+                    return true
+                }else{
+                    this.not_filled = false
+                    return false
+                }
+            }else {
+                if(this.manager == null){
+                    this.not_filled = true
+                    return true
+                }else{
+                    this.not_filled = false
+                    return false
+                }
+            }
+            }
+        ,
+        notOK(){
+            if(this.not_filled == true || this.isNameTaken() == true){
+                return true
+            }
+            return false
         }
     },
     template: `
@@ -127,13 +171,12 @@ Vue.component("newRestaurant", {
 				 </div>
 				
 				<div class="text-center" id="err_div">
-				    <p class="error" v-if="passwordsNotSame">Password and confirm password should match!</p>
 				    <p class="error" v-if="notFilled">All fields should be filled!</p>
-				    <p class="error" v-if="isUsernameTaken">Username already taken!</p>
+				    <p class="error" v-if="isNameTaken">Name already taken!</p>
 			    </div>
 				</div>
                 <div class="d-grid gap-2 col-6 mx-auto"">
-                    <button id="btn" class="btn btn-warning" type="button" @click="create" :key="button_text">{{this.button_text}}</button>
+                    <button id="btn" class="btn btn-warning" type="button" @click="create" :disabled="notOK" :key="button_text">{{this.button_text}}</button>
                 </div>
 		</div>
 	</div>
