@@ -77,4 +77,17 @@ private ManagerDAO managerDAO;
 		
 	}
 
+	public User changePassword(User logged, String newPassword) throws IOException {
+		ArrayList<Manager> all = getAll();
+		User userFound = null;
+		for (User user : all) {
+			if(user.getUsername().equals(logged.getUsername())) {
+				user.setPassword(newPassword);
+				userFound = user;
+			}
+		}
+		managerDAO.saveAll(all);
+		return userFound;
+	}
+
 }

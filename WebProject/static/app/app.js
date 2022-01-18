@@ -8,6 +8,7 @@ const CreateOrder = {template: '<createOrder></createOrder>' }
 const ManagerRegistration = {template: '<managerRegistration></managerRegistration>'}
 const RestaurantPage = {template: '<restaurantPage></restaurantPage>'}
 const NewItem = {template: '<newItem></newItem>' }
+const ChangePassword = {template: '<changePassword></changePassword>' }
 
 const router = new VueRouter({
 	  mode: 'hash',
@@ -21,7 +22,8 @@ const router = new VueRouter({
 		{ path: '/createOrder', component: CreateOrder },
 		{ path: '/managerRegistration', component: ManagerRegistration },
 		{ path: '/restaurantPage', component: RestaurantPage },
-		{ path: '/newItem', component: NewItem }
+		{ path: '/newItem', component: NewItem },
+		{ path: '/changePassword', component: ChangePassword },
 	]
 });
 
