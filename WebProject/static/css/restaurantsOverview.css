@@ -27,6 +27,12 @@
 	font-weight: bold;
 }
 
+.restaurant_modal_item{
+	font-size: 18px;
+	font-family: 'Times New Roman', Times, serif;
+	font-weight: bold;
+}
+
 .restaurant_data{
 	font-size: 18px;
 	font-family: 'Times New Roman', Times, serif;
@@ -40,11 +46,13 @@
  	border-radius: 35px;  
 }
 
+
 .btn_manager{
 	width: 180px;	
 	border-radius: 25px;  
-	 background-color: rgb(255, 128, 128);
+	background-color: rgb(255, 128, 128);
 }
+
 .btn_filtrate{
 	background-color: lightcoral;
 	font-size: 12px;
@@ -53,6 +61,7 @@
 	border: 2px solid lightcoral;
 	width: 300px;
 }
+
 .btn_search_res{
 	background-color: lightcoral;
 	font-size: 12px;
@@ -69,3 +78,25 @@
 	border: 2px solid lightcoral;
 	width: 200px;
 }
+
+.btn_modal{
+	background-color: lightcoral;
+	font-size: 12px;
+	font-family: 'Times New Roman', Times, serif;
+	font-weight: bold;
+	border: 2px solid lightcoral;
+	width: 150px;
+}
+
+.modal {
+	background: none;
+    display: block;
+  	left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom:0;
+z-index: 40;
+   
+}
+
