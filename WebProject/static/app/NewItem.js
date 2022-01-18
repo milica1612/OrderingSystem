@@ -8,7 +8,8 @@ Vue.component("newItem", {
 			photo:"",
 			description: "",
 			quantity: "",
-			not_filled: false
+			not_filled: false,
+			img_name: "",
         }
     },
 	mounted () {

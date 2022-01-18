@@ -125,6 +125,25 @@ public class RestaurantController {
 			
 		});
 		
+		put("/restaurantPage/editItem/:name/:itemName", (req, res) -> {
+			res.type("application/json");
+			
+			try {
+			Item item = gson.fromJson(req.body(), Item.class);
+			String restaurantName = req.params("name");	
+			String oldName = req.params("itemName");
+			System.out.println(restaurantName);
+			Item edited = restaurantService.editItem(restaurantName, oldName, item);
+
+			return gson.toJson(edited);
+			
+			} catch(Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		
+		});
+		
 		post("/restaurantPage/addNewItem/:name", (req, res) -> {
 			res.type("application/json");
 			

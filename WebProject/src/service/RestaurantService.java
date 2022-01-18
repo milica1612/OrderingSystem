@@ -149,6 +149,42 @@ public class RestaurantService {
 		return newItem;
 	}
 	
+	public Item editItem(String restaurantName, String oldName, Item editedItem) throws FileNotFoundException, IOException {
+		if(editedItem.getPhoto() != null) {
+			String filePath = "images/items/" + editedItem.getName() + restaurantName + ".jpg";
+			System.out.println(filePath);
+			imageService.Base64DecodeAndSave(editedItem.getPhoto(), filePath);
+			editedItem.setPhoto(filePath);
+		}
+		ArrayList<Restaurant> restaurants = getAll();
+		for(Restaurant restaurant : restaurants) {
+			if(restaurant.getName().equals(restaurantName)) {
+				ArrayList<Item> items = restaurant.getItems();	
+				if(items != null) {
+					for(Item item: items) {
+						if(item.getName().equals(oldName)) {
+							item.setName(editedItem.getName());
+							item.setDescription(editedItem.getDescription());
+							if(editedItem.getPhoto() != null) {
+								item.setPhoto(editedItem.getPhoto());
+							}
+							item.setPrice(editedItem.getPrice());
+							item.setQuantity(editedItem.getQuantity());
+							item.setType(editedItem.getType());
+						}
+					}
+				}else {
+					return null;
+				}
+		restaurant.setItems(items);
+			}
+		}
+		
+		restaurantDAO.saveAll(restaurants);
+		return editedItem;
+	}
+	
+	
 	public ArrayList<String> getRestaurantTypes() {
 		ArrayList<Restaurant> restaurants = getAll();
 		ArrayList<String> types = new ArrayList<String>();
@@ -159,6 +195,5 @@ public class RestaurantService {
 		}
 		return types;
 	}
-	
 	
 }

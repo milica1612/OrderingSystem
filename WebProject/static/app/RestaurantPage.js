@@ -10,7 +10,9 @@ Vue.component("restaurantPage", {
 				quantity: "",
 				photo:"",
 				type: "",
-				not_filled: false
+				not_filled: false,
+				oldName: "",
+				img_name: ""
 			}
         }
     },
@@ -26,7 +28,8 @@ Vue.component("restaurantPage", {
 	},
 	methods: {
 		setItem(itm){
-			this.current_item = itm
+			this.current_item = itm,
+			this.oldName = itm.name
 		},
 		setFiles: function(event){
             const file = event.target.files[0];
@@ -41,14 +44,34 @@ Vue.component("restaurantPage", {
                 this.photo = img;
             }
             reader.readAsDataURL(file);
-        }
+        },
+		save(){
+			if(this.current_item.name != "" && this.current_item.price != 0.0 && this.current_item.type != ""){
+		            let params = {
+						name: this.current_item.name,
+						price: this.current_item.price,
+						description: this.current_item.description,
+						quantity: this.current_item.quantity,
+						photo: this.photo,
+						type: this.current_item.type,				
+					}
+					axios.put('/restaurantPage/editItem/' + localStorage.getItem("restaurant") + '/' 
+								+ this.oldName, JSON.stringify(params))
+						.then(response => {
+							 console.log(response);
+            }).catch(err => {
+                    console.log(err);
+                });
+            }
+			
+		}
 	},
 	computed:{
 		notFilled(){
           if(this.name == "" || this.price == 0.0 || this.type == "" || this.photo == ""){
 		             this.not_filled = true
                 return true
-            }
+           }
             this.not_filled = false
             return false
         },
@@ -117,17 +140,18 @@ Vue.component("restaurantPage", {
   										</div>
 										<label class="col-sm-3 col-form-label">Photo</label>
 											<img v-bind:src= "current_item.photo" alt="" id="restaurant_logo" class="rounded float-start" style="width: 60px; height: 60px"></br>
-				  							<input type="file" class="form-control" accept="image/*" @change="setFiles" v-model="current_item.photo">
+				  							<input type="file" class="form-control" accept="image/*" @change="setFiles" v-model="img_name">
 										</div>
 										<div class="text-center" id="err_div">
 										    <p class="error" v-if="notFilled">Name, type, price and photo field should be filled!</p>
 											<p class="error" v-else></p>
 									    </div>
+									<div class="modal-footer">
+                						<button type="button" class="btn_modal" data-bs-dismiss="modal">Close</button>
+                						<button type="submit" class="btn_modal" @click="save" :key="button_text">Save changes</button>
+              						</div>
               					</div>
-              					<div class="modal-footer">
-                					<button type="button" class="btn_modal" data-bs-dismiss="modal">Close</button>
-                					<button type="button" class="btn_modal">Save changes</button>
-              					</div>
+              					
             				</div>
           				</div>
 					</div>
