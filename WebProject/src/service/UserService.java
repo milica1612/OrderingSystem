@@ -97,5 +97,19 @@ public class UserService {
 		
 		return result;
 	}
+
+	public User changePassword(User logged, String newPassword) throws IOException {
+		ArrayList<User> all = getAllUsers();
+		User userFound = null;
+		for (User user : all) {
+			if(user.getUsername().equals(logged.getUsername())) {
+				user.setPassword(newPassword);
+				userFound = user;
+			}
+		}
+		userDAO.saveAll(all);
+		return userFound;
+		
+	}
 	
 }

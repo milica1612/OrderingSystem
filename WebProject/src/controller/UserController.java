@@ -205,6 +205,34 @@ public class UserController {
 			}
 			return true;
 		});
+		
+		put("/users/changePassword", (req,res) -> {
+			res.type("application/json");
+			
+			try {
+				Session session = req.session(true);
+				User logged = session.attribute("logged");
+				System.out.println(logged.getUsername());
+				String newPassword = gson.fromJson(req.body(), String.class);
+				User newUser = userService.changePassword(logged, newPassword);	
+				if(newUser == null) {
+					newUser = managerService.changePassword(logged, newPassword);
+				}
+				if(newUser == null) {
+					newUser = customerService.changePassword(logged, newPassword);
+				}
+				if(newUser == null) {
+					newUser = delivererService.changePassword(logged, newPassword);
+				}
+				session.attribute("logged", newUser);
+				return gson.toJson(newUser);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
+		
 	}
 	
 	
