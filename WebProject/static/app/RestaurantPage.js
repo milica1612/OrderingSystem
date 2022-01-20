@@ -103,6 +103,10 @@ Vue.component("restaurantPage", {
 			       		Edit Item
 					</button>
 					
+					<button type="button" class="btn_search_res" data-bs-toggle="modal" data-bs-target="#modal2" v-on:click="setItem(item)">
+			       		Order Item
+					</button>
+					
         			<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true">
           				<div class="modal-dialog" id="modal_content">
             				<div class="modal-content">
@@ -117,7 +121,7 @@ Vue.component("restaurantPage", {
 										<div class="mb-3 row">
 											<label  class="col-sm-3 col-form-label">Price</label></br>
 											<div class="col-sm-9" style="margin-top: -6px">
-												<input type="text" class="form control-plaintext" v-model="current_item.price">
+												<input type="number" class="form control-plaintext" v-model="current_item.price" min="1">
 											</div>
   										</div>
 										<div class="mb-3 row">
@@ -150,6 +154,31 @@ Vue.component("restaurantPage", {
                 						<button type="button" class="btn_modal" data-bs-dismiss="modal">Close</button>
                 						<button type="submit" class="btn_modal" @click="save" :key="button_text">Save changes</button>
               						</div>
+              					</div>
+              					
+            				</div>
+          				</div>
+
+					<div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true">
+          				<div class="modal-dialog" id="modal_content">
+            				<div class="modal-content">
+                					<button type="button" style="margin-left: 430px" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              						<div class="modal-body">
+ 										<img v-bind:src= "item.photo" alt="" id="restaurant_logo" class="rounded float-start" style="margin-top: 5px"></br>
+										<label  class="restaurant_name">{{current_item.name}}</label></br>
+										<label  class="restaurant_name">{{current_item.price}} din.</label></br>
+										<label  class="restaurant_name">{{current_item.description}}</label></br>
+										
+										<div class="mb-3 row">
+											<label  class="col-sm-3 col-form-label">Quantity: </label></br>
+											<div class="col-sm-9" style="margin-top: -6px">
+												<input type="number" class="form control-plaintext" min="1">
+											</div>
+  										</div>
+										<div class="modal-footer">
+	                						<button type="button" class="btn_modal" data-bs-dismiss="modal">Close</button>
+	                						<button type="submit" class="btn_modal"  :key="button_text">Add to card</button>
+	              						</div>
               					</div>
               					
             				</div>
