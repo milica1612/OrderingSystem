@@ -95,6 +95,12 @@ Vue.component("restaurantPage", {
 					}
 			}
 			return false
+		},
+		isCustomerLogged(){
+			if(localStorage.getItem('role') == 'CUSTOMER'){
+				return true
+			}
+			return false
 		}
 	},
 	template: `
@@ -120,11 +126,11 @@ Vue.component("restaurantPage", {
 					<label  class="restaurant_name">{{item.price}} din.</label></br>
 					<label  class="restaurant_name">{{item.description}}</label></br>
 					
-					<button type="button" class="btn_search_res" data-bs-toggle="modal" data-bs-target="#modal" v-on:click="setItem(item)">
+					<button type="button" class="btn_search_res" data-bs-toggle="modal" data-bs-target="#modal" v-on:click="setItem(item)" v-if="isManagerLogged">
 			       		Edit Item
 					</button>
 					
-					<button type="button" class="btn_search_res" data-bs-toggle="modal" data-bs-target="#modal2" v-on:click="setItem(item)">
+					<button type="button" class="btn_search_res" data-bs-toggle="modal" data-bs-target="#modal2" v-on:click="setItem(item)" v-if="isCustomerLogged">
 			       		Order Item
 					</button>
 					
