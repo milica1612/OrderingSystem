@@ -4,6 +4,7 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import com.google.gson.Gson;
 
+import beans.Cart;
 import beans.Item;
 import beans.User;
 import service.CartService;
@@ -47,6 +48,24 @@ public class CartController {
 				return null;
 			}
 			
+		});
+		
+		get("carts/getByCustomer", (req, res) -> {
+			res.type("application/json");
+			try {
+				Session session = req.session(true);
+				User logged = session.attribute("logged");
+				Cart cart = cartService.getItemsFromCart(logged.getUsername());
+				if(cart == null) {
+					return "";
+				}else {
+					return gson.toJson(cart);
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				return "";
+			}
 		});
 	}
 }

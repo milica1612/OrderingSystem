@@ -72,4 +72,16 @@ public class CartService {
 		cartDAO.saveAll(allCarts);
 		return item;
 	}
+
+	public Cart getItemsFromCart(String username) {
+		ArrayList<Cart> carts = getAll();
+		if(carts != null) {
+			for(Cart cart: carts) {
+				if(cart.getCustomer().equals(username)) {
+					return cart;
+				}
+			}
+		}
+		return null;
+	}
 }

@@ -86,7 +86,7 @@ Vue.component("restaurantPage", {
 						price: this.current_item.price,
 						description: this.current_item.description,
 						quantity: this.current_item.quantity,
-						photo: this.photo,
+						photo: this.current_item.photo,
 						type: this.current_item.type,				
 					}
 				axios.post('/carts/addItemToCart/' + this.quantityItem, JSON.stringify(params))
@@ -211,7 +211,7 @@ Vue.component("restaurantPage", {
             				<div class="modal-content">
                 					<button type="button" style="margin-left: 430px" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               						<div class="modal-body">
- 										<img v-bind:src= "item.photo" alt="" id="restaurant_logo" class="rounded float-start" style="margin-top: 5px"></br>
+ 										<img v-bind:src= "current_item.photo" alt="" id="restaurant_logo" class="rounded float-start" style="margin-top: 5px"></br>
 										<label  class="restaurant_name">{{current_item.name}}</label></br>
 										<label  class="restaurant_name">{{current_item.price}} din.</label></br>
 										<label  class="restaurant_name">{{current_item.description}}</label></br>
