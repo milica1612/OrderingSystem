@@ -2,19 +2,25 @@ Vue.component("restaurantPage", {
 
     data() {
         return {
-			restaurant : null,
+			restaurant: {
+				name: ""
+			},
+			manager_restaurant: {
+				name: ""
+			},
 			current_item: {
 				name: "",
 				price: 0.0,
 				description: "",
 				quantity: "",
-				photo:"",
+				photo: "",
 				type: "",
 				not_filled: false,
 				oldName: "",
-				img_name: ""
-			}
-        }
+				img_name: "",
+			},
+		}
+
     },
 	mounted () {
 		axios.get('/restaurantPage/' + this.$route.query.name)
@@ -25,6 +31,13 @@ Vue.component("restaurantPage", {
 					console.log(name);
 					
 		   })
+		if(localStorage.getItem("role") == 'MANAGER'){
+			axios.get('/managers/restaurant')
+				.then(response => {
+					this.manager_restaurant = response.data
+
+				})
+		}
 	},
 	methods: {
 		setItem(itm){
@@ -75,12 +88,20 @@ Vue.component("restaurantPage", {
             this.not_filled = false
             return false
         },
+		isManagerLogged(){
+			if(localStorage.getItem('role') == 'MANAGER'){
+					if (this.restaurant.name == this.manager_restaurant.name) {
+						return true
+					}
+			}
+			return false
+		}
 	},
 	template: `
 	<div class="reg">
 		<div class="container" id="restaurant_info">
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-			  <button class="btn_manager" type="button">Add new item</button>
+			  <button class="btn_manager" type="button" v-if="isManagerLogged">Add new item</button>
 			</div>
 			<img v-bind:src= "restaurant.logo" alt="" id="restaurant_logo" class="rounded float-start" style="margin-top: 5px">
 			<label  class="restaurant_name">{{restaurant.name}}</label></br>

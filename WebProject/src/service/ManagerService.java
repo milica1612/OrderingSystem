@@ -89,5 +89,16 @@ private ManagerDAO managerDAO;
 		managerDAO.saveAll(all);
 		return userFound;
 	}
+	public Restaurant getRestaurant(String manager) {
+		ArrayList<Manager> managers = getAll();
+		if(managers != null) {
+			for (Manager m : managers) {
+				if(m.getUsername().equals(manager)) {
+					return m.getRestaurant();
+				}
+			}
+		}
+		return null;
+	}
 
 }

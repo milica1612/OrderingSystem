@@ -113,6 +113,19 @@ public class ManagerController {
 				return null;
 			}
 		});
+		get("/managers/restaurant", (req,res) -> {
+			res.type("application/json");
+			try {
+			Session session = req.session(true);
+			User logged = session.attribute("logged");
+			Restaurant restaurant = managerService.getRestaurant(logged.getUsername());
+			
+			return gson.toJson(restaurant);
+			}catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
 		
 		put("/managers/restaurant/:name", (req,res) -> {
 			res.type("application/json");
@@ -130,6 +143,8 @@ public class ManagerController {
 				return null;
 			}
 		});
+		
+		
 		
 	}
 }
