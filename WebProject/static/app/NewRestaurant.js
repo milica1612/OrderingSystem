@@ -126,7 +126,7 @@ Vue.component("newRestaurant", {
             }
         ,
         notOK(){
-            if(this.not_filled == true || this.isNameTaken() == true){
+            if(this.not_filled == true || this.isNameTaken == true){
                 return true
             }
             return false
