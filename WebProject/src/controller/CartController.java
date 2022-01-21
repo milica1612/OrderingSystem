@@ -5,6 +5,7 @@ import static spark.Spark.post;
 import com.google.gson.Gson;
 
 import beans.Cart;
+import beans.CartItem;
 import beans.Item;
 import beans.User;
 import service.CartService;
@@ -43,6 +44,35 @@ public class CartController {
 				
 				return gson.toJson(cartService.addItemToCart(logged.getUsername(), item, quantity));
 				
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			
+		});
+		
+		post("/carts/removeItem", (req, res) -> {
+			res.type("application/json");
+			try {
+				Session session = req.session(true);
+				User logged = session.attribute("logged");
+				CartItem cartItem = gson.fromJson(req.body(), CartItem.class);	
+				return gson.toJson(cartService.removeItem(logged.getUsername(), cartItem));
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			
+		});
+		
+		post("/carts/editItemQuantity", (req, res) -> {
+			res.type("application/json");
+			try {
+				Session session = req.session(true);
+				User logged = session.attribute("logged");
+				CartItem cartItem = gson.fromJson(req.body(), CartItem.class);	
+				return gson.toJson(cartService.editItemQuantity(logged.getUsername(), cartItem));	
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
