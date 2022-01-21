@@ -5,7 +5,9 @@ Vue.component("createOrder", {
 			restaurants: [],
 			restaurant: null,
 			searchParam: "",
+			selected: {},
 			types: [],
+			user: {},
 			filter: "",
 			btn_txt_name: "Sort By Name",
 			btn_txt_loc: "Sort By Loaction",
@@ -14,6 +16,8 @@ Vue.component("createOrder", {
 				key: '',
 				isAsc: false
 			},
+			comment: "",
+			rate: ""
         }
     },
 	mounted () {
@@ -29,6 +33,10 @@ Vue.component("createOrder", {
 					this.types = response.data
 				}
 			).catch()
+		axios.get('/users/logged')
+			.then(response => {
+				this.user = response.data
+			})
 	},
 	computed: {
 	},
@@ -164,6 +172,20 @@ Vue.component("createOrder", {
 				this.btn_txt_rate = "Sort By Rating asc"
 			}
 			this.$forceUpdate()
+		},
+		commentAndRate(){
+			let params = {
+				rating: this.rating,
+				content: this.comment,
+				restaurant: this.selected
+			}
+			axios.post('/comments/commentAndRate', JSON.stringify(params))
+				.then(response => {
+				console.log(response)
+			})
+		},
+		setSelected(selected_res){
+			this.selected = selected_res
 		}
 	},
 	computed:{},
@@ -213,7 +235,8 @@ Vue.component("createOrder", {
 			</table>
 		</div>
 		<br>
-		<div class="container" id="restaurant_view" v-for="r in restaurants" :key="r.name" v-on:click="viewRestaurant(r)">
+		<div class="container" id="restaurant_view" v-for="r in restaurants" :key="r.name">
+		<div v-on:click="viewRestaurant(r)">
 			<img v-bind:src= "r.logo" alt="" id="restaurant_logo" class="rounded float-start" style="margin-top: 20px">
 			<label class="restaurant_name">{{r.name}}</label></br>
         	<label class="restaurant_data">{{r.type}}</label></br> 
@@ -222,8 +245,36 @@ Vue.component("createOrder", {
 			<label class="restaurant_data">{{r.rating}}  &#10027;</label></br>
 			<label class="restaurant_data" v-if="r.isOpen == true">OPEN</label>
 			<label class="restaurant_data" v-else>CLOSE</label>
+			<br>
+		</div>
+			<button class="btn_manager" type="button" data-bs-toggle="modal" data-bs-target="#modall" v-on:click="setSelected(r)">Comment and rate</button>
 			<hr style="height:10px">
         </div>
+        <div class="modal fade" id="modall" tabindex="-1" aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true">
+          				<div class="modal-dialog" id="modal_content">
+            				<div class="modal-content">
+                					<button type="button" style="margin-left: 430px" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              						<div class="modal-body">
+										
+										<div class="mb-3 row">
+											<label  class="col-sm-3 col-form-label">Comment: </label></br>
+											<div class="col-sm-9" style="margin-top: -6px">
+												<input type="text" class="form control-plaintext" v-model="comment">
+											</div>
+											<label  class="col-sm-3 col-form-label">Rate: </label></br>
+											<div class="col-sm-9" style="margin-top: -6px">
+												<input type="number" min="1" max="5" class="form control-plaintext" v-model="rate">
+											</div>
+  										</div>
+										<div class="modal-footer">
+	                						<button type="button" class="btn_modal" data-bs-dismiss="modal">Close</button>
+	                						<button type="submit" class="btn_modal"  :key="button_text" @click="commentAndRate" data-bs-dismiss="modal">Comment And Rate</button>
+	              						</div>
+              					</div>
+              					
+            				</div>
+          				</div>
+					</div>
 	</div>
 	`});
   

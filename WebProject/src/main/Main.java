@@ -9,16 +9,19 @@ import java.io.IOException;
 
 import com.google.gson.Gson;
 
+import controller.CommentController;
 import controller.CartController;
 import controller.CustomerController;
 import controller.DelivererController;
 import controller.ManagerController;
 import controller.UserController;
+import dao.CommentDAO;
 import dao.CartDAO;
 import dao.CustomerDAO;
 import dao.DelivererDAO;
 import dao.ManagerDAO;
 import dao.UserDAO;
+import service.CommentService;
 import service.CartService;
 import service.CustomerService;
 import service.DelivererService;
@@ -62,14 +65,19 @@ public class Main {
 		RestaurantDAO restaurantDAO = new RestaurantDAO("./files/restaurants.json");
 		RestaurantService restaurantService = new RestaurantService(restaurantDAO, imageService);
 		
+		CommentDAO commentDAO = new CommentDAO("./files/comments.json");
+		CommentService commentService = new CommentService(commentDAO);
+		
 		CartDAO cartDAO = new CartDAO("./files/carts.json");
 		CartService cartService = new CartService(cartDAO, imageService);
+
 		
 		UserController userController = new UserController(customerService, userService, managerService, delivererService);
 		CustomerController customerController = new CustomerController(customerService, userService, managerService, delivererService);
 		ManagerController managerController = new ManagerController(managerService, userService, customerService, delivererService, restaurantService);
 		DelivererController delivererController = new DelivererController(delivererService, userService, managerService, customerService);
 		RestaurantController restaurantController = new RestaurantController(restaurantService);
+		CommentController commentController = new CommentController(commentService);
 		CartController cartController = new CartController(cartService);
 	}
 
