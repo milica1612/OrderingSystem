@@ -6,17 +6,19 @@ public class Comment {
 	private Restaurant restaurant;
 	private String content;
 	private int rating;
+	private boolean approved = false;
 	
 	public Comment() {
 		
 	}
 	
-	public Comment(Customer customer, Restaurant restaurant, String content, int rating) {
+	public Comment(Customer customer, Restaurant restaurant, String content, int rating, boolean approved) {
 		super();
 		this.customer = customer;
 		this.restaurant = restaurant;
 		this.content = content;
 		this.rating = rating;
+		this.approved = approved;
 	}
 	
 	public Customer getCustomer() {
@@ -43,5 +45,14 @@ public class Comment {
 	public void setRating(int rating) {
 		this.rating = rating;
 	}
+
+	public boolean isApproved() {
+		return approved;
+	}
+
+	public void setApproved(boolean approved) {
+		this.approved = approved;
+	}
+	
 	
 }
