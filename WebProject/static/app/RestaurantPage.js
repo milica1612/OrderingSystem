@@ -19,6 +19,7 @@ Vue.component("restaurantPage", {
 				oldName: "",
 				img_name: "",
 			},
+			quantityItem: 1
 		}
 
     },
@@ -77,6 +78,25 @@ Vue.component("restaurantPage", {
                 });
             }
 			
+		},
+		addToCart(){
+			if(this.quantityItem != null){
+				let params = {
+						name: this.current_item.name,
+						price: this.current_item.price,
+						description: this.current_item.description,
+						quantity: this.current_item.quantity,
+						photo: this.current_item.photo,
+						type: this.current_item.type,				
+					}
+				axios.post('/carts/addItemToCart/' + this.quantityItem, JSON.stringify(params))
+				.then(response => {
+					console.log(response);
+					alert(this.quantityItem + "x" + this.current_item.name + " added to your cart!");
+				}).catch(err => {
+                    console.log(err);
+                });
+			}
 		}
 	},
 	computed:{
@@ -191,7 +211,7 @@ Vue.component("restaurantPage", {
             				<div class="modal-content">
                 					<button type="button" style="margin-left: 430px" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               						<div class="modal-body">
- 										<img v-bind:src= "item.photo" alt="" id="restaurant_logo" class="rounded float-start" style="margin-top: 5px"></br>
+ 										<img v-bind:src= "current_item.photo" alt="" id="restaurant_logo" class="rounded float-start" style="margin-top: 5px"></br>
 										<label  class="restaurant_name">{{current_item.name}}</label></br>
 										<label  class="restaurant_name">{{current_item.price}} din.</label></br>
 										<label  class="restaurant_name">{{current_item.description}}</label></br>
@@ -199,12 +219,12 @@ Vue.component("restaurantPage", {
 										<div class="mb-3 row">
 											<label  class="col-sm-3 col-form-label">Quantity: </label></br>
 											<div class="col-sm-9" style="margin-top: -6px">
-												<input type="number" class="form control-plaintext" min="1">
+												<input type="number" class="form control-plaintext" min="1" v-model="quantityItem">
 											</div>
   										</div>
 										<div class="modal-footer">
 	                						<button type="button" class="btn_modal" data-bs-dismiss="modal">Close</button>
-	                						<button type="submit" class="btn_modal"  :key="button_text">Add to card</button>
+	                						<button type="submit" class="btn_modal" @click="addToCart" :key="button_text">Add to card</button>
 	              						</div>
               					</div>
               					

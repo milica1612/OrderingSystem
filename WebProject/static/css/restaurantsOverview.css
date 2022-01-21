@@ -21,6 +21,13 @@
 	text-align: center; 
 }
 
+#cart_view{
+     background-color: white;
+ 	border-radius: 25px;  
+	width: 50%;
+	text-align: center;
+}
+
 .restaurant_name{
 	font-size: 22px;
 	font-family: 'Times New Roman', Times, serif;
@@ -43,6 +50,12 @@
 #restaurant_logo{
 	width: 160px;
     height: 160px;
+ 	border-radius: 35px;  
+}
+
+#item_logo{
+	width: 130px;
+    height: 130px;
  	border-radius: 35px;  
 }
 

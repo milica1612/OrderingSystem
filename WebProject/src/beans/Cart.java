@@ -1,11 +1,12 @@
 package beans;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
 public class Cart {
 
-	private HashMap<Item, Integer> items = new HashMap<Item, Integer>();
+	private ArrayList<CartItem> items;
 	private String customer;
 	private Double total;
 	
@@ -13,7 +14,7 @@ public class Cart {
 	}
 	
 	
-	public Cart(HashMap<Item, Integer> items, String customer, Double total) {
+	public Cart(ArrayList<CartItem> items, String customer, Double total) {
 		super();
 		this.items = items;
 		this.customer = customer;
@@ -26,12 +27,12 @@ public class Cart {
 	}
 
 
-	public HashMap<Item, Integer> getItems() {
+	public ArrayList<CartItem> getItems() {
 		return items;
 	}
 
 
-	public void setItems(HashMap<Item, Integer> items) {
+	public void setItems(ArrayList<CartItem> items) {
 		this.items = items;
 	}
 
