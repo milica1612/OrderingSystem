@@ -33,6 +33,14 @@
 	font-family: 'Times New Roman', Times, serif;
 	font-weight: bold;
 }
+
+.restaurant_comm{
+	text-align: left;
+	font-size: 16px;
+	font-family: 'Times New Roman', Times, serif;
+	font-weight: bold;
+}
+
 #item_content{
 	text-align: center;
 }
@@ -142,4 +150,9 @@ z-index: 40;
 	font-weight: bold;
 	border: 2px solid lightcoral;
 	text-align: center;
+}
+
+#comment {
+	border: 2px solid grey;
+	border-radius: 25px;
 }
