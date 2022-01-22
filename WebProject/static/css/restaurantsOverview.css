@@ -1,6 +1,5 @@
 @charset "utf-8";
 
-
 #restaurant_view {
     background-color: white;
  	border-radius: 25px;  
@@ -136,3 +135,11 @@ z-index: 40;
    
 }
 
+#btn_order {
+	background-color: lightcoral;
+	font-size: 24px;
+	font-family: 'Times New Roman', Times, serif;
+	font-weight: bold;
+	border: 2px solid lightcoral;
+	text-align: center;
+}

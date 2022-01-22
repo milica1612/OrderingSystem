@@ -95,10 +95,13 @@ Vue.component("cartOverview", {
 			<button class="btn_manager" type="button" data-bs-toggle="modal" data-bs-target="#modal" v-on:click="setItem(cartItem)">Edit</button></br>
 			<hr style="height:10px">
 		</div>
-		<div>
+		<div class="container">
+			<hr style="height:3px">
+			<div class="text-center">
+				<button id="btn_order" class="btn btn-warning" type="button">ORDER</button>
+			</div>
 			<label id="cart_total" class="rounded float-end">TOTAL: {{cart.total}} din.</label> 
 		</div>
-		<hr style="height:3px">
 		
 			<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true">
           				<div class="modal-dialog" id="modal_content">

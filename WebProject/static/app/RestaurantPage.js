@@ -145,7 +145,7 @@ Vue.component("restaurantPage", {
 					<label  class="restaurant_name">{{item.name}}</label></br>
 					<label  class="restaurant_name">{{item.price}} din.</label></br>
 					<label  class="restaurant_name">{{item.description}}</label></br>
-					
+					<label class="restaurant_name">{{item.quantity}}</label></br>
 					<button type="button" class="btn_search_res" data-bs-toggle="modal" data-bs-target="#modal" v-on:click="setItem(item)" v-if="isManagerLogged">
 			       		Edit Item
 					</button>
