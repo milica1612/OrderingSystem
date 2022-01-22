@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
 
 import beans.Cart;
@@ -72,7 +73,52 @@ public class CartService {
 		cartDAO.saveAll(allCarts);
 		return item;
 	}
-
+	
+	public CartItem removeItem(String username, CartItem cartItem) throws IOException {
+		ArrayList<Cart> allCarts = cartDAO.getAll();
+		if(allCarts != null) {
+			for(Cart c: allCarts) {
+				if(c.getCustomer().equals(username)) {
+					ArrayList<CartItem> items = c.getItems();
+					for(CartItem i: items) {
+						if(i.getItem().getName().equals(cartItem.getItem().getName())){
+							c.setTotal(c.getTotal() - i.getItem().getPrice()*i.getQuantity());
+							items.remove(i);
+							break;
+						}
+					}
+					c.setItems(items);
+				}
+			}
+		}
+		cartDAO.saveAll(allCarts);
+		return cartItem;
+	}
+	
+	public CartItem editItemQuantity(String username, CartItem cartItem) throws IOException {
+		ArrayList<Cart> allCarts = cartDAO.getAll();
+		if(allCarts != null) {
+			for(Cart c: allCarts) {
+				if(c.getCustomer().equals(username)) {
+					ArrayList<CartItem> items = c.getItems();
+					for(CartItem i: items) {
+						if(i.getItem().getName().equals(cartItem.getItem().getName())){
+							c.setTotal(c.getTotal() - i.getItem().getPrice()*i.getQuantity());
+							i.setQuantity(cartItem.getQuantity());
+							break;
+						}		
+					}
+					c.setItems(items);
+					double total = c.getTotal() + cartItem.getItem().getPrice() * cartItem.getQuantity();
+					c.setTotal(total);
+				}
+			}
+		}
+		cartDAO.saveAll(allCarts);
+		return cartItem;
+		}
+	
+	
 	public Cart getItemsFromCart(String username) {
 		ArrayList<Cart> carts = getAll();
 		if(carts != null) {
@@ -84,4 +130,5 @@ public class CartService {
 		}
 		return null;
 	}
+	
 }

@@ -214,8 +214,7 @@ Vue.component("restaurantPage", {
  										<img v-bind:src= "current_item.photo" alt="" id="restaurant_logo" class="rounded float-start" style="margin-top: 5px"></br>
 										<label  class="restaurant_name">{{current_item.name}}</label></br>
 										<label  class="restaurant_name">{{current_item.price}} din.</label></br>
-										<label  class="restaurant_name">{{current_item.description}}</label></br>
-										
+										<label  class="restaurant_name">{{current_item.description}}</label></br>		
 										<div class="mb-3 row">
 											<label  class="col-sm-3 col-form-label">Quantity: </label></br>
 											<div class="col-sm-9" style="margin-top: -6px">

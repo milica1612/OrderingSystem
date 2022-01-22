@@ -22,16 +22,33 @@
 }
 
 #cart_view{
-     background-color: white;
+    background-color: white;
  	border-radius: 25px;  
 	width: 50%;
 	text-align: center;
 }
 
 .restaurant_name{
+	text-align: center;
 	font-size: 22px;
 	font-family: 'Times New Roman', Times, serif;
 	font-weight: bold;
+}
+#item_content{
+	text-align: center;
+}
+
+#cart_quantity{
+	font-size: 22px;
+	font-family: 'Times New Roman', Times, serif;
+	font-weight: bold;
+}
+
+#cart_total{
+	font-size: 28px;
+	font-family: 'Times New Roman', Times, serif;
+	font-weight: bold;
+	color: black;
 }
 
 .restaurant_modal_item{
@@ -54,14 +71,20 @@
 }
 
 #item_logo{
-	width: 130px;
-    height: 130px;
+	width: 160px;
+    height: 160px;
  	border-radius: 35px;  
 }
 
 
 .btn_manager{
 	width: 180px;	
+	border-radius: 25px;  
+	background-color: rgb(255, 128, 128);
+}
+
+#btn_cancel{
+	width: 40px;	
 	border-radius: 25px;  
 	background-color: rgb(255, 128, 128);
 }
