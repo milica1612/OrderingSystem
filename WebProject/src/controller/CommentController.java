@@ -2,6 +2,10 @@ package controller;
 
 import static spark.Spark.post;
 
+import java.util.ArrayList;
+
+import static spark.Spark.get;
+
 import com.google.gson.Gson;
 
 import beans.Comment;
@@ -33,6 +37,18 @@ public class CommentController {
 
 				return gson.toJson(created);
 				
+			} catch(Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			
+		});
+		
+		get("/comments/getAllApproved/:restaurant", (req, res) -> {
+			res.type("application/json");
+			try {	
+				ArrayList<Comment> comments = commentService.getAllApprovedForRestaurant(req.params("restaurant"));
+				return gson.toJson(comments);
 			} catch(Exception e) {
 				e.printStackTrace();
 				return null;
