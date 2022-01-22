@@ -19,7 +19,11 @@ Vue.component("restaurantPage", {
 				oldName: "",
 				img_name: "",
 			},
-			quantityItem: 1
+			quantityItem: 1,
+			btn_txt: "View Comments",
+			view_items: true,
+			view_comments: false,
+			comments: []
 		}
 
     },
@@ -32,6 +36,11 @@ Vue.component("restaurantPage", {
 					console.log(name);
 					
 		   })
+		axios.get('/comments/getAllApproved/' + this.$route.query.name)
+			.then(response => {
+				this.comments = response.data
+				console.log(response)
+			})
 		if(localStorage.getItem("role") == 'MANAGER'){
 			axios.get('/managers/restaurant')
 				.then(response => {
@@ -97,6 +106,18 @@ Vue.component("restaurantPage", {
                     console.log(err);
                 });
 			}
+		},
+		changeView(){
+			if(this.view_comments){
+				this.view_comments = false
+				this.view_items = true
+				this.btn_txt = "View Comments"
+			}else{
+				this.view_comments = true
+				this.view_items = false
+				this.btn_txt = "View Items"
+			}
+
 		}
 	},
 	computed:{
@@ -128,7 +149,10 @@ Vue.component("restaurantPage", {
 		<div class="container" id="restaurant_info">
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 			  <button class="btn_manager" type="button" v-if="isManagerLogged">Add new item</button>
-			</div>
+			</div> 
+			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+				<button class="btn_manager" type="button" @click="changeView">{{this.btn_txt}}</button>
+			</div> 
 			<img v-bind:src= "restaurant.logo" alt="" id="restaurant_logo" class="rounded float-start" style="margin-top: 5px">
 			<label  class="restaurant_name">{{restaurant.name}}</label></br>
 			<label class="restaurant_data">{{restaurant.type}}</label></br> 
@@ -138,7 +162,7 @@ Vue.component("restaurantPage", {
 			<label class="restaurant_data">{{restaurant.location.address.city}} {{restaurant.location.address.zipcode}}</label></br>  
 			<label class="restaurant_data">{{restaurant.rating}} &#10027;</label></br>
 		</div> </br>
-		<div class="container" id="restaurant_items">
+		<div class="container" id="restaurant_items" v-if="view_items">
 			<div class="row">
 				<div class="col-2" v-for="item in restaurant.items" :key="item.name">
 					<img v-bind:src= "item.photo" alt="" id="restaurant_logo" class="rounded float-start" style="margin-top: 5px"></br>
@@ -232,6 +256,17 @@ Vue.component("restaurantPage", {
 					</div>
 				</div>
 			</div>
+		</div>
+		
+		<div class="container" id="restaurant_items" v-if="view_comments">
+			<div class="row">
+				<div class="col-2" v-for="c in comments" :key="c" id="comment">
+					<label  class="restaurant_name">{{c.customer.username}}</label></br>
+					<label  class="restaurant_comm">{{c.content}}</label></br>
+					<label  class="restaurant_comm">{{c.rating}}  &#10027;</label></br>
+				</div>
+			</div>
+		</div>
 		</div>
 	</div>
 	`});

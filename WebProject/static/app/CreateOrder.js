@@ -175,7 +175,7 @@ Vue.component("createOrder", {
 		},
 		commentAndRate(){
 			let params = {
-				rating: this.rating,
+				rating: this.rate,
 				content: this.comment,
 				restaurant: this.selected
 			}
