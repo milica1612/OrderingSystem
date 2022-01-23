@@ -183,6 +183,7 @@ Vue.component("createOrder", {
 				.then(response => {
 				console.log(response)
 			})
+			location.reload()
 		},
 		setSelected(selected_res){
 			this.selected = selected_res

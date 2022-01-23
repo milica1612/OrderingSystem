@@ -195,5 +195,15 @@ public class RestaurantService {
 		}
 		return types;
 	}
+
+	public void setRating(Restaurant restaurant) throws IOException {
+		ArrayList<Restaurant> restaurants = getAll();
+		for (Restaurant restaurant2 : restaurants) {
+			if(restaurant2.getName().equals(restaurant.getName())) {
+				restaurant2.setRating(restaurant.getRating());
+			}
+		}
+		restaurantDAO.saveAll(restaurants);
+	}
 	
 }

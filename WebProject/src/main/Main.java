@@ -77,7 +77,7 @@ public class Main {
 		ManagerController managerController = new ManagerController(managerService, userService, customerService, delivererService, restaurantService);
 		DelivererController delivererController = new DelivererController(delivererService, userService, managerService, customerService);
 		RestaurantController restaurantController = new RestaurantController(restaurantService);
-		CommentController commentController = new CommentController(commentService);
+		CommentController commentController = new CommentController(commentService, restaurantService);
 		CartController cartController = new CartController(cartService);
 	}
 
