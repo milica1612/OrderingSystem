@@ -24,7 +24,8 @@ Vue.component("newItem", {
 	                type: this.type,
 					photo: this.photo,
 					description: this.description,
-					quantity: this.quantity
+					quantity: this.quantity,
+					restaurant: localStorage.getItem("restaurant"),
 	            }
 	            axios.post('/restaurantPage/addNewItem/' + localStorage.getItem("restaurant"), JSON.stringify(params)).then(
 	                response => {

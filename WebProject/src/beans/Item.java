@@ -8,13 +8,13 @@ public class Item {
 	private String quantity;
 	private String description;
 	private String photo;
-	
+	private String restaurant;
 	public Item() {
 		
 	}
 	
 	public Item(String name, Double price, ItemType type, String quantity, String description,
-			String photo) {
+			String photo, String restaurant) {
 		super();
 		this.name = name;
 		this.price = price;
@@ -22,6 +22,7 @@ public class Item {
 		this.quantity = quantity;
 		this.description = description;
 		this.photo = photo;
+		this.restaurant = restaurant;
 	}
 
 	public String getName() {
@@ -71,6 +72,13 @@ public class Item {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
-	
+
+	public String getRestaurant() {
+		return restaurant;
+	}
+
+	public void setRestaurant(String restaurant) {
+		this.restaurant = restaurant;
+	}
 	
 }

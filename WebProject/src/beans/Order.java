@@ -1,32 +1,28 @@
 package beans;
 
 import java.util.Date;
-import java.util.HashMap;
 
 public class Order {
 
 	private String code;
-	private HashMap<Item, Integer> items;
+	private Cart cart;
 	private Restaurant restaurant;
 	private Date dateAndTime;
-	private Double total;
-	private Customer customer;
 	private OrderStatus orderStatus;
-	
+	private String customer;
 	public Order() {
 		
 	}
 	
-	public Order(String code, HashMap<Item, Integer> items, Restaurant restaurant, Date dateAndTime, Double total,
-			Customer customer, OrderStatus orderStatus) {
+	public Order(String code, Cart cart, Restaurant restaurant, Date dateAndTime, OrderStatus orderStatus,
+			String customer) {
 		super();
 		this.code = code;
-		this.items = items;
+		this.cart = cart;
 		this.restaurant = restaurant;
 		this.dateAndTime = dateAndTime;
-		this.total = total;
-		this.customer = customer;
 		this.orderStatus = orderStatus;
+		this.customer = customer;
 	}
 
 	public String getCode() {
@@ -35,14 +31,6 @@ public class Order {
 
 	public void setCode(String code) {
 		this.code = code;
-	}
-
-	public HashMap<Item, Integer> getItems() {
-		return items;
-	}
-
-	public void setItems(HashMap<Item, Integer> items) {
-		this.items = items;
 	}
 
 	public Restaurant getRestaurant() {
@@ -61,22 +49,6 @@ public class Order {
 		this.dateAndTime = dateAndTime;
 	}
 
-	public Double getTotal() {
-		return total;
-	}
-
-	public void setTotal(Double total) {
-		this.total = total;
-	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
 	public OrderStatus getOrderStatus() {
 		return orderStatus;
 	}
@@ -84,6 +56,21 @@ public class Order {
 	public void setOrderStatus(OrderStatus orderStatus) {
 		this.orderStatus = orderStatus;
 	}
-	
+
+	public Cart getCart() {
+		return cart;
+	}
+
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
+
+	public String getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(String customer) {
+		this.customer = customer;
+	}
 	
 }
