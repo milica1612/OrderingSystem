@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import beans.Comment;
+import beans.Restaurant;
 import dao.CommentDAO;
 
 public class CommentService {
@@ -27,6 +28,22 @@ public class CommentService {
 			}
 		}
 		return result;
+	}
+
+	public Double calculateRating(Restaurant restaurant) {
+		ArrayList<Comment> all = commentDAO.getAll();
+		Double total = (double) 0;
+		int count = 0;
+		for (Comment comment : all) {
+			if(comment.getRestaurant().getName().equals(restaurant.getName())) {
+				total += comment.getRating();
+				count++;
+			}
+		}
+		if(count == 0) {
+			return (double) 5;
+		}
+		return Math.round(total/count*100.0)/100.0;
 	}
 	
 	
