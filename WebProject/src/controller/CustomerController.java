@@ -49,8 +49,7 @@ public class CustomerController {
 				Date date=new SimpleDateFormat("yyyy-MM-dd").parse(dto.getDateOfBirth());  
 				newCustomer.setDateOfBirth(date);
 				newCustomer.setUserType(UserType.CUSTOMER);
-				newCustomer.getCart().setCustomer(newCustomer.getUsername());
-				
+				newCustomer.setPoints(0);
 				if(customerService.getAll() != null) {
 					for (Customer customer : customerService.getAll()) {
 						if(customer.getUsername().equals(newCustomer.getUsername())) {

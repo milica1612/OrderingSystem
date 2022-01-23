@@ -18,6 +18,7 @@ Vue.component("restaurantPage", {
 				not_filled: false,
 				oldName: "",
 				img_name: "",
+				restaurant: "",
 			},
 			quantityItem: 1,
 			btn_txt: "View Comments",
@@ -76,7 +77,8 @@ Vue.component("restaurantPage", {
 						description: this.current_item.description,
 						quantity: this.current_item.quantity,
 						photo: this.photo,
-						type: this.current_item.type,				
+						type: this.current_item.type,
+						restaurant: this.current_item.restaurant,				
 					}
 					axios.put('/restaurantPage/editItem/' + localStorage.getItem("restaurant") + '/' 
 								+ this.oldName, JSON.stringify(params))
@@ -96,7 +98,8 @@ Vue.component("restaurantPage", {
 						description: this.current_item.description,
 						quantity: this.current_item.quantity,
 						photo: this.current_item.photo,
-						type: this.current_item.type,				
+						type: this.current_item.type,	
+						restaurant: this.current_item.restaurant,			
 					}
 				axios.post('/carts/addItemToCart/' + this.quantityItem, JSON.stringify(params))
 				.then(response => {

@@ -6,10 +6,8 @@ import java.util.Date;
 public class Customer extends User{
 
 	private ArrayList<Order> orders = new ArrayList<Order>();
-	private Cart cart = new Cart();
-	private int points;
+	private double points;
 	private CustomerType customerType;
-	
 	
 	public Customer() {
 		super();
@@ -28,19 +26,11 @@ public class Customer extends User{
 		this.orders = orders;
 	}
 
-	public Cart getCart() {
-		return cart;
-	}
-
-	public void setCart(Cart cart) {
-		this.cart = cart;
-	}
-
-	public int getPoints() {
+	public double getPoints() {
 		return points;
 	}
 
-	public void setPoints(int points) {
+	public void setPoints(double points) {
 		this.points = points;
 	}
 
