@@ -8,12 +8,14 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import beans.Cart;
+import beans.CartItem;
 import beans.Order;
 import beans.OrderStatus;
 import beans.User;
@@ -49,10 +51,23 @@ private String file;
 	}
 
 	public Order create(Order newOrder) throws IOException {
+		
+		for(CartItem i: newOrder.getCart().getItems()){
+			newOrder.setRestaurant(i.getItem().getRestaurant());
+		}
+		
 		ArrayList<Order> orders = getAll();
 		if(orders == null) {
 			orders = new ArrayList<Order>();
 		}
+		
+		String rand = "";
+		String chars = "1234567890QWERTYUIOPASDFGHJKLZXCVBNM";
+	  	for (int i = 0; i < 10; i++) {
+	      rand += chars.toCharArray()[new Random().nextInt(chars.length())];
+	  	}
+	  	
+	  	newOrder.setCode(rand);
 		newOrder.setDateAndTime(new Date());
 		newOrder.setOrderStatus(OrderStatus.PROCESSING);	
 		orders.add(newOrder);

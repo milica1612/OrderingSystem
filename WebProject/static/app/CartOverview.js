@@ -14,8 +14,10 @@ Vue.component("cartOverview", {
 				not_filled: false,
 				oldName: "",
 				img_name: "",
+				restaurant: "",
 			},
-			quantityItem: 1
+			quantityItem: 1,
+			order: {},
 		}
     },
 	mounted() {
@@ -41,7 +43,8 @@ Vue.component("cartOverview", {
 						description: this.current_item.description,
 						quantity: this.current_item.quantity,
 						photo: this.current_item.photo,
-						type: this.current_item.type,				
+						type: this.current_item.type,
+						restaurant: this.current_item.restaurant,				
 					},
 					quantity: this.quantityItem				
 					}
@@ -63,7 +66,8 @@ Vue.component("cartOverview", {
 						description: this.current_item.description,
 						quantity: this.current_item.quantity,
 						photo: this.current_item.photo,
-						type: this.current_item.type,				
+						type: this.current_item.type,
+						restaurant: this.current_item.restaurant,				
 					},
 					quantity: this.quantityItem				
 					}
@@ -75,6 +79,19 @@ Vue.component("cartOverview", {
                     console.log(err);
                 });
 			}
+		},
+		createOrder(){
+				let params = {
+						cart: this.cart,
+					}
+				axios.post('/orders/create', JSON.stringify(params))
+				.then(response => {
+					this.order = response.data
+					console.log(response);
+				}).catch(err => {
+                    console.log(err);
+                });
+			
 		}
 	},
 	computed:{},
@@ -98,7 +115,7 @@ Vue.component("cartOverview", {
 		<div class="container">
 			<hr style="height:3px">
 			<div class="text-center">
-				<button id="btn_order" class="btn btn-warning" type="button">ORDER</button>
+				<button id="btn_order" class="btn btn-warning" type="button"  @click="createOrder">ORDER</button>
 			</div>
 			<label id="cart_total" class="rounded float-end">TOTAL: {{cart.total}} din.</label> 
 		</div>

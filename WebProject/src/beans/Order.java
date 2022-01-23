@@ -6,7 +6,7 @@ public class Order {
 
 	private String code;
 	private Cart cart;
-	private Restaurant restaurant;
+	private String restaurant;
 	private Date dateAndTime;
 	private OrderStatus orderStatus;
 	private String customer;
@@ -14,7 +14,7 @@ public class Order {
 		
 	}
 	
-	public Order(String code, Cart cart, Restaurant restaurant, Date dateAndTime, OrderStatus orderStatus,
+	public Order(String code, Cart cart, String restaurant, Date dateAndTime, OrderStatus orderStatus,
 			String customer) {
 		super();
 		this.code = code;
@@ -33,11 +33,11 @@ public class Order {
 		this.code = code;
 	}
 
-	public Restaurant getRestaurant() {
+	public String getRestaurant() {
 		return restaurant;
 	}
 
-	public void setRestaurant(Restaurant restaurant) {
+	public void setRestaurant(String restaurant) {
 		this.restaurant = restaurant;
 	}
 

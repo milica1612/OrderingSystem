@@ -14,12 +14,14 @@ import controller.CartController;
 import controller.CustomerController;
 import controller.DelivererController;
 import controller.ManagerController;
+import controller.OrderController;
 import controller.UserController;
 import dao.CommentDAO;
 import dao.CartDAO;
 import dao.CustomerDAO;
 import dao.DelivererDAO;
 import dao.ManagerDAO;
+import dao.OrderDAO;
 import dao.UserDAO;
 import service.CommentService;
 import service.CartService;
@@ -27,6 +29,7 @@ import service.CustomerService;
 import service.DelivererService;
 import service.ImageService;
 import service.ManagerService;
+import service.OrderService;
 import controller.RestaurantController;
 import controller.UserController;
 import dao.CustomerDAO;
@@ -71,6 +74,8 @@ public class Main {
 		CartDAO cartDAO = new CartDAO("./files/carts.json");
 		CartService cartService = new CartService(cartDAO, imageService);
 
+		OrderDAO orderDAO = new OrderDAO("./files/orders.json");
+		OrderService orderService = new OrderService(orderDAO, customerDAO, imageService);
 		
 		UserController userController = new UserController(customerService, userService, managerService, delivererService);
 		CustomerController customerController = new CustomerController(customerService, userService, managerService, delivererService);
@@ -79,6 +84,7 @@ public class Main {
 		RestaurantController restaurantController = new RestaurantController(restaurantService);
 		CommentController commentController = new CommentController(commentService, restaurantService);
 		CartController cartController = new CartController(cartService);
+		OrderController orderController = new OrderController(orderService);
 	}
 
 }
