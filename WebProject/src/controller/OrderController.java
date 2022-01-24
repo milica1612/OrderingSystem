@@ -5,6 +5,7 @@ import static spark.Spark.post;
 
 import com.google.gson.Gson;
 
+import beans.CartItem;
 import beans.Order;
 import beans.User;
 import service.OrderService;
@@ -47,6 +48,21 @@ public class OrderController {
 				return gson.toJson(created);
 				
 			} catch(Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			
+		});
+		
+		post("/orders/cancelOrder", (req, res) -> {
+			res.type("application/json");
+			try {
+				Session session = req.session(true);
+				User logged = session.attribute("logged");
+				Order order = gson.fromJson(req.body(), Order.class);	
+				return gson.toJson(orderService.removeOrder(logged.getUsername(), order));
+				
+			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
 			}

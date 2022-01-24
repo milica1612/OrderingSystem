@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.google.gson.JsonElement;
 
 import beans.Customer;
+import beans.Cart;
 import beans.CartItem;
 import beans.Order;
 import dao.CustomerDAO;
@@ -49,6 +50,28 @@ public class OrderService {
 	public ArrayList<Order> getByCustomer(String username) {
 		Customer customer = customerDAO.getByUsername(username);
 		return customer.getOrders();
+	}
+
+	public Order removeOrder(String username, Order order) throws IOException {
+		ArrayList<Order> allOrders = orderDAO.getAll();
+		ArrayList<Customer> customers = customerDAO.getAll();
+		for(Customer c: customers) {
+				if(c.getUsername().equals(username)) {
+					ArrayList<Order> orders = c.getOrders();
+					for(Order o: orders) {
+						if(o.getCode().equals(order.getCode())){
+							orders.remove(o);
+							break;
+						}
+					}
+					c.setOrders(orders);
+					allOrders.remove(order);
+				}
+			}
+		
+		orderDAO.saveAll(allOrders);
+		customerDAO.saveAll(customers);
+		return order;
 	}
 	
 }

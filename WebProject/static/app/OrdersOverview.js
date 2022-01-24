@@ -12,6 +12,8 @@ Vue.component("ordersOverview", {
 		   })
 	},
 	methods: {
+		cancelOrder(){
+		}
 	},
 	computed:{},
 	template: `
@@ -32,6 +34,7 @@ Vue.component("ordersOverview", {
 							<label  class="restaurant_data">QUANTITY: {{cartItem.quantity}}</label>
 						</div> </br>
 						<label class="restaurant_name">TOTAL: {{order.cart.total}} din;  </label> 
+						<button class="btn_manager" type="button" data-bs-toggle="modal" data-bs-target="#modal">Cancel Order</button></br>
 						<hr style="height:10px">
 					</div>
 		</div>
