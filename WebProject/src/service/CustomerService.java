@@ -4,7 +4,11 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import com.google.gson.JsonElement;
+
 import beans.Customer;
+import beans.Order;
+import beans.OrderStatus;
 import beans.User;
 import dao.CustomerDAO;
 import dto.LoginDTO;
@@ -57,6 +61,16 @@ public class CustomerService {
 		}
 		customerDAO.saveAll(all);
 		return userFound;
+	}
+
+	public boolean canComment(String username, String params) {
+		Customer customer = customerDAO.getByUsername(username);
+		for (Order o : customer.getOrders()) {
+			if(o.getOrderStatus().equals(OrderStatus.DELIVERED) && o.getRestaurant().equals(params)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

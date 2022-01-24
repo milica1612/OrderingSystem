@@ -2,6 +2,7 @@ package controller;
 
 import com.google.gson.Gson;
 
+import beans.Comment;
 import beans.Customer;
 import beans.Deliverer;
 import beans.Gender;
@@ -13,10 +14,13 @@ import service.CustomerService;
 import service.DelivererService;
 import service.ManagerService;
 import service.UserService;
+import spark.Session;
 
+import static spark.Spark.get;
 import static spark.Spark.post;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class CustomerController {
@@ -89,6 +93,23 @@ public class CustomerController {
 			}
 			
 		});
+		
+		get("/customers/canComment/:restaurant", (req, res) -> {
+			res.type("application/json");
+			try {	
+				Session session = req.session(true);
+				Customer logged = session.attribute("logged");
+				if(logged == null) {
+					return gson.toJson(false);
+				}
+				return gson.toJson(customerService.canComment(logged.getUsername(), req.params("restaurant")));	
+			} catch(Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			
+		});
+		
 		
 		
 	}

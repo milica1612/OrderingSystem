@@ -17,7 +17,8 @@ Vue.component("createOrder", {
 				isAsc: false
 			},
 			comment: "",
-			rate: ""
+			rate: "",
+			can_comment: false
         }
     },
 	mounted () {
@@ -187,6 +188,11 @@ Vue.component("createOrder", {
 		},
 		setSelected(selected_res){
 			this.selected = selected_res
+			axios.get('/customers/canComment/' + selected_res.name)
+				.then(response => {
+					console.log(response)
+					this.can_comment = response.data
+				})
 		}
 	},
 	computed:{},
@@ -251,8 +257,8 @@ Vue.component("createOrder", {
 			<button class="btn_manager" type="button" data-bs-toggle="modal" data-bs-target="#modall" v-on:click="setSelected(r)">Comment and rate</button>
 			<hr style="height:10px">
         </div>
-        <div class="modal fade" id="modall" tabindex="-1" aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true">
-          				<div class="modal-dialog" id="modal_content">
+        <div class="modal fade" id="modall" tabindex="-1" aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true" >
+          				<div class="modal-dialog" id="modal_content" v-if="can_comment">
             				<div class="modal-content">
                 					<button type="button" style="margin-left: 430px" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               						<div class="modal-body">
@@ -274,6 +280,14 @@ Vue.component("createOrder", {
               					</div>
               					
             				</div>
+          				</div>
+          				<div  class="modal-dialog" id="modal_content" v-else>
+          				<div class="modal-content">
+          					Cannot comment restaurant from which you haven't ordered	
+          					<div class="modal-footer">
+	                			<button type="button" class="btn_modal" data-bs-dismiss="modal">Close</button>
+	              			</div>
+	              		</div>
           				</div>
 					</div>
 	</div>
