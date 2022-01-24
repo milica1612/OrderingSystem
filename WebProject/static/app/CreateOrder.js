@@ -10,7 +10,7 @@ Vue.component("createOrder", {
 			user: {},
 			filter: "",
 			btn_txt_name: "Sort By Name",
-			btn_txt_loc: "Sort By Loaction",
+			btn_txt_loc: "Sort By Location",
 			btn_txt_rate: "Sort By Rating",
 			sort: {
 				key: '',

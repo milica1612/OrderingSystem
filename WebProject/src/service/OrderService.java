@@ -9,6 +9,7 @@ import beans.Customer;
 import beans.Cart;
 import beans.CartItem;
 import beans.Order;
+import dao.CartDAO;
 import dao.CustomerDAO;
 import dao.OrderDAO;
 
@@ -16,13 +17,15 @@ public class OrderService {
 
 	private OrderDAO orderDAO;
 	private CustomerDAO customerDAO;
+	private CartDAO cartDAO;
 	private ImageService imageService;
 
-	public OrderService(OrderDAO orderDAO, CustomerDAO customerDAO, ImageService imageService) {
+	public OrderService(OrderDAO orderDAO, CustomerDAO customerDAO, CartDAO cartDAO, ImageService imageService) {
 		super();
 		this.orderDAO = orderDAO;
 		this.customerDAO = customerDAO;
 		this.imageService = imageService;
+		this.cartDAO = cartDAO;
 	}
 
 	public ArrayList<Order> getAll() {
@@ -43,6 +46,15 @@ public class OrderService {
 			}
 		}
 		
+		ArrayList<Cart> carts = cartDAO.getAll();
+		for(Cart cart : carts) {
+			if(cart.getCustomer().equals(newOrder.getCart().getCustomer())) {
+				carts.remove(cart);
+				break;
+			}
+		}
+		
+		cartDAO.saveAll(carts);
 		customerDAO.saveAll(customers);
 		return created;
 	}
@@ -55,11 +67,16 @@ public class OrderService {
 	public Order removeOrder(String username, Order order) throws IOException {
 		ArrayList<Order> allOrders = orderDAO.getAll();
 		ArrayList<Customer> customers = customerDAO.getAll();
+		double points = order.getCart().getTotal()/1000*133*4;
 		for(Customer c: customers) {
 				if(c.getUsername().equals(username)) {
 					ArrayList<Order> orders = c.getOrders();
 					for(Order o: orders) {
 						if(o.getCode().equals(order.getCode())){
+							c.setPoints(c.getPoints() - points);
+							if(c.getPoints() < 0) {
+								c.setPoints(0);
+							}
 							orders.remove(o);
 							break;
 						}

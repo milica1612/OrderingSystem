@@ -88,6 +88,7 @@ Vue.component("cartOverview", {
 				.then(response => {
 					this.order = response.data
 					console.log(response);
+					location.reload()
 				}).catch(err => {
                     console.log(err);
                 });
