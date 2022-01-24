@@ -1,5 +1,6 @@
 package controller;
 
+import static spark.Spark.get;
 import static spark.Spark.post;
 
 import com.google.gson.Gson;
@@ -18,6 +19,19 @@ public class OrderController {
 		super();
 		this.orderService = orderService;
 	
+		get("/orders/getByCustomer", (req, res) -> {
+			res.type("application/json");
+			try {
+				Session session = req.session(true);
+				User logged = session.attribute("logged");
+			
+				return gson.toJson(orderService.getByCustomer(logged.getUsername()));	
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
+		
 		post("/orders/create", (req,res) -> {
 			res.type("application/json");
 			

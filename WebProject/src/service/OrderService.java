@@ -3,6 +3,8 @@ package service;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.google.gson.JsonElement;
+
 import beans.Customer;
 import beans.CartItem;
 import beans.Order;
@@ -34,7 +36,7 @@ public class OrderService {
 			if(customer.getUsername().equals(newOrder.getCart().getCustomer())) {
 				customer.setPoints(customer.getPoints() + points);
 				ArrayList<Order> orders = customer.getOrders();
-				orders.add(newOrder);
+				orders.add(created);
 				customer.setOrders(orders);
 				break;
 			}
@@ -42,6 +44,11 @@ public class OrderService {
 		
 		customerDAO.saveAll(customers);
 		return created;
+	}
+
+	public ArrayList<Order> getByCustomer(String username) {
+		Customer customer = customerDAO.getByUsername(username);
+		return customer.getOrders();
 	}
 	
 }

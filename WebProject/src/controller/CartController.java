@@ -20,19 +20,6 @@ public class CartController {
 		super();
 		this.cartService = cartService;
 		
-		get("/carts/getByCustomerName", (req, res) -> {
-			res.type("application/json");
-			try {
-				Session session = req.session(true);
-				User loggedUser = session.attribute("user");
-				return gson.toJson(cartService.getByCustomerName(loggedUser.getUsername()));
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-		});
-		
 		post("/carts/addItemToCart/:quantity", (req, res) -> {
 			res.type("application/json");
 			try {
