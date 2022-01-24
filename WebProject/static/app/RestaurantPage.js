@@ -24,7 +24,8 @@ Vue.component("restaurantPage", {
 			btn_txt: "View Comments",
 			view_items: true,
 			view_comments: false,
-			comments: []
+			comments: [],
+			waiting: false
 		}
 
     },
@@ -37,16 +38,29 @@ Vue.component("restaurantPage", {
 					console.log(name);
 					
 		   })
-		axios.get('/comments/getAllApproved/' + this.$route.query.name)
-			.then(response => {
-				this.comments = response.data
-				console.log(response)
-			})
+			axios.get('/comments/getAllApproved/' + this.$route.query.name)
+				.then(response => {
+					this.comments = response.data
+					console.log(response)
+				})
 		if(localStorage.getItem("role") == 'MANAGER'){
 			axios.get('/managers/restaurant')
 				.then(response => {
 					this.manager_restaurant = response.data
-
+					if(this.manager_restaurant.name == this.$route.query.name){
+						axios.get('/comments/getAll/' + this.$route.query.name)
+							.then(response => {
+								this.comments = response.data
+								console.log(response)
+							})
+					}
+				})
+		}
+		if(localStorage.getItem("role") == 'ADMIN'){
+			axios.get('/comments/getAll/' + this.$route.query.name)
+				.then(response => {
+					this.comments = response.data
+					console.log(response)
 				})
 		}
 	},
@@ -121,6 +135,29 @@ Vue.component("restaurantPage", {
 				this.btn_txt = "View Items"
 			}
 
+		},
+		approve(c){
+			axios.put('/comments/approve', JSON.stringify(c))
+				.then(response => {
+					console.log(response);
+					axios.get('/comments/getAll/' + this.$route.query.name)
+						.then(response => {
+							this.comments = response.data
+							console.log(response)
+						})
+
+				})
+		},
+		decline(c){
+			axios.put('/comments/decline', JSON.stringify(c))
+				.then(response => {
+					console.log(response);
+					axios.get('/comments/getAll/' + this.$route.query.name)
+						.then(response => {
+							this.comments = response.data
+							console.log(response)
+						})
+				})
 		}
 	},
 	computed:{
@@ -267,6 +304,15 @@ Vue.component("restaurantPage", {
 					<label  class="restaurant_name">{{c.customer.username}}</label></br>
 					<label  class="restaurant_comm">{{c.content}}</label></br>
 					<label  class="restaurant_comm">{{c.rating}}  &#10027;</label></br>
+					<div v-if="isManagerLogged">
+					<button type="button" class="btn_search_res" v-if="c.status == 'WAITING'" v-on:click="approve(c)">
+			       		Approve
+					</button>
+					
+					<button type="button" class="btn_search_res" v-if="c.status == 'WAITING'" v-on:click="decline(c)">
+			       		Decline
+					</button>
+					</div>
 				</div>
 			</div>
 		</div>
