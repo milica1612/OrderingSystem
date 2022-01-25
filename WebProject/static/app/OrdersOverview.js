@@ -6,6 +6,9 @@ Vue.component("ordersOverview", {
 		btn_txt_name: "Sort By Name",
 		btn_txt_price: "Sort By Price",
 		btn_txt_date: "Sort By Date",	
+		searchParam: "",
+		searchFrom: "",
+		searchTo: "",
 	}
     },
 	mounted() {
@@ -31,7 +34,27 @@ Vue.component("ordersOverview", {
 				}).catch(err => {
                     console.log(err);
                 });
-		}
+		},
+		searchByRestaurant(){
+			if(this.searchParam == ""){
+				axios.get('/orders/getByCustomer')
+					.then(response => {
+						if (response.data != null) {
+							this.orders = response.data
+						}
+					})
+			}
+			else{
+				axios.get('orders/getByRestaurant/' + this.searchParam).then(response => {
+					this.orders = response.data
+					console.log(response)
+
+				}).catch(err => {
+					console.log(err)
+				});
+			}
+		},
+		
 	},
 	computed:{},
 	template: `
@@ -42,9 +65,17 @@ Vue.component("ordersOverview", {
 		<div id="search_id" class="container">
 			<table>
 			<tr>
-			<td><input type="search"  placeholder="Search..."></td>
-			<td><button class="btn_search_res" type="button">Search By Restaurant</button></td>
+			<td><input type="search"  placeholder="Search by restaurant..." v-model="searchParam"></td>
+			<td><button class="btn_search_res" type="button" v-on:click="searchByRestaurant">Search By Restaurant</button></td>
+			</tr>
+			<tr>
+			<td><input type="number"  placeholder="From..." min="1" v-model="searchFrom"></td>
+			<td><input type="number"  placeholder="To..." min="1" v-model="searchTo"></td>
 			<td><button class="btn_search_res" type="button">Search By Price</button></td>
+			</tr>
+			<tr>
+			<td><input type="date" data-date-format="mm/dd/yyyy"></td>
+			<td><input type="date" data-date-format="mm/dd/yyyy"></td>
 			<td><button class="btn_search_res" type="button">Search By Date</button></td>
 			</tr>
 			<tr>
