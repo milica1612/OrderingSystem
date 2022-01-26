@@ -1,6 +1,8 @@
 package service;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -108,6 +110,11 @@ public class OrderService {
 	}
 
 	public ArrayList<Order> getByPrice(Double priceFrom, Double priceTo, String username) {
+		
+		if(priceTo == 0) {
+			priceTo = 50000.00;
+		}
+		
 		Customer customer = customerDAO.getByUsername(username);
 		ArrayList<Order> allOrders = customer.getOrders();
 		ArrayList<Order> result = new ArrayList<Order>();
@@ -121,13 +128,23 @@ public class OrderService {
 		return result;
 	}
 
-	public ArrayList<Order> getByDate(Date dateFrom, Date dateTo, String username) {
+	public ArrayList<Order> getByDate(String dateFrom, String dateTo, String username) throws ParseException {
+		
+		if(dateFrom == null) {
+			dateFrom = "2000-01-01";
+		}
+		if(dateTo == null) {
+			dateTo = "2100-01-01";
+		}
+		Date from = new SimpleDateFormat("yyyy-MM-dd").parse(dateFrom);
+		Date to = new SimpleDateFormat("yyyy-MM-dd").parse(dateTo); 
+		
 		Customer customer = customerDAO.getByUsername(username);
 		ArrayList<Order> allOrders = customer.getOrders();
 		ArrayList<Order> result = new ArrayList<Order>();
 		if(allOrders != null) {
 			for(Order order : allOrders) {
-				if(order.getDateAndTime().after(dateFrom) && order.getDateAndTime().before(dateTo)) {
+				if(order.getDateAndTime().after(from) && order.getDateAndTime().before(to)) {
 					result.add(order);
 				}
 			}

@@ -7,8 +7,10 @@ Vue.component("ordersOverview", {
 		btn_txt_price: "Sort By Price",
 		btn_txt_date: "Sort By Date",	
 		searchParam: "",
-		searchFrom: "",
-		searchTo: "",
+		searchPriceFrom: "",
+		searchPriceTo: "",
+		searchDateFrom: "",
+		searchDateTo: "",
 	}
     },
 	mounted() {
@@ -54,7 +56,110 @@ Vue.component("ordersOverview", {
 				});
 			}
 		},
-		
+		searchByDate(){
+			if(this.searchDateFrom == "" && this.searchDateTo == ""){
+				axios.get('/orders/getByCustomer')
+					.then(response => {
+						if (response.data != null) {
+							this.orders = response.data
+						}
+					})
+			}
+			else{
+				if(this.searchDateFrom == ""){
+					let params = {
+					dateTo: this.searchDateTo
+					}
+					axios.post('orders/getByDate', JSON.stringify(params))
+					.then(response => {
+						this.orders = response.data
+						console.log(response)
+	
+					}).catch(err => {
+						console.log(err)
+					});
+				}
+				else if(this.searchDateTo == ""){
+					let params = {
+						dateFrom: this.searchDateFrom,
+					}
+					axios.post('orders/getByDate', JSON.stringify(params))
+					.then(response => {
+						this.orders = response.data
+						console.log(response)
+	
+					}).catch(err => {
+						console.log(err)
+					});
+				}
+				else {
+					let params = {
+					dateFrom: this.searchDateFrom,
+					dateTo: this.searchDateTo
+					}
+					axios.post('orders/getByDate', JSON.stringify(params))
+					.then(response => {
+						this.orders = response.data
+						console.log(response)
+	
+					}).catch(err => {
+						console.log(err)
+					});
+				}
+			}
+		},
+		searchByPrice(){
+			if(this.searchPriceFrom == "" && this.searchPriceTo == ""){
+				axios.get('/orders/getByCustomer')
+					.then(response => {
+						if (response.data != null) {
+							this.orders = response.data
+						}
+					})
+			}
+			else{
+				if(this.searchPriceFrom == ""){
+					let params = {
+					priceTo: this.searchPriceTo
+					}
+					axios.post('orders/getByPrice', JSON.stringify(params))
+					.then(response => {
+						this.orders = response.data
+						console.log(response)
+	
+					}).catch(err => {
+						console.log(err)
+					});
+				}
+				else if(this.searchPriceTo == ""){
+					let params = {
+						priceFrom: this.searchPriceFrom,
+					}
+					axios.post('orders/getByPrice', JSON.stringify(params))
+					.then(response => {
+						this.orders = response.data
+						console.log(response)
+	
+					}).catch(err => {
+						console.log(err)
+					});
+				}
+				else {
+					let params = {
+					priceFrom: this.searchPriceFrom,
+					priceTo: this.searchPriceTo
+					}
+					axios.post('orders/getByPrice', JSON.stringify(params))
+					.then(response => {
+						this.orders = response.data
+						console.log(response)
+	
+					}).catch(err => {
+						console.log(err)
+					});
+				}
+			}
+		}
 	},
 	computed:{},
 	template: `
@@ -69,14 +174,14 @@ Vue.component("ordersOverview", {
 			<td><button class="btn_search_res" type="button" v-on:click="searchByRestaurant">Search By Restaurant</button></td>
 			</tr>
 			<tr>
-			<td><input type="number"  placeholder="From..." min="1" v-model="searchFrom"></td>
-			<td><input type="number"  placeholder="To..." min="1" v-model="searchTo"></td>
-			<td><button class="btn_search_res" type="button">Search By Price</button></td>
+			<td><input type="number"  placeholder="From..." min="1" v-model="searchPriceFrom"></td>
+			<td><input type="number"  placeholder="To..." min="1" v-model="searchPriceTo"></td>
+			<td><button class="btn_search_res" type="button"  v-on:click="searchByPrice">Search By Price</button></td>
 			</tr>
 			<tr>
-			<td><input type="date" data-date-format="mm/dd/yyyy"></td>
-			<td><input type="date" data-date-format="mm/dd/yyyy"></td>
-			<td><button class="btn_search_res" type="button">Search By Date</button></td>
+			<td><input type="date" data-date-format="mm/dd/yyyy" v-model="searchDateFrom"></td>
+			<td><input type="date" data-date-format="mm/dd/yyyy" v-model="searchDateTo"></td>
+			<td><button class="btn_search_res" type="button" v-on:click="searchByDate">Search By Date</button></td>
 			</tr>
 			<tr>
 			<td colspan="2"><label>Filtrate by order status</label></td>

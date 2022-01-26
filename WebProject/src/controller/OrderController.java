@@ -13,6 +13,7 @@ import beans.CartItem;
 import beans.Order;
 import beans.Restaurant;
 import beans.User;
+import dto.OrderSearchDTO;
 import service.OrderService;
 import spark.Session;
 
@@ -88,19 +89,14 @@ public class OrderController {
 			}
 		});
 		
-		get("/orders/getByPrice/:from/:to", (req, res) -> {
+		post("/orders/getByPrice", (req, res) -> {
 			res.type("application/json");
 			try {
 				Session session = req.session(true);
-				User logged = session.attribute("logged");
-				
-				String from = req.params("from");
-				Double priceFrom = Double.parseDouble(from);
-				
-				String to = req.params("to");
-				Double priceTo = Double.parseDouble(to);
-				
-				ArrayList<Order> orders = orderService.getByPrice(priceFrom, priceTo, logged.getUsername());
+				User logged = session.attribute("logged");				
+				OrderSearchDTO orderDTO = gson.fromJson(req.body(), OrderSearchDTO.class);
+
+				ArrayList<Order> orders = orderService.getByPrice(orderDTO.getPriceFrom(), orderDTO.getPriceTo(), logged.getUsername());
 				return gson.toJson(orders);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -108,19 +104,14 @@ public class OrderController {
 			}
 		});
 		
-		get("/orders/getByDate/:from/:to", (req, res) -> {
+		post("/orders/getByDate", (req, res) -> {
 			res.type("application/json");
 			try {
 				Session session = req.session(true);
 				User logged = session.attribute("logged");
+				OrderSearchDTO orderDTO = gson.fromJson(req.body(), OrderSearchDTO.class);
 				
-				String from = req.params("from");
-				Date dateFrom = new SimpleDateFormat("yyyy-MM-dd").parse(from); 
-				
-				String to = req.params("to");
-				Date dateTo = new SimpleDateFormat("yyyy-MM-dd").parse(to); 
-				
-				ArrayList<Order> orders = orderService.getByDate(dateFrom, dateTo, logged.getUsername());
+				ArrayList<Order> orders = orderService.getByDate(orderDTO.getDateFrom(), orderDTO.getDateTo(), logged.getUsername());
 				return gson.toJson(orders);
 			} catch (Exception e) {
 				e.printStackTrace();
