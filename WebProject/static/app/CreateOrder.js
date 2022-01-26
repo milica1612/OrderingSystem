@@ -17,7 +17,7 @@ Vue.component("createOrder", {
 				isAsc: false
 			},
 			comment: "",
-			rate: "",
+			rate: 5,
 			can_comment: false
         }
     },
@@ -40,6 +40,15 @@ Vue.component("createOrder", {
 			})
 	},
 	computed: {
+		isNotFilled(){
+			if(this.comment == ""){
+				return true
+			}else if(this.rate < 1 || this.rate > 5){
+				return  true
+			}else{
+				return false
+			}
+		}
 	},
 	methods: {
 		viewRestaurant : function (restaurant) {
@@ -194,7 +203,6 @@ Vue.component("createOrder", {
 				})
 		}
 	},
-	computed:{},
 	template: `
 	<div class="reg">
 		<div class="container">
@@ -253,7 +261,7 @@ Vue.component("createOrder", {
 			<label class="restaurant_data" v-else>CLOSE</label>
 			<br>
 		</div>
-			<button class="btn_manager" type="button" data-bs-toggle="modal" data-bs-target="#modall" v-on:click="setSelected(r)">Comment and rate</button>
+			<button class="btn_manager" type="button" data-bs-toggle="modal" data-bs-target="#modall" v-on:click="setSelected(r)" >Comment and rate</button>
 			<hr style="height:10px">
         </div>
         <div class="modal fade" id="modall" tabindex="-1" aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true" >
@@ -274,7 +282,7 @@ Vue.component("createOrder", {
   										</div>
 										<div class="modal-footer">
 	                						<button type="button" class="btn_modal" data-bs-dismiss="modal">Close</button>
-	                						<button type="submit" class="btn_modal"  :key="button_text" @click="commentAndRate" data-bs-dismiss="modal">Comment And Rate</button>
+	                						<button type="submit" class="btn_modal"  @click="commentAndRate" data-bs-dismiss="modal" :disabled="isNotFilled">Comment And Rate</button>
 	              						</div>
               					</div>
               					
