@@ -10,6 +10,7 @@ import beans.Customer;
 import beans.Item;
 import beans.Restaurant;
 import dao.RestaurantDAO;
+import dto.RestaurantSearchDTO;
 
 public class RestaurantService {
 	private RestaurantDAO restaurantDAO;
@@ -204,6 +205,25 @@ public class RestaurantService {
 			}
 		}
 		restaurantDAO.saveAll(restaurants);
+	}
+
+	public ArrayList<Restaurant> search(RestaurantSearchDTO dto) {
+		Double rating;
+		try {
+			rating = Double.parseDouble(dto.getRating());
+		}catch (Exception e){
+			rating = (double) 0;
+		}
+		ArrayList<Restaurant> all = getAll();
+		ArrayList<Restaurant> result = new ArrayList<Restaurant>();
+		for (Restaurant restaurant : all) {
+			if(restaurant.getName().toLowerCase().contains(dto.getName().toLowerCase().trim()) && 
+					restaurant.getLocation().getAddress().getCity().toLowerCase().contains(dto.getLocation().toLowerCase().trim()) 
+					&& restaurant.getType().contains(dto.getType()) && restaurant.getRating() >= rating) {
+				result.add(restaurant);
+			}
+		}
+		return result;
 	}
 	
 }

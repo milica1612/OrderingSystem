@@ -19,6 +19,7 @@ import beans.Restaurant;
 import beans.User;
 import beans.UserType;
 import dto.RegistrationDTO;
+import dto.RestaurantSearchDTO;
 import service.RestaurantService;
 
 public class RestaurantController {
@@ -243,6 +244,19 @@ public class RestaurantController {
 			}else {
 				return gson.toJson(restaurant);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+	});
+	
+	put("/restaurants/search", (req, res) -> {
+		res.type("application/json");
+		try {
+			
+			RestaurantSearchDTO dto = gson.fromJson(req.body(), RestaurantSearchDTO.class);
+			ArrayList<Restaurant> restaurants = restaurantService.search(dto);
+			return gson.toJson(restaurants);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "";

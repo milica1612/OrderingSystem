@@ -156,3 +156,7 @@ z-index: 40;
 	border: 2px solid grey;
 	border-radius: 25px;
 }
+
+.select_search {
+	width: 120px;
+}
