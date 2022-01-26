@@ -4,7 +4,10 @@ Vue.component("createOrder", {
         return {
 			restaurants: [],
 			restaurant: null,
-			searchParam: "",
+			searchName: "",
+			searchType: "",
+			searchLocation: "",
+			searchRating: "",
 			selected: {},
 			types: [],
 			user: {},
@@ -60,6 +63,7 @@ Vue.component("createOrder", {
 					.then(response => {
 						if (response.data != null) {
 							this.restaurants = response.data
+							console.log(this.users);
 						}
 					})
 			}
@@ -73,18 +77,24 @@ Vue.component("createOrder", {
 				});
 			}
 		},
-		searchByType(){
-			if(this.searchParam == ""){
+		search(){
+			if(this.searchName == "" && this.searchLocation == "" && this.searchRating == "" && this.searchType == ""){
 				axios.get('/restaurants/getAll')
 					.then(response => {
 						if (response.data != null) {
 							this.restaurants = response.data
-							console.log(this.users);
 						}
 					})
 			}
 			else{
-				axios.get('restaurants/getByType/' + this.searchParam).then(response => {
+				let params = {
+					name : this.searchName,
+					type: this.searchType,
+					location: this.searchLocation,
+					rating: this.searchRating
+
+				}
+				axios.put('restaurants/search', JSON.stringify(params)).then(response => {
 					this.restaurants = response.data
 					console.log(response)
 
@@ -211,11 +221,26 @@ Vue.component("createOrder", {
 		<div id="search_id" class="container">
 			<table>
 			<tr>
-			<td><input type="search"  placeholder="Search..." v-model="searchParam"></td>
-			<td><button class="btn_search_res" type="button" v-on:click="searchByName">Search By Name</button></td>
-			<td><button class="btn_search_res" type="button" v-on:click="searchByType">Search By Type</button></td>
-			<td><button class="btn_search_res" type="button" v-on:click="searchByLocation">Search By Location</button></td>
-			<td><button class="btn_search_res" type="button" v-on:click="searchByRating">Search By Rating</button></td>
+			<td><input type="search"  placeholder="Name..." v-model="searchName"></td>
+			<td><input type="search"  placeholder="Location..." v-model="searchLocation"></td>
+			
+			<td class="select_search">
+			<select  class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="searchType">
+					<option value=""></option>
+                     <option v-for="type in types" :value="type">{{type}}</option>
+			</select>
+			</td>
+			<td class="select_search">
+			<select class="form-select form-select-sm"  aria-label=".form-select-sm example" v-model="searchRating">
+				<option value=""></option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+			</select>
+			</td>
+			<td><button class="btn_search_res" type="button" v-on:click="search">Search</button></td>
 			</tr>
 			<tr>
 			<td colspan="2"><label>Filtrate</label></td>
@@ -225,7 +250,6 @@ Vue.component("createOrder", {
 			<td colspan="2">
 			<button class="btn_filtrate" type="button" v-on:click="filtrateOpen">Open restaurants</button>
 			</td>
-			<td></td>
 			<td colspan="2">
 			<select  class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="filter"
 			 @change="filtrateByType(filter)">
