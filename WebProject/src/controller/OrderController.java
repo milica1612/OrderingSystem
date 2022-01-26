@@ -2,12 +2,14 @@ package controller;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
+import static spark.Spark.put;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import beans.CartItem;
 import beans.Order;
@@ -44,7 +46,7 @@ public class OrderController {
 			
 			try {
 				Order newOrder = gson.fromJson(req.body(), Order.class);
-				
+				newOrder.setTotal(newOrder.getCart().getTotal());
 				Session session = req.session(true);
 				User logged = session.attribute("logged");		
 				String customer = logged.getName() + " " + logged.getLastName();
@@ -117,6 +119,34 @@ public class OrderController {
 				e.printStackTrace();
 				return null;
 			}
+		});
+		
+		put("/orders/filtrate/type/:filter", (req,res) -> {
+			res.type("application/json");
+			try {
+				String param = req.params("filter");
+				ArrayList<Order> results = gson.fromJson(req.body(), new TypeToken<ArrayList<Order>>(){}.getType());
+				ArrayList<Order> filtratedOrders = orderService.filtrateOrdersByRestaurantType(param, results);
+				return gson.toJson(filtratedOrders);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			
+		});
+		
+		put("/orders/filtrate/status/:filter", (req,res) -> {
+			res.type("application/json");
+			try {
+				String param = req.params("filter");
+				ArrayList<Order> results = gson.fromJson(req.body(), new TypeToken<ArrayList<Order>>(){}.getType());
+				ArrayList<Order> filtratedOrders = orderService.filtrateOrdersByOrderStatus(param, results);
+				return gson.toJson(filtratedOrders);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			
 		});
 	}
 }

@@ -10,12 +10,14 @@ public class Order {
 	private Date dateAndTime;
 	private OrderStatus orderStatus;
 	private String customer;
+	private double total;
+	
 	public Order() {
 		
 	}
 	
 	public Order(String code, Cart cart, String restaurant, Date dateAndTime, OrderStatus orderStatus,
-			String customer) {
+			String customer, double total) {
 		super();
 		this.code = code;
 		this.cart = cart;
@@ -23,6 +25,7 @@ public class Order {
 		this.dateAndTime = dateAndTime;
 		this.orderStatus = orderStatus;
 		this.customer = customer;
+		this.total = total;
 	}
 
 	public String getCode() {
@@ -71,6 +74,14 @@ public class Order {
 
 	public void setCustomer(String customer) {
 		this.customer = customer;
+	}
+
+	public double getTotal() {
+		return total;
+	}
+
+	public void setTotal(double total) {
+		this.total = total;
 	}
 	
 }

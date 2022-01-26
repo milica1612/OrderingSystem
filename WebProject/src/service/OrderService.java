@@ -7,28 +7,34 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonSyntaxException;
 
 import beans.Customer;
 import beans.Cart;
 import beans.CartItem;
 import beans.Order;
+import beans.OrderStatus;
+import beans.Restaurant;
 import dao.CartDAO;
 import dao.CustomerDAO;
 import dao.OrderDAO;
+import dao.RestaurantDAO;
 
 public class OrderService {
 
 	private OrderDAO orderDAO;
 	private CustomerDAO customerDAO;
 	private CartDAO cartDAO;
+	private RestaurantDAO restaurantDAO;
 	private ImageService imageService;
 
-	public OrderService(OrderDAO orderDAO, CustomerDAO customerDAO, CartDAO cartDAO, ImageService imageService) {
+	public OrderService(OrderDAO orderDAO, CustomerDAO customerDAO, CartDAO cartDAO, RestaurantDAO restaurantDAO, ImageService imageService) {
 		super();
 		this.orderDAO = orderDAO;
 		this.customerDAO = customerDAO;
 		this.imageService = imageService;
 		this.cartDAO = cartDAO;
+		this.restaurantDAO = restaurantDAO;
 	}
 
 	public ArrayList<Order> getAll() {
@@ -77,15 +83,14 @@ public class OrderService {
 					for(Order o: orders) {
 						if(o.getCode().equals(order.getCode())){
 							c.setPoints(c.getPoints() - points);
+							o.setOrderStatus(OrderStatus.CANCELED);
 							if(c.getPoints() < 0) {
 								c.setPoints(0);
 							}
-							orders.remove(o);
 							break;
 						}
 					}
 					c.setOrders(orders);
-					allOrders.remove(order);
 				}
 			}
 		
@@ -151,4 +156,31 @@ public class OrderService {
 		}
 		return result;
 	}
+
+	public ArrayList<Order> filtrateOrdersByRestaurantType(String param, ArrayList<Order> results) throws JsonSyntaxException, IOException {
+		
+		ArrayList<Order> orders = new ArrayList<Order>();
+		for(Order order : results) {
+			Restaurant restaurant = restaurantDAO.getRestaurant(order.getRestaurant());
+			if(restaurant.getType().toLowerCase().contains(param.toLowerCase().trim())) {
+				orders.add(order);
+			}
+		}
+		
+		return orders;
+	}
+
+	public ArrayList<Order> filtrateOrdersByOrderStatus(String param, ArrayList<Order> results) {
+		
+		ArrayList<Order> orders = new ArrayList<Order>();
+		for(Order order : results) {
+			if(order.getOrderStatus().toString().equals(param)) {
+				orders.add(order);
+			}
+		}
+		
+		return orders;
+	}
+	
+	
 }

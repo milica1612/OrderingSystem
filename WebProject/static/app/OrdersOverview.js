@@ -3,7 +3,7 @@ Vue.component("ordersOverview", {
 	data() {
         return {
 		orders: [],
-		btn_txt_name: "Sort By Name",
+		btn_txt_res: "Sort By Restaurant",
 		btn_txt_price: "Sort By Price",
 		btn_txt_date: "Sort By Date",	
 		searchParam: "",
@@ -11,6 +11,11 @@ Vue.component("ordersOverview", {
 		searchPriceTo: "",
 		searchDateFrom: "",
 		searchDateTo: "",
+		sort: {
+				key: '',
+				isAsc: false
+			},
+		types: [],
 	}
     },
 	mounted() {
@@ -18,6 +23,11 @@ Vue.component("ordersOverview", {
           .then(response => {
 				 	this.orders = response.data
 		   })
+		axios.get('/restaurants/getTypes').then(
+				response =>{
+					this.types = response.data
+				}
+			).catch()
 	},
 	methods: {	
 		cancelOrder(ord){
@@ -159,7 +169,58 @@ Vue.component("ordersOverview", {
 					});
 				}
 			}
-		}
+		},
+		sortedClass (key) {
+			return this.sort.key === key ? `sorted ${this.sort.isAsc ? 'asc' : 'desc' }` : '';
+		},
+		sortBy (key) {
+			this.sort.isAsc = this.sort.key === key ? !this.sort.isAsc : false;
+			this.sort.key = key;
+			this.sortedItems()
+		},
+		sortedItems () {
+			const list = this.orders.slice();
+			console.log(list);
+			if (this.sort.key !="") {
+				list.sort((a, b) => {
+					a = a[this.sort.key]
+					b = b[this.sort.key]
+					return (a === b ? 0 : a > b ? 1 : -1) * (this.sort.isAsc ? 1 : -1)
+				});
+			}
+			this.orders = list
+			if (this.sort.isAsc){
+			this.btn_txt_res = "Sort By Restaurant desc"
+				this.btn_txt_price = "Sort By Price desc"
+				this.btn_txt_date = "Sort By Date desc"
+			}else{
+				this.btn_txt_res = "Sort By Restaurant asc"
+				this.btn_txt_price = "Sort By Price asc"
+				this.btn_txt_date = "Sort By Date asc"
+			}
+			this.$forceUpdate()
+		},
+		
+		filtrateByType(filter){
+			axios.put('/orders/filtrate/type/' + filter, JSON.stringify(this.orders)
+			).then(response => {
+				this.orders = response.data
+				console.log(response)
+
+			}).catch(err => {
+				console.log(err)
+			});
+		},
+		filtrateByStatus(filter2){
+			axios.put('/orders/filtrate/status/' + filter2, JSON.stringify(this.orders)
+			).then(response => {
+				this.orders = response.data
+				console.log(response)
+
+			}).catch(err => {
+				console.log(err)
+			});
+		},
 	},
 	computed:{},
 	template: `
@@ -184,20 +245,35 @@ Vue.component("ordersOverview", {
 			<td><button class="btn_search_res" type="button" v-on:click="searchByDate">Search By Date</button></td>
 			</tr>
 			<tr>
-			<td colspan="2"><label>Filtrate by order status</label></td>
-			<td colspan="2"><label>Filtrate By Type</label></td>
+			<td><label>Filtrate by order status</label>
+			<select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="filter2"
+			@change="filtrateByStatus(filter2)">
+				<option value="PROCESSING">PROCESSING</option>
+				<option value="PREPARING">PREPARING</option>
+				<option value="WAITING_FOR_DELIVERY">WAITING_FOR_DELIVERY</option>
+				<option value="IN_TRANSPORT">IN_TRANSPORT</option>
+				<option value="DELIVERED">DELIVERED</option>
+				<option value="CANCELED">CANCELED</option>
+			</select>
+			</td>
+			<td><label>Filtrate By Type</label>
+			<select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="filter"
+			 @change="filtrateByType(filter)">
+                     <option v-for="type in types" :value="type">{{type}}</option>
+			</select>	
+			</td>
 			</tr>
 			</table>
 			<table>
 			<tr>
 			<td>
-				<button class="btn_sort" type="button" >{{this.btn_txt_name}}</button>
+				<button class="btn_sort" type="button" :class="sortedClass('restaurant')" @click="sortBy('restaurant')">{{this.btn_txt_res}}</button>
 			</td>
 			<td>
-				<button class="btn_sort" type="button"  >{{this.btn_txt_price}}</button>
+				<button class="btn_sort" type="button"  :class="sortedClass('total')" @click="sortBy('total')" >{{this.btn_txt_price}}</button>
 			</td>
 			<td>
-				<button class="btn_sort" type="button">{{this.btn_txt_date}}</button>
+				<button class="btn_sort" type="button"  :class="sortedClass('dateAndTime')" @click="sortBy('dateAndTime')">{{this.btn_txt_date}}</button>
 			</td>
 			</tr>
 			</table>

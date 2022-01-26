@@ -75,7 +75,7 @@ public class Main {
 		CartService cartService = new CartService(cartDAO, imageService);
 
 		OrderDAO orderDAO = new OrderDAO("./files/orders.json");
-		OrderService orderService = new OrderService(orderDAO, customerDAO, cartDAO, imageService);
+		OrderService orderService = new OrderService(orderDAO, customerDAO, cartDAO, restaurantDAO, imageService);
 		
 		UserController userController = new UserController(customerService, userService, managerService, delivererService);
 		CustomerController customerController = new CustomerController(customerService, userService, managerService, delivererService);
