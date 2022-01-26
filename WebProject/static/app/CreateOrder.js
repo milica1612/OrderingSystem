@@ -60,7 +60,6 @@ Vue.component("createOrder", {
 					.then(response => {
 						if (response.data != null) {
 							this.restaurants = response.data
-							console.log(this.users);
 						}
 					})
 			}

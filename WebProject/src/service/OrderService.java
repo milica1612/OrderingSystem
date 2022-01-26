@@ -2,6 +2,7 @@ package service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.google.gson.JsonElement;
 
@@ -90,5 +91,47 @@ public class OrderService {
 		customerDAO.saveAll(customers);
 		return order;
 	}
+
+	public ArrayList<Order> getByRestaurant(String restaurant, String username) {
+		Customer customer = customerDAO.getByUsername(username);
+		ArrayList<Order> allOrders = customer.getOrders();
+		ArrayList<Order> result = new ArrayList<Order>();
+		if(allOrders != null) {
+			for(Order order : allOrders) {
+				if(order.getRestaurant().toLowerCase().contains(restaurant.toLowerCase().trim())) {
+					result.add(order);
+				}
+			}
+		}
 	
+		return result;
+	}
+
+	public ArrayList<Order> getByPrice(Double priceFrom, Double priceTo, String username) {
+		Customer customer = customerDAO.getByUsername(username);
+		ArrayList<Order> allOrders = customer.getOrders();
+		ArrayList<Order> result = new ArrayList<Order>();
+		if(allOrders != null) {
+			for(Order order : allOrders) {
+				if(order.getCart().getTotal() >= priceFrom && order.getCart().getTotal() <= priceTo) {
+					result.add(order);
+				}
+			}
+		}
+		return result;
+	}
+
+	public ArrayList<Order> getByDate(Date dateFrom, Date dateTo, String username) {
+		Customer customer = customerDAO.getByUsername(username);
+		ArrayList<Order> allOrders = customer.getOrders();
+		ArrayList<Order> result = new ArrayList<Order>();
+		if(allOrders != null) {
+			for(Order order : allOrders) {
+				if(order.getDateAndTime().after(dateFrom) && order.getDateAndTime().before(dateTo)) {
+					result.add(order);
+				}
+			}
+		}
+		return result;
+	}
 }
