@@ -233,5 +233,17 @@ public class OrderService {
 		}
 	return result;
 		
+	}
+
+	public Order updateStatus(Order o) throws IOException {
+		ArrayList<Order> orders = getAll();
+		for (Order order : orders) {
+			if(order.getCode().equals(o.getCode())) {
+				order.setOrderStatus(o.getOrderStatus());
+				break;
+			}
+		}
+		orderDAO.saveAll(orders);
+		return o;
 	}	
 }

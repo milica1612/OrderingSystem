@@ -174,6 +174,20 @@ Vue.component("managerOrderOverview", {
                 console.log(err)
             });
         },
+        changeOrderStatusToPreparing(o){
+            axios.put('/orders/changeStatus/preparing', JSON.stringify(o))
+                .then(response => {
+                        console.log(response)
+                        location.reload()
+                    });
+        },
+        changeOrderStatusToWaitingForDelivery(o){
+            axios.put('/orders/changeStatus/waitingForDelivery', JSON.stringify(o))
+                .then(response => {
+                    console.log(response)
+                    location.reload()
+                });
+        }
     },
     computed:{},
     template: `
@@ -237,7 +251,8 @@ Vue.component("managerOrderOverview", {
 					<label  class="restaurant_data">QUANTITY: {{cartItem.quantity}}</label>
 				</div> </br></br>
 				<label class="restaurant_name">TOTAL: {{order.cart.total}} din;  </label> 
-				<button class="btn_manager" type="button" data-bs-toggle="modal" data-bs-target="#modal" v-if="order.orderStatus=='PROCESSING'" v-on:click="cancelOrder(order)">Cancel Order</button></br>
+				<button class="btn_manager" type="button" v-if="order.orderStatus=='PROCESSING'" v-on:click="changeOrderStatusToPreparing(order)">Preparing</button></br>
+				<button class="btn_manager" type="button" v-if="order.orderStatus=='PREPARING'" v-on:click="changeOrderStatusToWaitingForDelivery(order)">Waiting For Delivery</button></br>
 				<hr style="height:10px">
 			</div>
 	</div>
