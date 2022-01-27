@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 
 import beans.CartItem;
 import beans.Order;
+import beans.OrderStatus;
 import beans.Restaurant;
 import beans.User;
 import dto.OrderSearchDTO;
@@ -35,6 +36,17 @@ public class OrderController {
 				User logged = session.attribute("logged");
 			
 				return gson.toJson(orderService.getByCustomer(logged.getUsername()));	
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
+		
+		get("/orders/getByRestaurant/:name", (req, res) -> {
+			res.type("application/json");
+			try {
+				ArrayList<Order> orders = orderService.getAllForRestaurant(req.params("name"));
+				return gson.toJson(orders);
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
@@ -84,6 +96,30 @@ public class OrderController {
 				User logged = session.attribute("logged");
 				
 				ArrayList<Order> orders = orderService.getByRestaurant(req.params("name"), logged.getUsername());
+				return gson.toJson(orders);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
+		
+		put("orders/getForRestaurant/byDate/:name", (req, res) -> {
+			res.type("application/json");
+			try {
+				OrderSearchDTO orderDTO = gson.fromJson(req.body(), OrderSearchDTO.class);
+				ArrayList<Order> orders = orderService.getForRestaurantByDate(req.params("name"), orderDTO);
+				return gson.toJson(orders);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
+		
+		put("orders/getForRestaurant/byPrice/:name", (req, res) -> {
+			res.type("application/json");
+			try {
+				OrderSearchDTO orderDTO = gson.fromJson(req.body(), OrderSearchDTO.class);
+				ArrayList<Order> orders = orderService.getForRestaurantByPrice(req.params("name"), orderDTO);
 				return gson.toJson(orders);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -142,6 +178,34 @@ public class OrderController {
 				ArrayList<Order> results = gson.fromJson(req.body(), new TypeToken<ArrayList<Order>>(){}.getType());
 				ArrayList<Order> filtratedOrders = orderService.filtrateOrdersByOrderStatus(param, results);
 				return gson.toJson(filtratedOrders);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			
+		});
+		
+		put("/orders/changeStatus/preparing", (req,res) -> {
+			res.type("application/json");
+			try {
+				Order order = gson.fromJson(req.body(), Order.class);
+				order.setOrderStatus(OrderStatus.PREPARING);
+				Order newOrder = this.orderService.updateStatus(order);
+				return gson.toJson(newOrder);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			
+		});
+		
+		put("/orders/changeStatus/waitingForDelivery", (req,res) -> {
+			res.type("application/json");
+			try {
+				Order order = gson.fromJson(req.body(), Order.class);
+				order.setOrderStatus(OrderStatus.WAITING_FOR_DELIVERY);
+				Order newOrder = this.orderService.updateStatus(order);
+				return gson.toJson(newOrder);
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;

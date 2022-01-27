@@ -20,6 +20,7 @@ import dao.CartDAO;
 import dao.CustomerDAO;
 import dao.OrderDAO;
 import dao.RestaurantDAO;
+import dto.OrderSearchDTO;
 
 public class OrderService {
 
@@ -191,6 +192,68 @@ public class OrderService {
 		
 		return orders;
 	}
-	
-	
+
+	public ArrayList<Order> getAllForRestaurant(String params) {
+		ArrayList<Order> orders = getAll();
+		ArrayList<Order> result = new ArrayList<Order>();
+		for (Order order : orders) {
+			if(order.getRestaurant().equals(params)) {
+				result.add(order);
+			}
+		}
+	return result;
+	}
+
+	public ArrayList<Order> getForRestaurantByDate(String params, OrderSearchDTO orderDTO) throws ParseException {
+		if(orderDTO.getDateFrom() == null) {
+			orderDTO.setDateFrom("2000-01-01");
+		}
+		if(orderDTO.getDateTo() == null) {
+			orderDTO.setDateTo("2100-01-01");
+		}
+		Date from = new SimpleDateFormat("yyyy-MM-dd").parse(orderDTO.getDateFrom());
+		Date to = new SimpleDateFormat("yyyy-MM-dd").parse(orderDTO.getDateTo()); 
+		
+		ArrayList<Order> orders = getAll();
+		ArrayList<Order> result = new ArrayList<Order>();
+		for (Order order : orders) {
+			if(order.getRestaurant().equals(params)) {
+				if(order.getDateAndTime().after(from) && order.getDateAndTime().before(to)) {
+					result.add(order);
+				}
+			}
+		}
+	return result;
+	}
+
+	public ArrayList<Order> getForRestaurantByPrice(String params, OrderSearchDTO orderDTO) {
+		if(orderDTO.getPriceTo() == 0) {
+			orderDTO.setPriceTo(50000.00);
+		}
+		ArrayList<Order> orders = getAll();
+		ArrayList<Order> result = new ArrayList<Order>();
+		for (Order order : orders) {
+			if(order.getRestaurant().equals(params)) {
+				System.out.println(orderDTO.getPriceFrom());
+				System.out.println(orderDTO.getPriceTo());
+				if(order.getTotal() >= orderDTO.getPriceFrom() && order.getTotal() <= orderDTO.getPriceTo()) {
+					result.add(order);
+				}
+			}
+		}
+	return result;
+		
+	}
+
+	public Order updateStatus(Order o) throws IOException {
+		ArrayList<Order> orders = getAll();
+		for (Order order : orders) {
+			if(order.getCode().equals(o.getCode())) {
+				order.setOrderStatus(o.getOrderStatus());
+				break;
+			}
+		}
+		orderDAO.saveAll(orders);
+		return o;
+	}	
 }
