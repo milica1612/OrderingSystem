@@ -10,6 +10,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
 
 import beans.Customer;
+import beans.CustomerType;
 import beans.Cart;
 import beans.CartItem;
 import beans.Order;
@@ -42,14 +43,22 @@ public class OrderService {
 	}
 
 	public Order create(Order newOrder) throws IOException {
-		Order created = orderDAO.create(newOrder);
 		double points = newOrder.getCart().getTotal()/1000*133;
 		ArrayList<Customer> customers = customerDAO.getAll();
 		for(Customer customer: customers) {
 			if(customer.getUsername().equals(newOrder.getCart().getCustomer())) {
+				
 				customer.setPoints(customer.getPoints() + points);
+				if(customer.getPoints() >= 200 && customer.getPoints() < 400) {
+					customer.setCustomerType(new CustomerType("Bronze", 0.95, 200));
+				}else if(customer.getPoints() >= 400 && customer.getPoints() < 650) {
+					customer.setCustomerType(new CustomerType("Silver", 0.90, 400));
+				}
+				else if(customer.getPoints() >= 650) {
+					customer.setCustomerType(new CustomerType("Gold", 0.85, 650));
+				}
 				ArrayList<Order> orders = customer.getOrders();
-				orders.add(created);
+				orders.add(newOrder);
 				customer.setOrders(orders);
 				break;
 			}
@@ -63,6 +72,7 @@ public class OrderService {
 			}
 		}
 		
+		Order created = orderDAO.create(newOrder);
 		cartDAO.saveAll(carts);
 		customerDAO.saveAll(customers);
 		return created;

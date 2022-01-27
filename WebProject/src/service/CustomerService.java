@@ -9,6 +9,7 @@ import com.google.gson.JsonElement;
 import beans.Customer;
 import beans.Order;
 import beans.OrderStatus;
+import beans.Restaurant;
 import beans.User;
 import dao.CustomerDAO;
 import dto.LoginDTO;
@@ -73,4 +74,14 @@ public class CustomerService {
 		return false;
 	}
 
+	public ArrayList<Customer> filtrateByCustomerType(String param, ArrayList<Customer> results) {
+		
+		ArrayList<Customer> customers = new ArrayList<Customer>();
+		for(Customer c : results) {
+			if(c.getCustomerType() != null && c.getCustomerType().getName().toLowerCase().contains(param.toLowerCase().trim())) {
+			customers.add(c);
+			}
+		}
+		return customers;
+	}
 }
