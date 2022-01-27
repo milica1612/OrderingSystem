@@ -12,6 +12,7 @@ const ChangePassword = {template: '<changePassword></changePassword>' }
 const CartOverview = {template: '<cartOverview></cartOverview>' }
 const OrdersOverview = {template: '<ordersOverview></ordersOverview>' }
 const ManagerOrderOverview = {template: '<managerOrderOverview></managerOrderOverview>' }
+const ManagerDeliveryRequests = {template: '<managerDeliveryRequests></managerDeliveryRequests>' }
 
 const router = new VueRouter({
 	  mode: 'hash',
@@ -29,7 +30,8 @@ const router = new VueRouter({
 		{ path: '/changePassword', component: ChangePassword },
 		{ path: '/cartOverview', component: CartOverview },
 		{ path: '/ordersOverview', component: OrdersOverview },
-		{ path: '/managerOrderOverview', component: ManagerOrderOverview }
+		{ path: '/managerOrderOverview', component: ManagerOrderOverview },
+		{ path: '/managerDeliveryRequests', component: ManagerDeliveryRequests }
 
 	]
 });

@@ -193,7 +193,7 @@ Vue.component("managerOrderOverview", {
     template: `
 	<div class="reg">
 		<div class="container">
-		    <p id="title" class="text-center">MY ORDERS</p>
+		    <p id="title" class="text-center">RESTAURANT ORDERS</p>
 		</div> </br>
 		<div id="search_id" class="container">
 			<table>
