@@ -42,7 +42,7 @@ Vue.component("managerDeliveryRequests", {
 				<label  class="restaurant_name">TIME: {{o.order.dateAndTime}};  </label>
 				<label  class="restaurant_name">STATUS: {{o.order.orderStatus}};  </label>
 				</br>
-				<div class="container" id="cart_view" v-for="cartItem in o.order.cart.items" :key="o.cartItem.item.name">
+				<div class="container" id="cart_view" v-for="cartItem in o.order.cart.items" :key="cartItem.item.nae">
 					<img v-bind:src= "cartItem.item.photo" alt="" id="item_logo" class="rounded float-start" style="margin-top: 15px"></br>
 					<label  class="restaurant_name">{{cartItem.item.name}}</label></br>
 					<label  class="restaurant_data">{{cartItem.item.price}} din.</label></br>
