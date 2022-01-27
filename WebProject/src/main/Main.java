@@ -84,7 +84,7 @@ public class Main {
 		RestaurantController restaurantController = new RestaurantController(restaurantService);
 		CommentController commentController = new CommentController(commentService, restaurantService);
 		CartController cartController = new CartController(cartService);
-		OrderController orderController = new OrderController(orderService);
+		OrderController orderController = new OrderController(orderService, delivererService);
 	}
 
 }
