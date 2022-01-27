@@ -135,13 +135,25 @@ public class OrderService {
 			priceTo = 50000.00;
 		}
 		
-		Customer customer = customerDAO.getByUsername(username);
-		ArrayList<Order> allOrders = customer.getOrders();
 		ArrayList<Order> result = new ArrayList<Order>();
-		if(allOrders != null) {
-			for(Order order : allOrders) {
-				if(order.getCart().getTotal() >= priceFrom && order.getCart().getTotal() <= priceTo) {
-					result.add(order);
+		Customer customer = customerDAO.getByUsername(username);
+		if(customer != null) {
+			ArrayList<Order> allOrders = customer.getOrders();
+			if(allOrders != null) {
+				for(Order order : allOrders) {
+					if(order.getCart().getTotal() >= priceFrom && order.getCart().getTotal() <= priceTo) {
+						result.add(order);
+					}
+				}
+			}
+		}else {
+			Deliverer deliverer = delivererDAO.getByUsername(username);	
+			ArrayList<Order> allOrders = deliverer.getOrders();
+			if(allOrders != null) {
+				for(Order order : allOrders) {
+					if(order.getCart().getTotal() >= priceFrom && order.getCart().getTotal() <= priceTo) {
+						result.add(order);
+					}
 				}
 			}
 		}
@@ -159,13 +171,25 @@ public class OrderService {
 		Date from = new SimpleDateFormat("yyyy-MM-dd").parse(dateFrom);
 		Date to = new SimpleDateFormat("yyyy-MM-dd").parse(dateTo); 
 		
-		Customer customer = customerDAO.getByUsername(username);
-		ArrayList<Order> allOrders = customer.getOrders();
 		ArrayList<Order> result = new ArrayList<Order>();
-		if(allOrders != null) {
-			for(Order order : allOrders) {
-				if(order.getDateAndTime().after(from) && order.getDateAndTime().before(to)) {
-					result.add(order);
+		Customer customer = customerDAO.getByUsername(username);
+		if(customer != null) {
+			ArrayList<Order> allOrders = customer.getOrders();
+			if(allOrders != null) {
+				for(Order order : allOrders) {
+					if(order.getDateAndTime().after(from) && order.getDateAndTime().before(to)) {
+						result.add(order);
+					}
+				}
+			}
+		}else {
+			Deliverer deliverer = delivererDAO.getByUsername(username);	
+			ArrayList<Order> allOrders = deliverer.getOrders();
+			if(allOrders != null) {
+				for(Order order : allOrders) {
+					if(order.getDateAndTime().after(from) && order.getDateAndTime().before(to)) {
+						result.add(order);
+					}
 				}
 			}
 		}
@@ -275,6 +299,7 @@ public class OrderService {
 		for(Deliverer deliverer: deliverers) {
 			if(deliverer.getUsername().equals(username)) {
 				ArrayList<Order> delOrders = deliverer.getOrders();
+				o.setOrderStatus(OrderStatus.WAITING_FOR_DELIVERY_APPROVAL);
 				delOrders.add(o);
 				break;
 			}

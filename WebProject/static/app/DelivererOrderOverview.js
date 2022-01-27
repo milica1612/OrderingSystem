@@ -30,26 +30,9 @@ Vue.component("delivererOrderOverview", {
 			).catch()
 	},
 	methods: {	
-		cancelOrder(ord){
-				let params = {
-					code: ord.code,
-					cart: ord.cart,
-					restaurant: ord.restaurant,
-					dateAndTime: ord.dateAndTime,
-					orderStatus: ord.orderStatus,
-					customer: ord.customer,
-				}
-				axios.post('/orders/cancelOrder', JSON.stringify(params))
-				.then(response => {
-					console.log(response);
-					location.reload()
-				}).catch(err => {
-                    console.log(err);
-                });
-		},
 		searchByRestaurant(){
 			if(this.searchParam == ""){
-				axios.get('/orders/getByCustomer')
+				axios.get('/orders/getByDeliverer')
 					.then(response => {
 						if (response.data != null) {
 							this.orders = response.data
@@ -68,7 +51,7 @@ Vue.component("delivererOrderOverview", {
 		},
 		searchByDate(){
 			if(this.searchDateFrom == "" && this.searchDateTo == ""){
-				axios.get('/orders/getByCustomer')
+				axios.get('/orders/getByDeliverer')
 					.then(response => {
 						if (response.data != null) {
 							this.orders = response.data
@@ -120,7 +103,7 @@ Vue.component("delivererOrderOverview", {
 		},
 		searchByPrice(){
 			if(this.searchPriceFrom == "" && this.searchPriceTo == ""){
-				axios.get('/orders/getByCustomer')
+				axios.get('/orders/getByDeliverer')
 					.then(response => {
 						if (response.data != null) {
 							this.orders = response.data
@@ -251,6 +234,7 @@ Vue.component("delivererOrderOverview", {
 				<option value="PROCESSING">PROCESSING</option>
 				<option value="PREPARING">PREPARING</option>
 				<option value="WAITING_FOR_DELIVERY">WAITING_FOR_DELIVERY</option>
+				<option value="WAITING_FOR_DELIVERY_APPROVAL">WAITING_FOR_DELIVERY_APPROVAL</option>
 				<option value="IN_TRANSPORT">IN_TRANSPORT</option>
 				<option value="DELIVERED">DELIVERED</option>
 				<option value="CANCELED">CANCELED</option>
@@ -294,7 +278,6 @@ Vue.component("delivererOrderOverview", {
 					<label  class="restaurant_data">QUANTITY: {{cartItem.quantity}}</label>
 				</div> </br></br>
 				<label class="restaurant_name">TOTAL: {{order.cart.total}} din;  </label> 
-				<button class="btn_manager" type="button" data-bs-toggle="modal" data-bs-target="#modal" v-if="order.orderStatus=='PROCESSING'" v-on:click="cancelOrder(order)">Cancel Order</button></br>
 				<hr style="height:10px">
 			</div>
 	</div>
