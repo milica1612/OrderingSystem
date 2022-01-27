@@ -41,6 +41,17 @@ public class OrderController {
 			}
 		});
 		
+		get("/orders/getByRestaurant/:name", (req, res) -> {
+			res.type("application/json");
+			try {
+				ArrayList<Order> orders = orderService.getAllForRestaurant(req.params("name"));
+				return gson.toJson(orders);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
+		
 		post("/orders/create", (req,res) -> {
 			res.type("application/json");
 			
@@ -84,6 +95,30 @@ public class OrderController {
 				User logged = session.attribute("logged");
 				
 				ArrayList<Order> orders = orderService.getByRestaurant(req.params("name"), logged.getUsername());
+				return gson.toJson(orders);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
+		
+		put("orders/getForRestaurant/byDate/:name", (req, res) -> {
+			res.type("application/json");
+			try {
+				OrderSearchDTO orderDTO = gson.fromJson(req.body(), OrderSearchDTO.class);
+				ArrayList<Order> orders = orderService.getForRestaurantByDate(req.params("name"), orderDTO);
+				return gson.toJson(orders);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
+		
+		put("orders/getForRestaurant/byPrice/:name", (req, res) -> {
+			res.type("application/json");
+			try {
+				OrderSearchDTO orderDTO = gson.fromJson(req.body(), OrderSearchDTO.class);
+				ArrayList<Order> orders = orderService.getForRestaurantByPrice(req.params("name"), orderDTO);
 				return gson.toJson(orders);
 			} catch (Exception e) {
 				e.printStackTrace();
