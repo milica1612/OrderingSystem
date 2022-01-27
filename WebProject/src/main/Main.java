@@ -72,7 +72,7 @@ public class Main {
 		CommentService commentService = new CommentService(commentDAO);
 		
 		CartDAO cartDAO = new CartDAO("./files/carts.json");
-		CartService cartService = new CartService(cartDAO, imageService);
+		CartService cartService = new CartService(cartDAO, customerDAO, imageService);
 
 		OrderDAO orderDAO = new OrderDAO("./files/orders.json");
 		OrderService orderService = new OrderService(orderDAO, customerDAO, cartDAO, restaurantDAO, imageService);

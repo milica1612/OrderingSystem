@@ -9,18 +9,22 @@ import com.google.gson.JsonSyntaxException;
 
 import beans.Cart;
 import beans.CartItem;
+import beans.Customer;
 import beans.Item;
 import dao.CartDAO;
+import dao.CustomerDAO;
 
 public class CartService {
 
 	private CartDAO cartDAO;
+	private CustomerDAO customerDAO;
 	private ImageService imageService;
 
-	public CartService(CartDAO cartDAO, ImageService imageService) {
+	public CartService(CartDAO cartDAO, CustomerDAO customerDAO, ImageService imageService) {
 		super();
 		this.cartDAO = cartDAO;
 		this.imageService = imageService;
+		this.customerDAO = customerDAO;
 	}
 
 	public ArrayList<Cart> getAll() {
@@ -31,9 +35,10 @@ public class CartService {
 		return cartDAO.getCart(customer);
 	}
 	
-	public Item addItemToCart(String customer, Item item, int quantity) throws JsonSyntaxException, IOException {
+	public Item addItemToCart(String customerName, Item item, int quantity) throws JsonSyntaxException, IOException {
 		
-		Cart cart = getByCustomerName(customer);	
+		Cart cart = getByCustomerName(customerName);
+		Customer customer = customerDAO.getByUsername(customerName);
 		ArrayList<Cart> allCarts = cartDAO.getAll();
 		boolean found = false;
 		if(allCarts != null && cart != null) {
@@ -53,6 +58,10 @@ public class CartService {
 					}
 					c.setItems(items);
 					double total = c.getTotal() + item.getPrice()*quantity;
+					if(customer != null && customer.getCustomerType() != null) {
+						total = total * customer.getCustomerType().getDiscount();
+					}
+			
 					c.setTotal(total);
 				}
 			}
@@ -60,12 +69,15 @@ public class CartService {
 		else {
 			allCarts = new ArrayList<Cart>();
 			cart = new Cart();
-			cart.setCustomer(customer);
+			cart.setCustomer(customerName);
 			ArrayList<CartItem> items = new ArrayList<CartItem>();
 			CartItem ci = new CartItem(item, quantity);
 			items.add(ci);
 			cart.setItems(items);
 			double total =  item.getPrice()*quantity;
+			if(customer != null && customer.getCustomerType() != null) {
+				total = total * customer.getCustomerType().getDiscount();
+			}
 			cart.setTotal(total);
 			allCarts.add(cart);
 		}

@@ -1,12 +1,14 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import beans.Comment;
 import beans.Customer;
 import beans.Deliverer;
 import beans.Gender;
 import beans.Manager;
+import beans.Order;
 import beans.User;
 import beans.UserType;
 import dto.RegistrationDTO;
@@ -18,6 +20,7 @@ import spark.Session;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
+import static spark.Spark.put;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -110,7 +113,19 @@ public class CustomerController {
 			
 		});
 		
-		
-		
+		put("/customers/filtrateByType/:filter", (req,res) -> {
+			res.type("application/json");
+			try {
+				
+				String param = req.params("filter");
+				ArrayList<Customer> results = gson.fromJson(req.body(), new TypeToken<ArrayList<Customer>>(){}.getType());
+				ArrayList<Customer> filtratedUsers = customerService.filtrateByCustomerType(param, results);
+				return gson.toJson(filtratedUsers);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			
+		});
 	}
 }

@@ -5,6 +5,7 @@ Vue.component("usersOverview", {
            	users: [],
 			filtratedUsers: [],
 			filter: "",
+			filter2: "",
  			sort: {
         		key: '',
         		isAsc: false
@@ -113,6 +114,16 @@ Vue.component("usersOverview", {
             }).catch(err => {
                 console.log(err)
             });
+		},
+		filtrateByCustomerType(filter2){
+			axios.put('customers/filtrateByType/' + filter2, JSON.stringify(this.users)
+                    ).then(response => {
+                        this.users = response.data
+                console.log(response)
+
+            }).catch(err => {
+                console.log(err)
+            });
 		}
 	},
 	template:`
@@ -141,8 +152,11 @@ Vue.component("usersOverview", {
 			</td>
 			<td colspan="2">
 			<label>Filtrate customers</label>
-			<select id="gender_select"  class="form-select form-select-sm" aria-label=".form-select-sm example">
-				<option value="0">GOLD</option>
+			<select id="gender_select"  class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="filter2"
+			@change="filtrateByCustomerType(filter2)">
+				<option value="Gold">Gold</option>
+				<option value="Silver">Silver</option>
+				<option value="Bronze">Bronze</option>
 			</select>
 			</td>
 			</tr>
