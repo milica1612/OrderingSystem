@@ -1,18 +1,22 @@
 package controller;
 
+import static spark.Spark.get;
 import static spark.Spark.post;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.gson.Gson;
 
+import beans.Comment;
 import beans.Customer;
 import beans.Deliverer;
 import beans.Gender;
 import beans.Manager;
 import beans.User;
 import beans.UserType;
+import dto.OrderRequest;
 import dto.RegistrationDTO;
 import service.CustomerService;
 import service.DelivererService;
@@ -84,6 +88,18 @@ public class DelivererController {
 
 				return gson.toJson(created);
 				
+			} catch(Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			
+		});
+		
+		get("/deliverers/getAllRequests/:name", (req, res) -> {
+			res.type("application/json");
+			try {	
+				ArrayList<OrderRequest> requests = delivererService.getAllRequests(req.params("name"));
+				return gson.toJson(requests);
 			} catch(Exception e) {
 				e.printStackTrace();
 				return null;

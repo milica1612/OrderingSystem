@@ -7,11 +7,14 @@ import java.util.ArrayList;
 import beans.Customer;
 import beans.Deliverer;
 import beans.Manager;
+import beans.Order;
+import beans.OrderStatus;
 import beans.User;
 import dao.CustomerDAO;
 import dao.DelivererDAO;
 import dao.ManagerDAO;
 import dto.LoginDTO;
+import dto.OrderRequest;
 import dto.UserDTO;
 
 public class DelivererService {
@@ -61,6 +64,34 @@ private DelivererDAO delivererDAO;
 		}
 		delivererDAO.saveAll(all);
 		return userFound;
+	}
+
+	public ArrayList<OrderRequest> getAllRequests(String restaurant) {
+		ArrayList<Deliverer> deliverers = getAll();
+		ArrayList<OrderRequest> requests = new ArrayList<OrderRequest>();
+		for (Deliverer deliverer : deliverers) {
+			for (Order o : deliverer.getOrders()) {
+				if(o.getOrderStatus().equals(OrderStatus.WAITING_FOR_DELIVERY_APPROVAL) && o.getRestaurant().equals(restaurant)) {
+					requests.add(new OrderRequest(deliverer, o));
+				}
+			}
+		}
+		return requests;
+	}
+
+	public void changeOrderToInTransport(OrderRequest orderReq) throws IOException {
+		ArrayList<Deliverer> deliverers = getAll();
+		for (Deliverer deliverer : deliverers) {
+			if(deliverer.getUsername().equals(orderReq.getDeliverer().getUsername())) {
+				for (Order order : deliverer.getOrders()) {
+					if(order.getCode().equals(orderReq.getOrder().getCode())) {
+						order.setOrderStatus(OrderStatus.IN_TRANSPORT);
+					}
+				}
+			}
+		}
+		delivererDAO.saveAll(deliverers);
+		
 	}
 
 }

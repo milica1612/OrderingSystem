@@ -16,18 +16,22 @@ import beans.Order;
 import beans.OrderStatus;
 import beans.Restaurant;
 import beans.User;
+import dto.OrderRequest;
 import dto.OrderSearchDTO;
+import service.DelivererService;
 import service.OrderService;
 import spark.Session;
 
 public class OrderController {
 
 	private OrderService orderService;
+	private DelivererService delivererService;
 	private static Gson gson = new Gson();
 	
-	public OrderController(OrderService orderService) {
+	public OrderController(OrderService orderService, DelivererService delivererService) {
 		super();
 		this.orderService = orderService;
+		this.delivererService = delivererService;
 	
 		get("/orders/getByCustomer", (req, res) -> {
 			res.type("application/json");
@@ -205,6 +209,21 @@ public class OrderController {
 				Order order = gson.fromJson(req.body(), Order.class);
 				order.setOrderStatus(OrderStatus.WAITING_FOR_DELIVERY);
 				Order newOrder = this.orderService.updateStatus(order);
+				return gson.toJson(newOrder);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			
+		});
+		
+		put("/orders/changeStatus/inTransport", (req,res) -> {
+			res.type("application/json");
+			try {
+				OrderRequest orderReq = gson.fromJson(req.body(), OrderRequest.class);
+				orderReq.getOrder().setOrderStatus(OrderStatus.IN_TRANSPORT);
+				Order newOrder = this.orderService.updateStatus(orderReq.getOrder());
+				delivererService.changeOrderToInTransport(orderReq);
 				return gson.toJson(newOrder);
 			} catch (Exception e) {
 				e.printStackTrace();
