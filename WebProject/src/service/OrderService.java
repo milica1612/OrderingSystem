@@ -11,6 +11,7 @@ import com.google.gson.JsonSyntaxException;
 
 import beans.Customer;
 import beans.CustomerType;
+import beans.Deliverer;
 import beans.Cart;
 import beans.CartItem;
 import beans.Order;
@@ -18,6 +19,7 @@ import beans.OrderStatus;
 import beans.Restaurant;
 import dao.CartDAO;
 import dao.CustomerDAO;
+import dao.DelivererDAO;
 import dao.OrderDAO;
 import dao.RestaurantDAO;
 import dto.OrderSearchDTO;
@@ -28,15 +30,17 @@ public class OrderService {
 	private CustomerDAO customerDAO;
 	private CartDAO cartDAO;
 	private RestaurantDAO restaurantDAO;
+	private DelivererDAO delivererDAO;
 	private ImageService imageService;
 
-	public OrderService(OrderDAO orderDAO, CustomerDAO customerDAO, CartDAO cartDAO, RestaurantDAO restaurantDAO, ImageService imageService) {
+	public OrderService(OrderDAO orderDAO, CustomerDAO customerDAO, CartDAO cartDAO, RestaurantDAO restaurantDAO, DelivererDAO delivererDAO, ImageService imageService) {
 		super();
 		this.orderDAO = orderDAO;
 		this.customerDAO = customerDAO;
 		this.imageService = imageService;
 		this.cartDAO = cartDAO;
 		this.restaurantDAO = restaurantDAO;
+		this.delivererDAO = delivererDAO;
 	}
 
 	public ArrayList<Order> getAll() {
@@ -255,5 +259,44 @@ public class OrderService {
 		}
 		orderDAO.saveAll(orders);
 		return o;
-	}	
+	}
+	
+	public Order updateStatusDeliverer(Order o, String username) throws IOException {
+		
+		ArrayList<Deliverer> deliverers = delivererDAO.getAll();
+		ArrayList<Order> orders = getAll();
+		
+		for (Order order : orders) {
+			if(order.getCode().equals(o.getCode())) {
+				order.setOrderStatus(OrderStatus.WAITING_FOR_DELIVERY_APPROVAL);
+				break;
+			}
+		}
+		for(Deliverer deliverer: deliverers) {
+			if(deliverer.getUsername().equals(username)) {
+				ArrayList<Order> delOrders = deliverer.getOrders();
+				delOrders.add(o);
+				break;
+			}
+		}
+		delivererDAO.saveAll(deliverers);
+		orderDAO.saveAll(orders);
+		return o;
+	}
+
+	public ArrayList<Order> getAllWithoutDeliverer() {
+		ArrayList<Order> orders = getAll();
+		ArrayList<Order> result = new ArrayList<Order>();
+		for (Order order : orders) {
+			if(order.getOrderStatus().equals(OrderStatus.WAITING_FOR_DELIVERY)) {
+				result.add(order);
+			}
+		}
+		return result;
+	}
+
+	public ArrayList<Order> getByDeliverer(String username) {
+		Deliverer deliverer = delivererDAO.getByUsername(username);
+		return deliverer.getOrders();
+	}
 }

@@ -53,6 +53,32 @@ public class OrderController {
 			}
 		});
 		
+		get("/orders/getWithoutDeliverer", (req, res) -> {
+			res.type("application/json");
+			try {
+				
+				ArrayList<Order> orders = orderService.getAllWithoutDeliverer();
+				return gson.toJson(orders);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
+		
+		get("/orders/getByDeliverer", (req, res) -> {
+			res.type("application/json");
+			try {
+				Session session = req.session(true);
+				User logged = session.attribute("logged");
+				
+				ArrayList<Order> orders = orderService.getByDeliverer(logged.getUsername());
+				return gson.toJson(orders);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
+		
 		post("/orders/create", (req,res) -> {
 			res.type("application/json");
 			
@@ -205,6 +231,22 @@ public class OrderController {
 				Order order = gson.fromJson(req.body(), Order.class);
 				order.setOrderStatus(OrderStatus.WAITING_FOR_DELIVERY);
 				Order newOrder = this.orderService.updateStatus(order);
+				return gson.toJson(newOrder);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			
+		});
+		
+		put("/orders/changeStatus/waitingForDeliveryApproval", (req,res) -> {
+			res.type("application/json");
+			try {
+				Session session = req.session(true);
+				User logged = session.attribute("logged");
+				
+				Order order = gson.fromJson(req.body(), Order.class);
+				Order newOrder = this.orderService.updateStatusDeliverer(order, logged.getUsername());
 				return gson.toJson(newOrder);
 			} catch (Exception e) {
 				e.printStackTrace();
