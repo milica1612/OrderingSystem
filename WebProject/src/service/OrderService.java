@@ -308,6 +308,33 @@ public class OrderService {
 		orderDAO.saveAll(orders);
 		return o;
 	}
+	
+	public Order updateToDelivered(Order o, String username) throws IOException {
+		
+		ArrayList<Deliverer> deliverers = delivererDAO.getAll();
+		ArrayList<Order> orders = getAll();
+		
+		for (Order order : orders) {
+			if(order.getCode().equals(o.getCode())) {
+				order.setOrderStatus(OrderStatus.DELIVERED);
+				break;
+			}
+		}
+		for(Deliverer deliverer: deliverers) {
+			if(deliverer.getUsername().equals(username)) {
+				ArrayList<Order> delOrders = deliverer.getOrders();
+				for (Order order : delOrders) {
+					if(order.getCode().equals(o.getCode())) {
+						order.setOrderStatus(OrderStatus.DELIVERED);
+						break;
+					}
+				}
+			}
+		}
+		delivererDAO.saveAll(deliverers);
+		orderDAO.saveAll(orders);
+		return o;
+	}
 
 	public ArrayList<Order> getAllWithoutDeliverer() {
 		ArrayList<Order> orders = getAll();

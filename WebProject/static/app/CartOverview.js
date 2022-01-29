@@ -48,13 +48,17 @@ Vue.component("cartOverview", {
 					},
 					quantity: this.quantityItem				
 					}
-				axios.post('/carts/editItemQuantity', JSON.stringify(params))
-				.then(response => {
-					console.log(response);
-					location.reload()
-				}).catch(err => {
-                    console.log(err);
-                });
+				if(this.quantityItem < 1){
+					alert("Quantity has to be more then 0!");
+				}else{
+					axios.post('/carts/editItemQuantity', JSON.stringify(params))
+					.then(response => {
+						console.log(response);
+						location.reload()
+					}).catch(err => {
+	                    console.log(err);
+	                });
+				}
 			}
 		},
 		removeItem(){

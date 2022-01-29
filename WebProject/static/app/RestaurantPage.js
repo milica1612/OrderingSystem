@@ -115,13 +115,17 @@ Vue.component("restaurantPage", {
 						type: this.current_item.type,	
 						restaurant: this.current_item.restaurant,			
 					}
-				axios.post('/carts/addItemToCart/' + this.quantityItem, JSON.stringify(params))
-				.then(response => {
-					console.log(response);
-					alert(this.quantityItem + "x" + this.current_item.name + " added to your cart!");
-				}).catch(err => {
-                    console.log(err);
-                });
+					if(this.quantityItem < 1){
+						alert("Quantity has to be more then 0!");
+					}else{
+						axios.post('/carts/addItemToCart/' + this.quantityItem, JSON.stringify(params))
+						.then(response => {
+							console.log(response);
+							alert(this.quantityItem + "x" + this.current_item.name + " added to your cart!");
+						}).catch(err => {
+		                    console.log(err);
+		                });
+					}
 			}
 		},
 		changeView(){

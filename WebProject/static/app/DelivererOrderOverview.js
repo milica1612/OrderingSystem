@@ -204,6 +204,23 @@ Vue.component("delivererOrderOverview", {
 				console.log(err)
 			});
 		},
+		setOrderToDelivered(ord){
+				let params = {
+					code: ord.code,
+					cart: ord.cart,
+					restaurant: ord.restaurant,
+					dateAndTime: ord.dateAndTime,
+					orderStatus: ord.orderStatus,
+					customer: ord.customer,
+				}
+				axios.put('/orders/changeStatus/delivered', JSON.stringify(params))
+				.then(response => {
+					console.log(response);
+					location.reload()
+				}).catch(err => {
+                    console.log(err);
+                });
+		}
 	},
 	computed:{},
 	template: `
@@ -278,6 +295,7 @@ Vue.component("delivererOrderOverview", {
 					<label  class="restaurant_data">QUANTITY: {{cartItem.quantity}}</label>
 				</div> </br></br>
 				<label class="restaurant_name">TOTAL: {{order.cart.total}} din;  </label> 
+				<button class="btn_manager" type="button" data-bs-toggle="modal" data-bs-target="#modal" v-on:click="setOrderToDelivered(order)">Delivered</button></br>
 				<hr style="height:10px">
 			</div>
 	</div>
