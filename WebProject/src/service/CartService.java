@@ -63,6 +63,7 @@ public class CartService {
 					}
 			
 					c.setTotal(total);
+					break;
 				}
 			}
 		}
@@ -88,13 +89,18 @@ public class CartService {
 	
 	public CartItem removeItem(String username, CartItem cartItem) throws IOException {
 		ArrayList<Cart> allCarts = cartDAO.getAll();
+		Customer customer = customerDAO.getByUsername(username);
 		if(allCarts != null) {
 			for(Cart c: allCarts) {
 				if(c.getCustomer().equals(username)) {
 					ArrayList<CartItem> items = c.getItems();
 					for(CartItem i: items) {
 						if(i.getItem().getName().equals(cartItem.getItem().getName())){
-							c.setTotal(c.getTotal() - i.getItem().getPrice()*i.getQuantity());
+							if(customer != null && customer.getCustomerType() != null) {
+								c.setTotal(c.getTotal() - i.getItem().getPrice()*i.getQuantity()*customer.getCustomerType().getDiscount());				
+							}else {
+								c.setTotal(c.getTotal() - i.getItem().getPrice()*i.getQuantity());
+							}
 							items.remove(i);
 							break;
 						}
@@ -109,20 +115,28 @@ public class CartService {
 	
 	public CartItem editItemQuantity(String username, CartItem cartItem) throws IOException {
 		ArrayList<Cart> allCarts = cartDAO.getAll();
+		Customer customer = customerDAO.getByUsername(username);
 		if(allCarts != null) {
 			for(Cart c: allCarts) {
 				if(c.getCustomer().equals(username)) {
 					ArrayList<CartItem> items = c.getItems();
 					for(CartItem i: items) {
 						if(i.getItem().getName().equals(cartItem.getItem().getName())){
-							c.setTotal(c.getTotal() - i.getItem().getPrice()*i.getQuantity());
+							if(customer != null && customer.getCustomerType() != null) {
+								c.setTotal(c.getTotal() - i.getItem().getPrice()*i.getQuantity()*customer.getCustomerType().getDiscount());				
+							}else {
+								c.setTotal(c.getTotal() - i.getItem().getPrice()*i.getQuantity());
+							}
 							i.setQuantity(cartItem.getQuantity());
 							break;
 						}		
 					}
 					c.setItems(items);
-					double total = c.getTotal() + cartItem.getItem().getPrice() * cartItem.getQuantity();
-					c.setTotal(total);
+					if(customer != null && customer.getCustomerType() != null) {
+						c.setTotal(c.getTotal() + cartItem.getItem().getPrice()*cartItem.getQuantity()*customer.getCustomerType().getDiscount());				
+					}else {
+						c.setTotal(c.getTotal() + cartItem.getItem().getPrice()*cartItem.getQuantity());
+					}
 				}
 			}
 		}
