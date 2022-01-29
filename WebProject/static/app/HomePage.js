@@ -1,4 +1,4 @@
-Vue.component("createOrder", {
+Vue.component("homePage", {
 
     data() {
         return {

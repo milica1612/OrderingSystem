@@ -31,7 +31,7 @@ Vue.component("login", {
 						localStorage.setItem("username", response.data.username);
 						localStorage.setItem("role", response.data.userType);
 						this.error_message = false;
-						this.$router.push("/createOrder");
+						this.$router.push("/");
 					}
 				}).catch(err => {
 					console.log(err);

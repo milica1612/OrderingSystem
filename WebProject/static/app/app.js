@@ -4,7 +4,7 @@ const UserProfile = { template: '<userProfile></userProfile>' }
 const UsersOverview = {template: '<usersOverview></usersOverview>' }
 const NewRestaurant = {template: '<newRestaurant></newRestaurant>' }
 const EmployeeRegistration = {template: '<employeeRegistration></employeeRegistration>' }
-const CreateOrder = {template: '<createOrder></createOrder>' }
+const HomePage = {template: '<homePage></homePage>' }
 const ManagerRegistration = {template: '<managerRegistration></managerRegistration>'}
 const RestaurantPage = {template: '<restaurantPage></restaurantPage>'}
 const NewItem = {template: '<newItem></newItem>' }
@@ -25,7 +25,7 @@ const router = new VueRouter({
 		{ path: '/usersOverview', component: UsersOverview },
 		{ path: '/newRestaurant', component: NewRestaurant },
 		{ path: '/employeeRegistration', component: EmployeeRegistration },
-		{ path: '/createOrder', component: CreateOrder },
+		{ path: '/', component: HomePage },
 		{ path: '/managerRegistration', component: ManagerRegistration },
 		{ path: '/restaurantPage', component: RestaurantPage },
 		{ path: '/newItem', component: NewItem },
