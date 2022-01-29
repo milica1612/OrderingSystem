@@ -72,6 +72,9 @@ public class UserController {
 			try {
 				Session session = req.session(true);
 				User logged = session.attribute("logged");
+				if(logged == null) {
+					return gson.toJson( new User());
+				}
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  
 				UserDTO userDTO = new UserDTO(logged.getUsername(), logged.getPassword(),logged.getName(), logged.getLastName(),
 						logged.getGender().ordinal(), dateFormat.format(logged.getDateOfBirth())) ;
