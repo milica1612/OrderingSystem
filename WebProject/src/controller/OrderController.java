@@ -259,6 +259,22 @@ public class OrderController {
 			
 		});
 		
+		put("/orders/changeStatus/delivered", (req,res) -> {
+			res.type("application/json");
+			try {
+				Session session = req.session(true);
+				User logged = session.attribute("logged");
+				
+				Order order = gson.fromJson(req.body(), Order.class);
+				Order newOrder = this.orderService.updateToDelivered(order, logged.getUsername());
+				return gson.toJson(newOrder);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+			
+		});
+		
 		put("/orders/changeStatus/inTransport", (req,res) -> {
 			res.type("application/json");
 			try {
