@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import beans.CartItem;
+import beans.Customer;
 import beans.Order;
 import beans.OrderStatus;
 import beans.Restaurant;
@@ -46,11 +47,22 @@ public class OrderController {
 			}
 		});
 		
-		get("/orders/getByRestaurant/:name", (req, res) -> {
+		get("/orders/getForRestaurant/:name", (req, res) -> {
 			res.type("application/json");
 			try {
 				ArrayList<Order> orders = orderService.getAllForRestaurant(req.params("name"));
 				return gson.toJson(orders);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
+		
+		get("/orders/getCustomers/:name", (req, res) -> {
+			res.type("application/json");
+			try {
+				ArrayList<Customer> customers = orderService.getCustomers(req.params("name"));
+				return gson.toJson(customers);
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;

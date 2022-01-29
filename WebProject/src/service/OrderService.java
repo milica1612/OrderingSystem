@@ -324,4 +324,25 @@ public class OrderService {
 		Deliverer deliverer = delivererDAO.getByUsername(username);
 		return deliverer.getOrders();
 	}
+
+	public ArrayList<Customer> getCustomers(String params) {
+		ArrayList<Order> orders = getAllForRestaurant(params);
+		ArrayList<Customer> customers = new ArrayList<Customer>();
+		boolean contains = false;
+		for (Order order : orders) {
+			Customer customer = customerDAO.getByUsername(order.getCart().getCustomer());
+			for (Customer customer2 : customers) {
+				if(customer2.getUsername().equals(customer.getUsername())) {
+					contains = true;
+					break;
+				}
+			}
+				if(!contains) {
+					customers.add(customer);
+				}
+				contains = false;
+			
+		}
+		return customers;
+	}
 }
