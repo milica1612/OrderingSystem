@@ -23,7 +23,14 @@ public class RestaurantService {
 	}
 
 	public ArrayList<Restaurant> getAll() {
-		return restaurantDAO.getAll();
+		ArrayList<Restaurant> restaurants = restaurantDAO.getAll();
+		ArrayList<Restaurant> result = new ArrayList<Restaurant>();
+		for (Restaurant restaurant : restaurants) {
+			if(!restaurant.getIsDeleted()) {
+				result.add(restaurant);
+			}
+		}
+		return result;
 	}
 
 	public Restaurant create(Restaurant newRestaurant) throws IOException {
@@ -127,7 +134,7 @@ public class RestaurantService {
 		System.out.println(filePath);
 		imageService.Base64DecodeAndSave(newItem.getPhoto(), filePath);
 		newItem.setPhoto(filePath);
-		ArrayList<Restaurant> restaurants = getAll();
+		ArrayList<Restaurant> restaurants = restaurantDAO.getAll();
 		for(Restaurant restaurant : restaurants) {
 			if(restaurant.getName().equals(restaurantName)) {
 				ArrayList<Item> items = restaurant.getItems();	
@@ -157,7 +164,7 @@ public class RestaurantService {
 			imageService.Base64DecodeAndSave(editedItem.getPhoto(), filePath);
 			editedItem.setPhoto(filePath);
 		}
-		ArrayList<Restaurant> restaurants = getAll();
+		ArrayList<Restaurant> restaurants = restaurantDAO.getAll();
 		for(Restaurant restaurant : restaurants) {
 			if(restaurant.getName().equals(restaurantName)) {
 				ArrayList<Item> items = restaurant.getItems();	
@@ -198,7 +205,7 @@ public class RestaurantService {
 	}
 
 	public void setRating(Restaurant restaurant) throws IOException {
-		ArrayList<Restaurant> restaurants = getAll();
+		ArrayList<Restaurant> restaurants = restaurantDAO.getAll();
 		for (Restaurant restaurant2 : restaurants) {
 			if(restaurant2.getName().equals(restaurant.getName())) {
 				restaurant2.setRating(restaurant.getRating());
@@ -224,6 +231,20 @@ public class RestaurantService {
 			}
 		}
 		return result;
+	}
+
+	public Restaurant delete(String params) throws IOException {
+		ArrayList<Restaurant> all = restaurantDAO.getAll();
+		Restaurant res = new Restaurant();
+		for (Restaurant restaurant : all) {
+			if(restaurant.getName().equals(params)) {
+				restaurant.setIsDeleted(true);
+				res = restaurant;
+				break;
+			}
+		}
+		restaurantDAO.saveAll(all);
+		return res;
 	}
 	
 }
