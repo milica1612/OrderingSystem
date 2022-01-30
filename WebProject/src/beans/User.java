@@ -11,7 +11,7 @@ public class User {
 	private Gender gender;
 	private Date dateOfBirth;
 	private UserType userType;
-	private Boolean isDeleted;
+	private Boolean isDeleted = false;
 	
 	public User() {
 		
