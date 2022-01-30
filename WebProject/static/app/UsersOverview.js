@@ -124,6 +124,15 @@ Vue.component("usersOverview", {
             }).catch(err => {
                 console.log(err)
             });
+		},
+		deleteUser(usr){
+			axios.get('/users/deleteUser/' + usr.username)
+			.then(response => {
+				console.log(response);
+					location.reload()
+					}).catch(err => {
+                    console.log(err);
+                });
 		}
 	},
 	template:`
@@ -171,6 +180,7 @@ Vue.component("usersOverview", {
 	        <th :class="sortedClass('lastName')" @click="sortBy('lastName')">Last Name</th>
 	        <th :class="sortedClass('userType')" @click="sortBy('userType')">User Type</th>
 	        <th :class="sortedClass('points')" @click="sortBy('points')">Customer Points</th>
+			<th>Delete user</th>
 	      </tr>
 	    </thead>
 		<tbody>
@@ -183,6 +193,7 @@ Vue.component("usersOverview", {
 	        <td class="td_class">{{ user.lastName}}</td>
 	        <td class="td_class">{{ user.userType }}</td>
 			<td class="td_class">{{user.points}}</td>
+			<td><button type="button" class="btn_delete" data-bs-dismiss="modal" v-on:click="deleteUser(user)" >DELETE</button></td>       						
 	      </tr>
 	    </tbody>
 	  </table>

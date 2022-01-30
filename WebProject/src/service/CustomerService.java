@@ -29,13 +29,20 @@ public class CustomerService {
 	}
 
 	public ArrayList<Customer> getAll() {
-		return customerDAO.getAll();
+		ArrayList<Customer> customers = customerDAO.getAll();
+		ArrayList<Customer> result = new ArrayList<Customer>();
+		for(Customer c : customers) {
+			if(c.getIsDeleted() == false) {
+				result.add(c);
+			}
+		}
+		return result;
 	}
 
 	public Customer login(LoginDTO loginDTO) {
 		Customer logged = customerDAO.getByUsername(loginDTO.getUsername());
 		
-		if(logged != null) {
+		if(logged != null && logged.getIsDeleted() == false) {
 			if(loginDTO.getPassword().equals(logged.getPassword())) {
 				return logged;
 			}
@@ -52,7 +59,7 @@ public class CustomerService {
 	}
 
 	public User changePassword(User logged, String newPassword) throws IOException {
-		ArrayList<Customer> all = getAll();
+		ArrayList<Customer> all = customerDAO.getAll();
 		User userFound = null;
 		for (User user : all) {
 			if(user.getUsername().equals(logged.getUsername())) {
@@ -83,5 +90,18 @@ public class CustomerService {
 			}
 		}
 		return customers;
+	}
+
+	public User deleteUser(String username) throws IOException {
+		ArrayList<Customer> all = customerDAO.getAll();
+		User userFound = null;
+		for(User u : all) {
+			if(u.getUsername().equals(username)) {
+				u.setIsDeleted(true);
+				userFound = u;
+			}
+		}
+		customerDAO.saveAll(all);
+		return userFound;
 	}
 }

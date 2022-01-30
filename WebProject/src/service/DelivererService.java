@@ -31,13 +31,20 @@ private DelivererDAO delivererDAO;
 	}
 
 	public ArrayList<Deliverer> getAll() {
-		return delivererDAO.getAll();
+		ArrayList<Deliverer> deliverers = delivererDAO.getAll();
+		ArrayList<Deliverer> result = new ArrayList<Deliverer>();
+		for(Deliverer d : deliverers) {
+			if(d.getIsDeleted() == false) {
+				result.add(d);
+			}
+		}
+		return result;
 	}
 
 	public Deliverer login(LoginDTO loginDTO) {
 		Deliverer logged = delivererDAO.getByUsername(loginDTO.getUsername());
 		
-		if(logged != null) {
+		if(logged != null && logged.getIsDeleted() == false) {
 			if(loginDTO.getPassword().equals(logged.getPassword())) {
 				return logged;
 			}
@@ -54,7 +61,7 @@ private DelivererDAO delivererDAO;
 	}
 
 	public User changePassword(User logged, String newPassword) throws IOException {
-		ArrayList<Deliverer> all = getAll();
+		ArrayList<Deliverer> all = delivererDAO.getAll();
 		User userFound = null;
 		for (User user : all) {
 			if(user.getUsername().equals(logged.getUsername())) {
@@ -80,7 +87,7 @@ private DelivererDAO delivererDAO;
 	}
 
 	public void changeOrderToInTransport(OrderRequest orderReq) throws IOException {
-		ArrayList<Deliverer> deliverers = getAll();
+		ArrayList<Deliverer> deliverers = delivererDAO.getAll();
 		for (Deliverer deliverer : deliverers) {
 			if(deliverer.getUsername().equals(orderReq.getDeliverer().getUsername())) {
 				for (Order order : deliverer.getOrders()) {
@@ -92,6 +99,19 @@ private DelivererDAO delivererDAO;
 		}
 		delivererDAO.saveAll(deliverers);
 		
+	}
+
+	public User deleteUser(String username) throws IOException {
+		ArrayList<Deliverer> all = delivererDAO.getAll();
+		User userFound = null;
+		for(User u : all) {
+			if(u.getUsername().equals(username)) {
+				u.setIsDeleted(true);
+				userFound = u;
+			}
+		}
+		delivererDAO.saveAll(all);
+		return userFound;
 	}
 
 }

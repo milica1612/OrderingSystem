@@ -18,7 +18,14 @@ public class UserService {
 	}
 	
 	public ArrayList<User> getAllUsers() {
-		return userDAO.getAll();
+		ArrayList<User> users = userDAO.getAll();
+		ArrayList<User> result = new ArrayList<User>();
+		for(User u: users) {
+			if(u.getIsDeleted() == false) {
+				result.add(u);
+			}
+		}
+		return result;
 	}
 
 	public User create(User newUser) throws IOException {
@@ -99,7 +106,7 @@ public class UserService {
 	}
 
 	public User changePassword(User logged, String newPassword) throws IOException {
-		ArrayList<User> all = getAllUsers();
+		ArrayList<User> all = userDAO.getAll();
 		User userFound = null;
 		for (User user : all) {
 			if(user.getUsername().equals(logged.getUsername())) {
@@ -110,6 +117,19 @@ public class UserService {
 		userDAO.saveAll(all);
 		return userFound;
 		
+	}
+
+	public User deleteUser(String username) throws IOException {
+		ArrayList<User> all = userDAO.getAll();
+		User userFound = null;
+		for(User u : all) {
+			if(u.getUsername().equals(username)) {
+				u.setIsDeleted(true);
+				userFound = u;
+			}
+		}
+		userDAO.saveAll(all);
+		return userFound;
 	}
 	
 }

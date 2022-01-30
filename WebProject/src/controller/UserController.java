@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 
 import beans.Customer;
 import beans.Gender;
+import beans.Order;
 import beans.User;
 import beans.UserType;
 import dto.LoginDTO;
@@ -236,7 +237,27 @@ public class UserController {
 			}
 		});
 		
+		get("/users/deleteUser/:username", (req,res) -> {
+			res.type("application/json");
+			
+			try {
+				User user = userService.deleteUser(req.params("username"));
+				if(user == null) {
+					user = managerService.deleteUser(req.params("username"));
+				}
+				if(user == null) {
+					user = customerService.deleteUser(req.params("username"));
+				}
+				if(user == null) {
+					user = delivererService.deleteUser(req.params("username"));
+				}
+				return gson.toJson(user);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
+		
 	}
-	
-	
 }

@@ -27,7 +27,14 @@ private ManagerDAO managerDAO;
 	}
 
 	public ArrayList<Manager> getAll() {
-		return managerDAO.getAll();
+		ArrayList<Manager> managers = managerDAO.getAll();
+		ArrayList<Manager> result = new ArrayList<Manager>();
+		for(Manager m: managers) {
+			if(m.getIsDeleted() == false) {
+				result.add(m);
+			}
+		}
+		return result;
 	}
 
 	public ArrayList<Manager> getAllAvailable(){
@@ -46,7 +53,7 @@ private ManagerDAO managerDAO;
 	public Manager login(LoginDTO loginDTO) {
 		Manager logged = managerDAO.getByUsername(loginDTO.getUsername());
 		
-		if(logged != null) {
+		if(logged != null && logged.getIsDeleted() == false) {
 			if(loginDTO.getPassword().equals(logged.getPassword())) {
 				return logged;
 			}
@@ -63,7 +70,7 @@ private ManagerDAO managerDAO;
 	}
 
 	public Manager addRestaurant(String manager, Restaurant restaurant) throws IOException {
-		ArrayList<Manager> managers = getAll();
+		ArrayList<Manager> managers = managerDAO.getAll();
 		if(managers != null) {
 			for (Manager m : managers) {
 				if(m.getUsername().equals(manager)) {
@@ -78,7 +85,7 @@ private ManagerDAO managerDAO;
 	}
 
 	public User changePassword(User logged, String newPassword) throws IOException {
-		ArrayList<Manager> all = getAll();
+		ArrayList<Manager> all = managerDAO.getAll();
 		User userFound = null;
 		for (User user : all) {
 			if(user.getUsername().equals(logged.getUsername())) {
@@ -99,6 +106,19 @@ private ManagerDAO managerDAO;
 			}
 		}
 		return null;
+	}
+
+	public User deleteUser(String username) throws IOException {
+		ArrayList<Manager> all = managerDAO.getAll();
+		User userFound = null;
+		for(User u : all) {
+			if(u.getUsername().equals(username)) {
+				u.setIsDeleted(true);
+				userFound = u;
+			}
+		}
+		managerDAO.saveAll(all);
+		return userFound;
 	}
 
 }
