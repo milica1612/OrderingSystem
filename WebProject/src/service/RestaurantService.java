@@ -246,5 +246,19 @@ public class RestaurantService {
 		restaurantDAO.saveAll(all);
 		return res;
 	}
+
+	public Restaurant deleteItem(String restaurant, String item) throws IOException {
+		ArrayList<Restaurant> restaurants = restaurantDAO.getAll();
+		for (Restaurant res : restaurants) {
+			for (Item i : res.getItems()) {
+				if(i.getName().equals(item)) {
+					i.setIsDeleted(true);
+					restaurantDAO.saveAll(restaurants);
+					return res;
+				}
+			}
+		}
+		return null;
+	}
 	
 }

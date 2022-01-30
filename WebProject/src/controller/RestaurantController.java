@@ -274,5 +274,16 @@ public class RestaurantController {
 		}
 	});
 	
+	put("/restaurants/deleteItem/:restaurant/:item", (req, res) -> {
+		res.type("application/json");
+		try {
+			Restaurant restaurant = restaurantService.deleteItem(req.params("restaurant"), req.params("item"));
+			return gson.toJson(restaurant);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+	});
+	
 	}
 }

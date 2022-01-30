@@ -162,7 +162,14 @@ Vue.component("restaurantPage", {
 							console.log(response)
 						})
 				})
-		}
+		},
+		deleteItem(i){
+			axios.put('/restaurants/deleteItem/' + this.restaurant.name + "/" + i.name)
+				.then(response => {
+					console.log(response);
+					location.reload()
+				})
+		},
 	},
 	computed:{
 		notFilled(){
@@ -187,6 +194,12 @@ Vue.component("restaurantPage", {
 					return true
 			}
 			return false
+		},
+		isAdminLogged(){
+			if(localStorage.getItem('role') == 'ADMIN') {
+				return true
+			}
+			return false
 		}
 	},
 	template: `
@@ -209,7 +222,7 @@ Vue.component("restaurantPage", {
 		</div> </br>
 		<div class="container" id="restaurant_items" v-if="view_items">
 			<div class="row">
-				<div class="col-2" v-for="item in restaurant.items" :key="item.name">
+				<div class="col-2" v-for="item in restaurant.items" :key="item.name" v-if="!item.isDeleted">
 					<img v-bind:src= "item.photo" alt="" id="restaurant_logo" class="rounded float-start" style="margin-top: 5px"></br>
 					<label  class="restaurant_name">{{item.name}}</label></br>
 					<label  class="restaurant_name">{{item.price}} din.</label></br>
@@ -218,7 +231,9 @@ Vue.component("restaurantPage", {
 					<button type="button" class="btn_search_res" data-bs-toggle="modal" data-bs-target="#modal" v-on:click="setItem(item)" v-if="isManagerLogged">
 			       		Edit Item
 					</button>
-					
+					<button type="button" class="btn_search_res" v-on:click="deleteItem(item)" v-if="isAdminLogged">
+			       		Delete
+					</button>
 					<button type="button" class="btn_search_res" data-bs-toggle="modal" data-bs-target="#modal2" v-on:click="setItem(item)" v-if="isCustomerLogged">
 			       		Order Item
 					</button>
