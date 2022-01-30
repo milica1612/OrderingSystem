@@ -34,6 +34,7 @@ Vue.component("navbar", {
 			<li><a v-if="role == 'DELIVERER'" href="#/ordersWithoutDeliverer">All Orders</a></li>
 			<li><a v-if="role == 'MANAGER'" href="#/managerOrderOverview">Restaurant Orders</a></li>
 			<li><a v-if="role == 'MANAGER'" href="#/managerDeliveryRequests">Delivery Requests</a></li>
+			<li><a v-if="role == 'MANAGER'" href="#/customerOverview">Customer Overview</a></li>
 			<li><a v-if="role == 'ADMIN' | role == 'MANAGER' | role == 'CUSTOMER' | role == 'DELIVERER'" href="#/userProfile">My Profile</a></li>
 	        <li><a v-if="role == 'ADMIN' | role == 'MANAGER' | role == 'CUSTOMER' | role == 'DELIVERER'" href="#/changePassword">Change password</a></li>
 	        <li><a v-if="role == 'ADMIN' | role == 'MANAGER' | role == 'CUSTOMER' | role == 'DELIVERER'" href="#/login" @click ="logOut">Log Out</a></li>

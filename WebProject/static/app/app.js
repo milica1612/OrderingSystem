@@ -15,6 +15,7 @@ const ManagerOrderOverview = {template: '<managerOrderOverview></managerOrderOve
 const ManagerDeliveryRequests = {template: '<managerDeliveryRequests></managerDeliveryRequests>' }
 const DelivererOrderOverview = {template: '<delivererOrderOverview></delivererOrderOverview>' }
 const OrdersWithoutDeliverer = {template: '<ordersWithoutDeliverer></ordersWithoutDeliverer>' }
+const CustomerOverview = {template: '<customerOverview></customerOverview>' }
 
 const router = new VueRouter({
 	  mode: 'hash',
@@ -35,7 +36,8 @@ const router = new VueRouter({
 		{ path: '/managerOrderOverview', component: ManagerOrderOverview },
 		{ path: '/managerDeliveryRequests', component: ManagerDeliveryRequests },
 		{ path: '/delivererOrderOverview', component: DelivererOrderOverview },
-		{ path: '/ordersWithoutDeliverer', component: OrdersWithoutDeliverer }
+		{ path: '/ordersWithoutDeliverer', component: OrdersWithoutDeliverer },
+		{ path: '/customerOverview', component: CustomerOverview },
 
 	]
 });

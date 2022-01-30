@@ -23,7 +23,7 @@ Vue.component("managerOrderOverview", {
         axios.get('/managers/restaurant')
             .then(response => {
                 this.restaurant = response.data
-                axios.get('/orders/getByRestaurant/' + this.restaurant.name)
+                axios.get('/orders/getForRestaurant/' + this.restaurant.name)
                     .then(response => {
                         this.orders = response.data
                     })
@@ -224,9 +224,6 @@ Vue.component("managerOrderOverview", {
 			<table>
 			<tr>
 			<td>
-				<button class="btn_sort" type="button" :class="sortedClass('restaurant')" @click="sortBy('restaurant')">{{this.btn_txt_res}}</button>
-			</td>
-			<td>
 				<button class="btn_sort" type="button"  :class="sortedClass('total')" @click="sortBy('total')" >{{this.btn_txt_price}}</button>
 			</td>
 			<td>
@@ -239,6 +236,7 @@ Vue.component("managerOrderOverview", {
 			<div class="container" id="restaurant_view" v-for="order in orders" :key="order.code">
 				<label  class="restaurant_name">CODE: {{order.code}};  </label>
 				<label  class="restaurant_name">RESTAURANT: {{order.restaurant}};  </label>
+				<label  class="restaurant_name">CUSTOMER: {{order.customer}};  </label>
 				<label  class="restaurant_name">TIME: {{order.dateAndTime}};  </label>
 				<label  class="restaurant_name">STATUS: {{order.orderStatus}};  </label>
 				</br>
