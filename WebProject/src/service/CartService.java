@@ -57,9 +57,11 @@ public class CartService {
 						items.add(ci);
 					}
 					c.setItems(items);
-					double total = c.getTotal() + item.getPrice()*quantity;
+					double total;
 					if(customer != null && customer.getCustomerType() != null) {
-						total = total * customer.getCustomerType().getDiscount();
+						total = c.getTotal() + item.getPrice()*quantity* customer.getCustomerType().getDiscount();
+					}else {
+						total = c.getTotal() + item.getPrice()*quantity;
 					}
 			
 					c.setTotal(total);
@@ -75,9 +77,11 @@ public class CartService {
 			CartItem ci = new CartItem(item, quantity);
 			items.add(ci);
 			cart.setItems(items);
-			double total =  item.getPrice()*quantity;
+			double total;
 			if(customer != null && customer.getCustomerType() != null) {
-				total = total * customer.getCustomerType().getDiscount();
+				total = (item.getPrice()*quantity)* customer.getCustomerType().getDiscount();
+			}else {
+				total = item.getPrice()*quantity;
 			}
 			cart.setTotal(total);
 			allCarts.add(cart);

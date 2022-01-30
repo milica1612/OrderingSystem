@@ -351,4 +351,31 @@ public class OrderService {
 		Deliverer deliverer = delivererDAO.getByUsername(username);
 		return deliverer.getOrders();
 	}
+	
+	public ArrayList<Order> getUndeliveredOrders(String username){
+		ArrayList<Order> result = new ArrayList<Order>();
+		Customer customer = customerDAO.getByUsername(username);
+		if(customer != null) {
+			ArrayList<Order> allOrders = customer.getOrders();
+			if(allOrders != null) {
+				for(Order order : allOrders) {
+					if(!order.getOrderStatus().equals(OrderStatus.DELIVERED)
+							&& !order.getOrderStatus().equals(OrderStatus.CANCELED)) {
+						result.add(order);
+					}
+				}
+			}
+		}else {
+			Deliverer deliverer = delivererDAO.getByUsername(username);	
+			ArrayList<Order> allOrders = deliverer.getOrders();
+			if(allOrders != null) {
+				for(Order order : allOrders) {
+					if(!order.getOrderStatus().equals(OrderStatus.DELIVERED)){
+						result.add(order);
+					}
+				}
+			}
+		}
+			return result;
+	}
 }

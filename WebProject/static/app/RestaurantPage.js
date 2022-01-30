@@ -183,7 +183,8 @@ Vue.component("restaurantPage", {
 		},
 		isCustomerLogged(){
 			if(localStorage.getItem('role') == 'CUSTOMER'){
-				return true
+				if(this.restaurant.isOpen == true)
+					return true
 			}
 			return false
 		}

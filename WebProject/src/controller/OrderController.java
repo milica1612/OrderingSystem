@@ -289,5 +289,19 @@ public class OrderController {
 			}
 			
 		});
+		
+		get("/orders/getUndelivered", (req, res) -> {
+			res.type("application/json");
+			try {
+				Session session = req.session(true);
+				User logged = session.attribute("logged");
+				
+				ArrayList<Order> orders = orderService.getUndeliveredOrders(logged.getUsername());
+				return gson.toJson(orders);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		});
 	}
 }

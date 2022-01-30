@@ -30,6 +30,12 @@ Vue.component("ordersOverview", {
 			).catch()
 	},
 	methods: {	
+		getUndelivered() {
+		axios.get('/orders/getUndelivered')
+          .then(response => {
+				 	this.orders = response.data
+		   });
+		},
 		cancelOrder(ord){
 				let params = {
 					code: ord.code,
@@ -243,6 +249,11 @@ Vue.component("ordersOverview", {
 			<td><input type="date" data-date-format="mm/dd/yyyy" v-model="searchDateFrom"></td>
 			<td><input type="date" data-date-format="mm/dd/yyyy" v-model="searchDateTo"></td>
 			<td><button class="btn_search_res" type="button" v-on:click="searchByDate">Search By Date</button></td>
+			</tr>
+			<tr>
+			<td>
+				<button class="btn_sort" type="button" @click="getUndelivered">Undelivered Orders</button>
+			</td>
 			</tr>
 			<tr>
 			<td><label>Filtrate by order status</label>
