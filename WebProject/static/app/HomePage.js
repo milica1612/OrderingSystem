@@ -51,6 +51,18 @@ Vue.component("homePage", {
 			}else{
 				return false
 			}
+		},
+		isCustomerLogged() {
+			if (localStorage.getItem('role') == 'CUSTOMER') {
+				return true
+			}
+			return false
+		},
+		isAdminLogged(){
+			if(localStorage.getItem('role') == 'ADMIN'){
+				return true
+			}
+			return false
 		}
 	},
 	methods: {
@@ -211,6 +223,13 @@ Vue.component("homePage", {
 					console.log(response)
 					this.can_comment = response.data
 				})
+		},
+		deleteRestaurant(restaurant){
+			axios.put('/restaurants/delete/' + restaurant.name)
+				.then(response => {
+						console.log(response)
+						location.reload()
+					})
 		}
 	},
 	template: `
@@ -285,7 +304,8 @@ Vue.component("homePage", {
 			<label class="restaurant_data" v-else>CLOSE</label>
 			<br>
 		</div>
-			<button class="btn_manager" type="button" data-bs-toggle="modal" data-bs-target="#modall" v-on:click="setSelected(r)" >Comment and rate</button>
+			<button class="btn_manager" type="button" data-bs-toggle="modal" data-bs-target="#modall" v-on:click="setSelected(r)" v-if="isCustomerLogged">Comment and rate</button>
+			<button  class="btn_manager" type="button" v-if="isAdminLogged" v-on:click="deleteRestaurant(r)" >Delete</button>
 			<hr style="height:10px">
         </div>
         <div class="modal fade" id="modall" tabindex="-1" aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true" >
