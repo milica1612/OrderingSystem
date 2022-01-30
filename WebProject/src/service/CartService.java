@@ -65,6 +65,7 @@ public class CartService {
 					}
 			
 					c.setTotal(total);
+					c.setTotal(Math.round(c.getTotal()*100.0)/100.0);
 					break;
 				}
 			}
@@ -84,6 +85,7 @@ public class CartService {
 				total = item.getPrice()*quantity;
 			}
 			cart.setTotal(total);
+			cart.setTotal(Math.round(cart.getTotal()*100.0)/100.0);
 			allCarts.add(cart);
 		}
 		
@@ -102,8 +104,10 @@ public class CartService {
 						if(i.getItem().getName().equals(cartItem.getItem().getName())){
 							if(customer != null && customer.getCustomerType() != null) {
 								c.setTotal(c.getTotal() - i.getItem().getPrice()*i.getQuantity()*customer.getCustomerType().getDiscount());				
+								c.setTotal(Math.round(c.getTotal()*100.0)/100.0);
 							}else {
 								c.setTotal(c.getTotal() - i.getItem().getPrice()*i.getQuantity());
+								c.setTotal(Math.round(c.getTotal()*100.0)/100.0);
 							}
 							items.remove(i);
 							break;
@@ -128,8 +132,10 @@ public class CartService {
 						if(i.getItem().getName().equals(cartItem.getItem().getName())){
 							if(customer != null && customer.getCustomerType() != null) {
 								c.setTotal(c.getTotal() - i.getItem().getPrice()*i.getQuantity()*customer.getCustomerType().getDiscount());				
+								c.setTotal(Math.round(c.getTotal()*100.0)/100.0);
 							}else {
 								c.setTotal(c.getTotal() - i.getItem().getPrice()*i.getQuantity());
+								c.setTotal(Math.round(c.getTotal()*100.0)/100.0);
 							}
 							i.setQuantity(cartItem.getQuantity());
 							break;
@@ -138,8 +144,10 @@ public class CartService {
 					c.setItems(items);
 					if(customer != null && customer.getCustomerType() != null) {
 						c.setTotal(c.getTotal() + cartItem.getItem().getPrice()*cartItem.getQuantity()*customer.getCustomerType().getDiscount());				
+						c.setTotal(Math.round(c.getTotal()*100.0)/100.0);
 					}else {
 						c.setTotal(c.getTotal() + cartItem.getItem().getPrice()*cartItem.getQuantity());
+						c.setTotal(Math.round(c.getTotal()*100.0)/100.0);
 					}
 				}
 			}

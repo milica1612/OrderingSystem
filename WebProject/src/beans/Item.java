@@ -9,12 +9,13 @@ public class Item {
 	private String description;
 	private String photo;
 	private String restaurant;
+	private Boolean isDeleted;
 	public Item() {
 		
 	}
 	
 	public Item(String name, Double price, ItemType type, String quantity, String description,
-			String photo, String restaurant) {
+			String photo, String restaurant, Boolean isDeleted) {
 		super();
 		this.name = name;
 		this.price = price;
@@ -23,6 +24,7 @@ public class Item {
 		this.description = description;
 		this.photo = photo;
 		this.restaurant = restaurant;
+		this.isDeleted = isDeleted;
 	}
 
 	public String getName() {
@@ -79,6 +81,14 @@ public class Item {
 
 	public void setRestaurant(String restaurant) {
 		this.restaurant = restaurant;
+	}
+
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 	
 }

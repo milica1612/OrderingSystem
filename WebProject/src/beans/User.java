@@ -11,6 +11,7 @@ public class User {
 	private Gender gender;
 	private Date dateOfBirth;
 	private UserType userType;
+	private Boolean isDeleted;
 	
 	public User() {
 		
@@ -18,7 +19,7 @@ public class User {
 	
 	
 	public User(String username, String password, String name, String lastName, Gender gender, Date dateOfBirth,
-			UserType userType) {
+			UserType userType, Boolean isDeleted) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -27,6 +28,7 @@ public class User {
 		this.gender = gender;
 		this.dateOfBirth = dateOfBirth;
 		this.userType = userType;
+		this.isDeleted = isDeleted;
 	}
 
 
@@ -97,6 +99,15 @@ public class User {
 
 	public void setUserType(UserType userType) {
 		this.userType = userType;
+	}
+
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+
+
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 	
 }

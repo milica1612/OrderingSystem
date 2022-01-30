@@ -11,12 +11,14 @@ public class Restaurant {
 	private Location location;
 	private String logo;
 	private double rating;
+	private Boolean isDeleted;
 	
 	public Restaurant() {
 		
 	}
 	
-	public Restaurant(String name, String type, ArrayList<Item> items, Boolean isOpen, Location location, String logo, double rating) {
+	public Restaurant(String name, String type, ArrayList<Item> items, Boolean isOpen, Location location, 
+			String logo, double rating, Boolean isDeleted) {
 		super();
 		this.name = name;
 		this.type = type;
@@ -25,6 +27,7 @@ public class Restaurant {
 		this.location = location;
 		this.logo = logo;
 		this.rating = rating;
+		this.isDeleted = isDeleted;
 	}
 
 	public String getName() {
@@ -81,6 +84,14 @@ public class Restaurant {
 
 	public void setRating(double rating) {
 		this.rating = rating;
+	}
+
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 	
 }
