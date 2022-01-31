@@ -31,9 +31,11 @@ public class CustomerService {
 	public ArrayList<Customer> getAll() {
 		ArrayList<Customer> customers = customerDAO.getAll();
 		ArrayList<Customer> result = new ArrayList<Customer>();
-		for(Customer c : customers) {
-			if(c.getIsDeleted() == false) {
-				result.add(c);
+		if(customers != null) {
+			for(Customer c : customers) {
+				if(c.getIsDeleted() == false) {
+					result.add(c);
+				}
 			}
 		}
 		return result;

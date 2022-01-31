@@ -15,6 +15,11 @@ Vue.component("employeeRegistration", {
             taken: ""
         }
     },
+    mounted () {
+        if(localStorage.getItem("role") != "ADMIN"){
+            this.$router.push("/")
+        }
+    },
 	methods: {
         register() {
 
@@ -34,11 +39,10 @@ Vue.component("employeeRegistration", {
 	                    axios.post('managers/registration', JSON.stringify(params)
 	                    ).then(response => {
 	                        console.log(response);
-	                        if (response.data == "") {
-	
+	                        if (response.data == "Username taken") {
+                                alert("Username taken")
 	                        } else {
-	
-	                            //this.$router.push("events")
+                                this.$router.push("/usersOverview")
 	                        }
 	                    }).catch(err => {
 	                        console.log(err);
@@ -48,11 +52,10 @@ Vue.component("employeeRegistration", {
 						axios.post('deliverers/registration', JSON.stringify(params)
 	                    ).then(response => {
 	                        console.log(response);
-	                        if (response.data == "") {
-	
+	                        if (response.data == "Username taken") {
+                                alert("Username taken")
 	                        } else {
-	
-	                            //this.$router.push("events")
+                                this.$router.push("/usersOverview")
 	                        }
 	                    }).catch(err => {
 	                        console.log(err);
@@ -61,6 +64,15 @@ Vue.component("employeeRegistration", {
 					
 				}
             }
+        },
+        isUsernameTaken() {
+            axios.get('users/' + this.username).then(response => {
+                this.taken = response.data
+                console.log(response)
+
+            }).catch(err => {
+                console.log(err)
+            });
         },
 	},
     computed:{
@@ -81,14 +93,7 @@ Vue.component("employeeRegistration", {
             this.not_filled = false
             return false
         },
-        isUsernameTaken() {
-            axios.get('users/' + this.username).then(response => {
-                this.taken = response.data
-                console.log(response)
-
-            }).catch(err => {
-                console.log(err)
-            });
+        isUsernameTakenComputed() {
             if(this.taken == ""){
                 return false
             }
@@ -137,7 +142,7 @@ Vue.component("employeeRegistration", {
 				</div>
 				<div>
 				  <label>Username</label>
-				  <input type="text" class="form-control" v-model="username">
+				  <input type="text" class="form-control" v-model="username" v-on:change="isUsernameTaken">
 				</div>
 				<div>
 				  <label>Password</label>
@@ -150,7 +155,7 @@ Vue.component("employeeRegistration", {
 				<div class="text-center" id="err_div">
 				    <p class="error" v-if="passwordsNotSame">Password and confirm password should match!</p>
 				    <p class="error" v-if="notFilled">All fields should be filled!</p>
-				    <p class="error" v-if="isUsernameTaken">Username already taken!</p>
+				    <p class="error" v-if="isUsernameTakenComputed">Username already taken!</p>
 			    </div>
 				</div>
 				<div class="d-grid gap-2 col-6 mx-auto">

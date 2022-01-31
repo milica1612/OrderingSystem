@@ -25,9 +25,11 @@ public class RestaurantService {
 	public ArrayList<Restaurant> getAll() {
 		ArrayList<Restaurant> restaurants = restaurantDAO.getAll();
 		ArrayList<Restaurant> result = new ArrayList<Restaurant>();
-		for (Restaurant restaurant : restaurants) {
-			if(!restaurant.getIsDeleted()) {
-				result.add(restaurant);
+		if(restaurants != null) {
+			for (Restaurant restaurant : restaurants) {
+				if(!restaurant.getIsDeleted()) {
+					result.add(restaurant);
+				}
 			}
 		}
 		return result;

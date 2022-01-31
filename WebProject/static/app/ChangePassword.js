@@ -16,7 +16,7 @@ Vue.component("changePassword", {
             axios.put('users/changePassword', JSON.stringify(this.new_password)
             ).then(response => {
                 console.log(response);
-                this.$router.push("/createOrder");
+                this.$router.push("/");
             }).catch(err => {
                 console.log(err);
             });

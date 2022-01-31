@@ -29,9 +29,11 @@ private ManagerDAO managerDAO;
 	public ArrayList<Manager> getAll() {
 		ArrayList<Manager> managers = managerDAO.getAll();
 		ArrayList<Manager> result = new ArrayList<Manager>();
-		for(Manager m: managers) {
-			if(m.getIsDeleted() == false) {
-				result.add(m);
+		if(managers != null) {
+			for(Manager m: managers) {
+				if(m.getIsDeleted() == false) {
+					result.add(m);
+				}
 			}
 		}
 		return result;

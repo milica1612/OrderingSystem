@@ -43,8 +43,6 @@ public class DelivererController {
 			
 			try {
 				RegistrationDTO dto = gson.fromJson(req.body(), RegistrationDTO.class);
-				System.out.println(dto.getDateOfBirth());
-				System.out.println(dto.getGender());
 				Deliverer newDeliverer = new Deliverer();
 				newDeliverer.setUsername(dto.getUsername());
 				newDeliverer.setName(dto.getName());

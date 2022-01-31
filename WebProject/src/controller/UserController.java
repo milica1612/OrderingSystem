@@ -216,7 +216,6 @@ public class UserController {
 			try {
 				Session session = req.session(true);
 				User logged = session.attribute("logged");
-				System.out.println(logged.getUsername());
 				String newPassword = gson.fromJson(req.body(), String.class);
 				User newUser = userService.changePassword(logged, newPassword);	
 				if(newUser == null) {

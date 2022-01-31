@@ -45,8 +45,6 @@ public class CustomerController {
 			
 			try {
 				RegistrationDTO dto = gson.fromJson(req.body(), RegistrationDTO.class);
-				System.out.println(dto.getDateOfBirth());
-				System.out.println(dto.getGender());
 				Customer newCustomer = new Customer();
 				newCustomer.setUsername(dto.getUsername());
 				newCustomer.setName(dto.getName());

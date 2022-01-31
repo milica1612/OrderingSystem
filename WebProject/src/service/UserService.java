@@ -20,9 +20,11 @@ public class UserService {
 	public ArrayList<User> getAllUsers() {
 		ArrayList<User> users = userDAO.getAll();
 		ArrayList<User> result = new ArrayList<User>();
-		for(User u: users) {
-			if(u.getIsDeleted() == false) {
-				result.add(u);
+		if(users != null) {
+			for(User u: users) {
+				if(u.getIsDeleted() == false) {
+					result.add(u);
+				}
 			}
 		}
 		return result;

@@ -33,9 +33,11 @@ private DelivererDAO delivererDAO;
 	public ArrayList<Deliverer> getAll() {
 		ArrayList<Deliverer> deliverers = delivererDAO.getAll();
 		ArrayList<Deliverer> result = new ArrayList<Deliverer>();
-		for(Deliverer d : deliverers) {
-			if(d.getIsDeleted() == false) {
-				result.add(d);
+		if(deliverers != null) {
+			for(Deliverer d : deliverers) {
+				if(d.getIsDeleted() == false) {
+					result.add(d);
+				}
 			}
 		}
 		return result;

@@ -48,8 +48,6 @@ public class ManagerController {
 			
 			try {
 				RegistrationDTO dto = gson.fromJson(req.body(), RegistrationDTO.class);
-				System.out.println(dto.getDateOfBirth());
-				System.out.println(dto.getGender());
 				Manager newManager = new Manager();
 				newManager.setUsername(dto.getUsername());
 				newManager.setName(dto.getName());
