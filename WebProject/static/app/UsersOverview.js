@@ -197,7 +197,7 @@ Vue.component("usersOverview", {
 	        <td class="td_class">{{ user.lastName}}</td>
 	        <td class="td_class">{{ user.userType }}</td>
 			<td class="td_class">{{user.points}}</td>
-			<td><button type="button" class="btn_delete" data-bs-dismiss="modal" v-on:click="deleteUser(user)" >DELETE</button></td>       						
+			<td><button type="button" class="btn_delete" data-bs-dismiss="modal" v-on:click="deleteUser(user)" v-if="user.userType !== 'ADMIN'">DELETE</button></td>       						
 	      </tr>
 	    </tbody>
 	  </table>
