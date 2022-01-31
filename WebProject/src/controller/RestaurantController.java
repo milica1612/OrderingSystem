@@ -20,6 +20,7 @@ import beans.User;
 import beans.UserType;
 import dto.RegistrationDTO;
 import dto.RestaurantSearchDTO;
+import service.ManagerService;
 import service.OrderService;
 import service.RestaurantService;
 
@@ -27,12 +28,14 @@ public class RestaurantController {
 	
 	private RestaurantService restaurantService;
 	private OrderService orderService;
+	private ManagerService managerService;
 	private static Gson gson = new Gson();
 	
-	public RestaurantController(RestaurantService restaurantService, OrderService orderService) {
+	public RestaurantController(RestaurantService restaurantService, OrderService orderService, ManagerService managerService) {
 		super();
 		this.restaurantService = restaurantService;
 		this.orderService = orderService;
+		this.managerService = managerService;
 		
 		post("/restaurants/create", (req,res) -> {
 			res.type("application/json");
@@ -242,6 +245,7 @@ public class RestaurantController {
 		try {
 			if(orderService.canRestaurantBeDeleted(req.params("name"))) {
 			Restaurant restaurant = restaurantService.delete(req.params("name"));
+			managerService.deleteRestaurant(req.params("name"));
 			return gson.toJson(restaurant);
 			}else {
 				return "";

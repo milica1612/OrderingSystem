@@ -144,14 +144,25 @@ private DelivererDAO delivererDAO;
 		delivererDAO.saveAll(deliverers);
 		
 	}
+	
+
+	public boolean canDelete(Deliverer d) {
+		for (Order o : d.getOrders()) {
+			if(o.getOrderStatus() != OrderStatus.CANCELED && o.getOrderStatus() != OrderStatus.DELIVERED)
+				return false;
+		}
+		return true;
+	}
 
 	public User deleteUser(String username) throws IOException {
 		ArrayList<Deliverer> all = delivererDAO.getAll();
 		User userFound = null;
-		for(User u : all) {
+		for(Deliverer u : all) {
 			if(u.getUsername().equals(username)) {
-				u.setIsDeleted(true);
-				userFound = u;
+				if(canDelete(u)) {
+					u.setIsDeleted(true);
+					userFound = u;
+				}
 			}
 		}
 		delivererDAO.saveAll(all);

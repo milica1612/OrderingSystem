@@ -128,8 +128,12 @@ Vue.component("usersOverview", {
 		deleteUser(usr){
 			axios.get('/users/deleteUser/' + usr.username)
 			.then(response => {
-				console.log(response);
+				if(response.data == null){
+					alert("Unable to delete entity because of unfished orders or job position!")
+				}else {
+					console.log(response);
 					location.reload()
+				}
 					}).catch(err => {
                     console.log(err);
                 });

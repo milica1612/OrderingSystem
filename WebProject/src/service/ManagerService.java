@@ -127,6 +127,20 @@ private ManagerDAO managerDAO;
 		return null;
 		
 	}
+	
+	public void deleteRestaurant(String restaurant) throws IOException {
+		ArrayList<Manager> managers = managerDAO.getAll();
+		if(managers != null) {
+			for (Manager m : managers) {
+				if(m.getRestaurant() != null) {
+					if(m.getRestaurant().getName().equals(restaurant)) {
+						m.setRestaurant(null);
+						managerDAO.saveAll(managers);
+					}
+				}
+			}
+			}
+	}
 
 	public User changePassword(User logged, String newPassword) throws IOException {
 		ArrayList<Manager> all = managerDAO.getAll();
@@ -151,14 +165,23 @@ private ManagerDAO managerDAO;
 		}
 		return null;
 	}
+	
+	public boolean canBeDeleted(Manager m) {
+		if(m.getRestaurant() != null) {
+			return false;
+		}
+		return true;
+	}
 
 	public User deleteUser(String username) throws IOException {
 		ArrayList<Manager> all = managerDAO.getAll();
 		User userFound = null;
-		for(User u : all) {
+		for(Manager u : all) {
 			if(u.getUsername().equals(username)) {
-				u.setIsDeleted(true);
-				userFound = u;
+					if(canBeDeleted(u)) {
+					u.setIsDeleted(true);
+					userFound = u;
+				}
 			}
 		}
 		managerDAO.saveAll(all);

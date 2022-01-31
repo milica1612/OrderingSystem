@@ -135,14 +135,24 @@ public class CustomerService {
 		}
 		return customers;
 	}
+	
+	public boolean canDeleteCustomer(Customer c) {
+		for (Order o : c.getOrders()) {
+			if(o.getOrderStatus() != OrderStatus.CANCELED && o.getOrderStatus() != OrderStatus.DELIVERED)
+				return false;
+		}
+		return true;
+	}
 
 	public User deleteUser(String username) throws IOException {
 		ArrayList<Customer> all = customerDAO.getAll();
 		User userFound = null;
-		for(User u : all) {
+		for(Customer u : all) {
 			if(u.getUsername().equals(username)) {
-				u.setIsDeleted(true);
-				userFound = u;
+				if(canDeleteCustomer(u)) {
+					u.setIsDeleted(true);
+					userFound = u;
+				}
 			}
 		}
 		customerDAO.saveAll(all);
