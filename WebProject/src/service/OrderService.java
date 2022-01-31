@@ -239,6 +239,19 @@ public class OrderService {
 		}
 	return result;
 	}
+	
+	public boolean canRestaurantBeDeleted(String params) {
+		ArrayList<Order> orders = getAll();
+		if(orders != null) {
+			for (Order order : orders) {
+				if(order.getRestaurant().equals(params)) {
+					if(order.getOrderStatus() != OrderStatus.DELIVERED && order.getOrderStatus() != OrderStatus.CANCELED)
+						return false;
+				}
+			}
+		}
+	return true;
+	}
 
 	public ArrayList<Order> getForRestaurantByDate(String params, OrderSearchDTO orderDTO) throws ParseException {
 		if(orderDTO.getDateFrom() == null) {

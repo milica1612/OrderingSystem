@@ -229,6 +229,9 @@ Vue.component("homePage", {
 				.then(response => {
 						console.log(response)
 						location.reload()
+						if(response.data == ""){
+							alert("Cannot delete restaurant that has undelivered orders!")
+						}
 					})
 		}
 	},
