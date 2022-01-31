@@ -116,6 +116,9 @@ public class ManagerController {
 			try {
 			Session session = req.session(true);
 			User logged = session.attribute("logged");
+			if(logged == null) {
+				return null;
+			}
 			Restaurant restaurant = managerService.getRestaurant(logged.getUsername());
 			
 			return gson.toJson(restaurant);

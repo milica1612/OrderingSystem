@@ -13,7 +13,9 @@ Vue.component("newItem", {
         }
     },
 	mounted () {
-		
+		if(localStorage.getItem("role") != 'MANAGER'){
+			this.$router.push("/")
+		}
 	},
 	methods: {
         create(){
@@ -37,7 +39,9 @@ Vue.component("newItem", {
 						}
 	                }
 	            ) 
-			}
+			}else{
+					alert('Name, type, price and photo field should be filled!')
+				}
         },
 		setFiles: function(event){
             const file = event.target.files[0];

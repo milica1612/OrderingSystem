@@ -72,6 +72,9 @@ public class CartController {
 			try {
 				Session session = req.session(true);
 				User logged = session.attribute("logged");
+				if(logged == null) {
+					return null;
+				}
 				Cart cart = cartService.getItemsFromCart(logged.getUsername());
 				if(cart == null) {
 					return "";

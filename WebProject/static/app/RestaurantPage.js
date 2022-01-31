@@ -248,9 +248,9 @@ Vue.component("restaurantPage", {
                 					<button type="button" style="margin-left: 430px" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               						<div class="modal-body">
  										<div class="mb-3 row">
-											<label class="col-sm-3 col-form-label">Name</label>
+											<label  class="col-sm-3 col-form-label">Name</label></br>
 											<div class="col-sm-9" style="margin-top: -6px">
-									  			<input type="text" class="form-control" v-model="current_item.name">
+												<input type="text" class="form-control" v-model="current_item.name">
 											</div>
   										</div>
 										<div class="mb-3 row">
@@ -262,7 +262,10 @@ Vue.component("restaurantPage", {
 										<div class="mb-3 row">
 											<label  class="col-sm-3 col-form-label">Type</label></br>
 											<div class="col-sm-9" style="margin-top: -6px">
-												<input type="text" class="form-control" v-model="current_item.type">
+												<select id="gender_select"  class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="current_item.type">
+				  									<option value="0">FOOD</option>
+				  									<option value="1">DRINK</option>
+				  								</select>	
 											</div>
   										</div>
 										<div class="mb-3 row">
@@ -287,7 +290,7 @@ Vue.component("restaurantPage", {
 									    </div>
 									<div class="modal-footer">
                 						<button type="button" class="btn_modal" data-bs-dismiss="modal">Close</button>
-                						<button type="submit" class="btn_modal" @click="save"  data-bs-dismiss="modal"  :key="button_text">Save changes</button>
+                						<button type="submit" class="btn_modal" @click="save"  data-bs-dismiss="modal" >Save changes</button>
               						</div>
               					</div>
               					
@@ -311,7 +314,7 @@ Vue.component("restaurantPage", {
   										</div>
 										<div class="modal-footer">
 	                						<button type="button" class="btn_modal" data-bs-dismiss="modal">Close</button>
-	                						<button type="submit" class="btn_modal" @click="addToCart" :key="button_text">Add to card</button>
+	                						<button type="submit" class="btn_modal" @click="addToCart">Add to card</button>
 	              						</div>
               					</div>
               					
