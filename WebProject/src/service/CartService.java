@@ -50,7 +50,7 @@ public class CartService {
 							i.setQuantity(i.getQuantity() + quantity);
 							found = true;
 							break;
-						}		
+						}
 					}
 					if(!found) {
 						CartItem ci = new CartItem(item, quantity);

@@ -83,6 +83,9 @@ Vue.component("cartOverview", {
                     console.log(err);
                 });
 			}
+			if(this.cart.items.lenght == 0){
+				localStorage.removeItem("cartRestaurant")
+			}
 		},
 		createOrder(){
 				let params = {
@@ -90,6 +93,7 @@ Vue.component("cartOverview", {
 					}
 				axios.post('/orders/create', JSON.stringify(params))
 				.then(response => {
+					localStorage.removeItem("cartRestaurant")
 					this.order = response.data
 					console.log(response);
 					location.reload()

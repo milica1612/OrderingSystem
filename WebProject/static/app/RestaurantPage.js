@@ -119,13 +119,18 @@ Vue.component("restaurantPage", {
 					if(this.quantityItem < 1){
 						alert("Quantity has to be more then 0!");
 					}else{
-						axios.post('/carts/addItemToCart/' + this.quantityItem, JSON.stringify(params))
-						.then(response => {
-							console.log(response);
-							alert(this.quantityItem + "x" + this.current_item.name + " added to your cart!");
-						}).catch(err => {
-		                    console.log(err);
-		                });
+						if(localStorage.getItem("cartRestaurant") == this.current_item.restaurant || localStorage.getItem("cartRestaurant") == null){
+							axios.post('/carts/addItemToCart/' + this.quantityItem, JSON.stringify(params))
+							.then(response => {
+								console.log(response);
+								localStorage.setItem("cartRestaurant", this.current_item.restaurant)
+								alert(this.quantityItem + "x" + this.current_item.name + " added to your cart!");
+							}).catch(err => {
+			                    console.log(err);
+			                });
+						}else{
+							alert("You can't order from more restaurants at the same time!")
+						}
 					}
 			}
 		},
