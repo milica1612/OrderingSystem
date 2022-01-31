@@ -306,7 +306,7 @@ Vue.component("delivererOrderOverview", {
 					<label  class="restaurant_data">QUANTITY: {{cartItem.quantity}}</label>
 				</div> </br></br>
 				<label class="restaurant_name">TOTAL: {{order.cart.total}} din;  </label> 
-				<button class="btn_manager" type="button" data-bs-toggle="modal" data-bs-target="#modal" v-on:click="setOrderToDelivered(order)">Delivered</button></br>
+				<button class="btn_manager" type="button" data-bs-toggle="modal" data-bs-target="#modal" v-on:click="setOrderToDelivered(order)" v-if="order.orderStatus == 'IN_TRANSPORT'">Delivered</button></br>
 				<hr style="height:10px">
 			</div>
 	</div>

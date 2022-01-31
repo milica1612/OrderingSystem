@@ -109,6 +109,12 @@ public class OrderService {
 				}
 			}
 		
+		for (Order o : allOrders) {
+			if(o.getCode().equals(order.getCode())) {
+				o.setOrderStatus(OrderStatus.CANCELED);
+			}
+		}
+		
 		orderDAO.saveAll(allOrders);
 		customerDAO.saveAll(customers);
 		return order;
@@ -284,6 +290,19 @@ public class OrderService {
 			}
 		}
 		orderDAO.saveAll(orders);
+		
+		ArrayList<Customer> customers = customerDAO.getAll();
+		for (Customer customer : customers) {
+			if(customer.getUsername().equals(o.getCart().getCustomer())) {
+				for (Order order : customer.getOrders()) {
+					if(order.getCode().equals(o.getCode())) {
+						order.setOrderStatus(o.getOrderStatus());
+						break;
+					}
+				}
+			}
+		}
+		customerDAO.saveAll(customers);
 		return o;
 	}
 	
@@ -306,6 +325,18 @@ public class OrderService {
 				break;
 			}
 		}
+		ArrayList<Customer> customers = customerDAO.getAll();
+		for (Customer customer : customers) {
+			if(customer.getUsername().equals(o.getCart().getCustomer())) {
+				for (Order order : customer.getOrders()) {
+					if(order.getCode().equals(o.getCode())) {
+						order.setOrderStatus(OrderStatus.WAITING_FOR_DELIVERY_APPROVAL);
+						break;
+					}
+				}
+			}
+		}
+		customerDAO.saveAll(customers);
 		delivererDAO.saveAll(deliverers);
 		orderDAO.saveAll(orders);
 		return o;
@@ -333,6 +364,20 @@ public class OrderService {
 				}
 			}
 		}
+		
+		ArrayList<Customer> customers = customerDAO.getAll();
+		for (Customer customer : customers) {
+			if(customer.getUsername().equals(o.getCart().getCustomer())) {
+				for (Order order : customer.getOrders()) {
+					if(order.getCode().equals(o.getCode())) {
+						order.setOrderStatus(OrderStatus.DELIVERED);
+						break;
+					}
+				}
+			}
+		}
+		
+		customerDAO.saveAll(customers);
 		delivererDAO.saveAll(deliverers);
 		orderDAO.saveAll(orders);
 		return o;

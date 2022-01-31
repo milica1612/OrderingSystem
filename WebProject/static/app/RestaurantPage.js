@@ -209,6 +209,12 @@ Vue.component("restaurantPage", {
 				return true
 			}
 			return false
+		},
+		isManagerOrAdmin(){
+			if(localStorage.getItem('role') == 'ADMIN' || localStorage.getItem('role') == 'MANAGER') {
+				return true
+			}
+			return false
 		}
 	},
 	template: `
@@ -336,6 +342,7 @@ Vue.component("restaurantPage", {
 					<label  class="restaurant_name">{{c.customer.username}}</label></br>
 					<label  class="restaurant_comm">{{c.content}}</label></br>
 					<label  class="restaurant_comm">{{c.rating}}  &#10027;</label></br>
+					<label  class="restaurant_comm" v-if="isManagerOrAdmin">{{c.status}}</label></br>
 					<div v-if="isManagerLogged">
 					<button type="button" class="btn_search_res" v-if="c.status == 'WAITING'" v-on:click="approve(c)">
 			       		Approve

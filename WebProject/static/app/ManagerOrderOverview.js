@@ -248,7 +248,7 @@ Vue.component("managerOrderOverview", {
 					<label  class="restaurant_data">{{cartItem.item.quantity}}</label></br>
 					<label  class="restaurant_data">QUANTITY: {{cartItem.quantity}}</label>
 				</div> </br></br>
-				<label class="restaurant_name">TOTAL: {{order.cart.total}} din;  </label> 
+				<label class="restaurant_name">TOTAL: {{order.cart.total}} din;  </label> <br/>
 				<button class="btn_manager" type="button" v-if="order.orderStatus=='PROCESSING'" v-on:click="changeOrderStatusToPreparing(order)">Preparing</button></br>
 				<button class="btn_manager" type="button" v-if="order.orderStatus=='PREPARING'" v-on:click="changeOrderStatusToWaitingForDelivery(order)">Waiting For Delivery</button></br>
 				<hr style="height:10px">
