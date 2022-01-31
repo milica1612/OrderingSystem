@@ -29,8 +29,12 @@ Vue.component("newItem", {
 	            }
 	            axios.post('/restaurantPage/addNewItem/' + localStorage.getItem("restaurant"), JSON.stringify(params)).then(
 	                response => {
+						if(response.data != null){
 	                    console.log(response)
 	                   	window.location.href = "#/restaurantPage?name=" + localStorage.getItem("restaurant");
+						}else{
+							alert('Item name already taken!');
+						}
 	                }
 	            ) 
 			}

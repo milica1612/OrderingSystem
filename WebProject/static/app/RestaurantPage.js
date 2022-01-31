@@ -97,7 +97,8 @@ Vue.component("restaurantPage", {
 					axios.put('/restaurantPage/editItem/' + localStorage.getItem("restaurant") + '/' 
 								+ this.oldName, JSON.stringify(params))
 						.then(response => {
-							 console.log(response);
+							console.log(response);
+							location.reload()
             }).catch(err => {
                     console.log(err);
                 });
@@ -170,6 +171,9 @@ Vue.component("restaurantPage", {
 					location.reload()
 				})
 		},
+		addItem(){
+			 this.$router.push("/newItem");
+		}
 	},
 	computed:{
 		notFilled(){
@@ -206,7 +210,7 @@ Vue.component("restaurantPage", {
 	<div class="reg">
 		<div class="container" id="restaurant_info">
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-			  <button class="btn_manager" type="button" v-if="isManagerLogged">Add new item</button>
+			  <button class="btn_manager" type="button" v-if="isManagerLogged" @click="addItem">Add new item</button>
 			</div> 
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 				<button class="btn_manager" type="button" @click="changeView">{{this.btn_txt}}</button>
@@ -283,7 +287,7 @@ Vue.component("restaurantPage", {
 									    </div>
 									<div class="modal-footer">
                 						<button type="button" class="btn_modal" data-bs-dismiss="modal">Close</button>
-                						<button type="submit" class="btn_modal" @click="save" :key="button_text">Save changes</button>
+                						<button type="submit" class="btn_modal" @click="save"  data-bs-dismiss="modal"  :key="button_text">Save changes</button>
               						</div>
               					</div>
               					

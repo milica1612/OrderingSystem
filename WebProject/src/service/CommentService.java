@@ -23,9 +23,11 @@ public class CommentService {
 	public ArrayList<Comment> getAllApprovedForRestaurant(String params) {
 		ArrayList<Comment> all = commentDAO.getAll();
 		ArrayList<Comment> result = new ArrayList<Comment>();
-		for (Comment comment : all) {
-			if(comment.getRestaurant().getName().equals(params) && comment.getStatus() == CommentStatus.APPROVED) {
-				result.add(comment);
+		if(all != null) {
+			for (Comment comment : all) {
+				if(comment.getRestaurant().getName().equals(params) && comment.getStatus() == CommentStatus.APPROVED) {
+					result.add(comment);
+				}
 			}
 		}
 		return result;

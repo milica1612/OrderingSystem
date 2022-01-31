@@ -11,7 +11,7 @@ public class Restaurant {
 	private Location location;
 	private String logo;
 	private double rating;
-	private Boolean isDeleted;
+	private Boolean isDeleted = false;
 	
 	public Restaurant() {
 		

@@ -301,7 +301,7 @@ Vue.component("homePage", {
 			<label class="restaurant_data">{{r.location.address.city}} {{r.location.address.zipcode}}</label></br>  
 			<label class="restaurant_data">{{r.rating}}  &#10027;</label></br>
 			<label class="restaurant_data" v-if="r.isOpen == true">OPEN</label>
-			<label class="restaurant_data" v-else>CLOSE</label>
+			<label class="restaurant_data" v-else>CLOSED</label>
 			<br>
 		</div>
 			<button class="btn_manager" type="button" data-bs-toggle="modal" data-bs-target="#modall" v-on:click="setSelected(r)" v-if="isCustomerLogged">Comment and rate</button>

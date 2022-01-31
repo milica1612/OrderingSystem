@@ -132,10 +132,6 @@ public class RestaurantService {
 	}
 
 	public Item addNewItem(String restaurantName, Item newItem) throws FileNotFoundException, IOException {
-		String filePath = "images/items/" + newItem.getName() + restaurantName + ".jpg";
-		System.out.println(filePath);
-		imageService.Base64DecodeAndSave(newItem.getPhoto(), filePath);
-		newItem.setPhoto(filePath);
 		ArrayList<Restaurant> restaurants = restaurantDAO.getAll();
 		for(Restaurant restaurant : restaurants) {
 			if(restaurant.getName().equals(restaurantName)) {
@@ -146,6 +142,9 @@ public class RestaurantService {
 							return null;
 						}
 					}
+					String filePath = "images/items/" + newItem.getName() + restaurantName + ".jpg";
+					imageService.Base64DecodeAndSave(newItem.getPhoto(), filePath);
+					newItem.setPhoto(filePath);
 					items.add(newItem);
 				}else {
 					items = new ArrayList<Item>();

@@ -224,9 +224,11 @@ public class OrderService {
 	public ArrayList<Order> getAllForRestaurant(String params) {
 		ArrayList<Order> orders = getAll();
 		ArrayList<Order> result = new ArrayList<Order>();
-		for (Order order : orders) {
-			if(order.getRestaurant().equals(params)) {
-				result.add(order);
+		if(orders != null) {
+			for (Order order : orders) {
+				if(order.getRestaurant().equals(params)) {
+					result.add(order);
+				}
 			}
 		}
 	return result;

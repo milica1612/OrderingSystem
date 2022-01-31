@@ -44,6 +44,7 @@ Vue.component("newRestaurant", {
                             axios.put('/managers/restaurant/' + this.name, JSON.stringify(this.manager.username)).then(
                                 response => {
                                     console.log(response)
+									 this.$router.push("/");
                                 })
                         }else{
                             localStorage.setItem("restaurant", this.name)
@@ -70,17 +71,21 @@ Vue.component("newRestaurant", {
         },
     },
     mounted(){
-        axios.get('/managers/getAllAvailable').then(
-            response =>{
-                this.managers = response.data
-                if(this.managers.length == 0){
-                    this.button_text = "CREATE AND REGISTER NEW MANAGER"
-                }else{
-                    this.button_text = "CREATE"
-                }
-                this.$forceUpdate()
-            }
-        ).catch()
+	 	if(localStorage.getItem("role") != 'ADMIN'){
+            this.$router.push("/")
+        }else{
+			axios.get('/managers/getAllAvailable').then(
+	            response =>{
+	                this.managers = response.data
+	                if(this.managers.length == 0){
+	                    this.button_text = "CREATE AND REGISTER NEW MANAGER"
+	                }else{
+	                    this.button_text = "CREATE"
+	                }
+	                this.$forceUpdate()
+	            }
+	        ).catch()
+ 		}
     },
     computed:{
         availableManagers(){

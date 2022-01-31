@@ -40,6 +40,7 @@ Vue.component("managerRegistration", {
                                 response => {
                                     console.log(response)
                                     localStorage.removeItem("restaurant");
+									 this.$router.push("/");
                                 })
                         }).catch(err => {
                             console.log(err);
@@ -48,6 +49,11 @@ Vue.component("managerRegistration", {
                 }
             }
         },
+    },
+	mounted () {
+        if(localStorage.getItem("role") != 'ADMIN'){
+            this.$router.push("/")
+        }
     },
     computed:{
         passwordsNotSame(){

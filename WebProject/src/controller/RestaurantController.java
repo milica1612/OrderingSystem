@@ -100,32 +100,6 @@ public class RestaurantController {
 			}
 		});
 		
-		post("/restaurants/create", (req,res) -> {
-			res.type("application/json");
-			
-			try {
-				Restaurant newRestaurant = gson.fromJson(req.body(), Restaurant.class);
-				newRestaurant.setIsOpen(true);
-				newRestaurant.setRating(5);
-				if(restaurantService.getAll() != null) {
-					for (Restaurant restaurant : restaurantService.getAll()) {
-						if(restaurant.getName().equals(newRestaurant.getName())) {
-							return "Username taken";
-						}
-					}
-				}
-				
-				Restaurant created = restaurantService.create(newRestaurant);
-
-				return gson.toJson(created);
-				
-			} catch(Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-			
-		});
-		
 		put("/restaurantPage/editItem/:name/:itemName", (req, res) -> {
 			res.type("application/json");
 			
@@ -147,13 +121,10 @@ public class RestaurantController {
 		
 		post("/restaurantPage/addNewItem/:name", (req, res) -> {
 			res.type("application/json");
-			
 			try {
 				Item item = gson.fromJson(req.body(), Item.class);
 				String restaurantName = req.params("name");	
-				System.out.println(restaurantName);
 				Item created = restaurantService.addNewItem(restaurantName, item);
-
 				return gson.toJson(created);
 				
 			} catch(Exception e) {
