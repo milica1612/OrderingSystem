@@ -147,6 +147,9 @@ public class RestaurantService {
 					newItem.setPhoto(filePath);
 					items.add(newItem);
 				}else {
+					String filePath = "images/items/" + newItem.getName() + restaurantName + ".jpg";
+					imageService.Base64DecodeAndSave(newItem.getPhoto(), filePath);
+					newItem.setPhoto(filePath);
 					items = new ArrayList<Item>();
 					items.add(newItem);
 				}

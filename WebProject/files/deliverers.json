@@ -1,1 +1,24 @@
-[{"orders":[],"username":"Deliverer","password":"deliverer","name":"Goran","lastName":"Nikolic","gender":"MALE","dateOfBirth":"Mar 5, 1989, 12:00:00 AM","userType":"DELIVERER","isDeleted":false},{"orders":[],"username":"Nina","password":"nina","name":"Nina","lastName":"Savic","gender":"FEMALE","dateOfBirth":"Sep 9, 1999, 12:00:00 AM","userType":"DELIVERER","isDeleted":false}]
+[
+	{
+		"orders": [],
+		"username": "Deliverer",
+		"password": "deliverer",
+		"name": "Goran",
+		"lastName": "Nikolic",
+		"gender": "MALE",
+		"dateOfBirth": "Mar 5, 1989, 12:00:00 AM",
+		"userType": "DELIVERER",
+		"isDeleted": false
+	},
+	{
+		"orders": [],
+		"username": "Nina",
+		"password": "nina",
+		"name": "Nina",
+		"lastName": "Savic",
+		"gender": "FEMALE",
+		"dateOfBirth": "Sep 9, 1999, 12:00:00 AM",
+		"userType": "DELIVERER",
+		"isDeleted": false
+	}
+]
