@@ -40,6 +40,48 @@ public class CustomerService {
 		}
 		return result;
 	}
+	
+	public ArrayList<Customer> searchUsersByName(String name){
+		
+		ArrayList<Customer> all = getAll();
+		ArrayList<Customer> result = new ArrayList<Customer>();
+		
+		for (Customer user : all) {
+			 if(user.getName().toLowerCase().contains(name.toLowerCase().trim())) {
+				 result.add(user);
+			 }
+		}
+		
+		return result;
+	}
+	
+	public ArrayList<Customer> searchUsersByLastName(String lastName){
+			
+			ArrayList<Customer> all = getAll();
+			ArrayList<Customer> result = new ArrayList<Customer>();
+			
+			for (Customer user : all) {
+				 if(user.getLastName().toLowerCase().contains(lastName.toLowerCase().trim())) {
+					 result.add(user);
+				 }
+			}
+			
+			return result;
+		}
+	
+	public ArrayList<Customer> searchUsersByUsername(String username){
+		
+		ArrayList<Customer> all = getAll();
+		ArrayList<Customer> result = new ArrayList<Customer>();
+		
+		for (Customer user : all) {
+			 if(user.getUsername().toLowerCase().contains(username.toLowerCase().trim())) {
+				 result.add(user);
+			 }
+		}
+		
+		return result;
+	}
 
 	public Customer login(LoginDTO loginDTO) {
 		Customer logged = customerDAO.getByUsername(loginDTO.getUsername());

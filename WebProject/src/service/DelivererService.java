@@ -43,6 +43,48 @@ private DelivererDAO delivererDAO;
 		return result;
 	}
 
+	public ArrayList<Deliverer> searchUsersByName(String name){
+		
+		ArrayList<Deliverer> all = getAll();
+		ArrayList<Deliverer> result = new ArrayList<Deliverer>();
+		
+		for (Deliverer user : all) {
+			 if(user.getName().toLowerCase().contains(name.toLowerCase().trim())) {
+				 result.add(user);
+			 }
+		}
+		
+		return result;
+	}
+	
+	public ArrayList<Deliverer> searchUsersByLastName(String lastName){
+			
+			ArrayList<Deliverer> all = getAll();
+			ArrayList<Deliverer> result = new ArrayList<Deliverer>();
+			
+			for (Deliverer user : all) {
+				 if(user.getLastName().toLowerCase().contains(lastName.toLowerCase().trim())) {
+					 result.add(user);
+				 }
+			}
+			
+			return result;
+		}
+	
+	public ArrayList<Deliverer> searchUsersByUsername(String username){
+		
+		ArrayList<Deliverer> all = getAll();
+		ArrayList<Deliverer> result = new ArrayList<Deliverer>();
+		
+		for (Deliverer user : all) {
+			 if(user.getUsername().toLowerCase().contains(username.toLowerCase().trim())) {
+				 result.add(user);
+			 }
+		}
+		
+		return result;
+	}
+	
 	public Deliverer login(LoginDTO loginDTO) {
 		Deliverer logged = delivererDAO.getByUsername(loginDTO.getUsername());
 		

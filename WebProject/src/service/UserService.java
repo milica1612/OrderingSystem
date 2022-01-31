@@ -87,7 +87,7 @@ public class UserService {
 		ArrayList<User> result = new ArrayList<User>();
 		
 		for (User user : all) {
-			 if(user.getName().toLowerCase().contains(username.toLowerCase().trim())) {
+			 if(user.getUsername().toLowerCase().contains(username.toLowerCase().trim())) {
 				 result.add(user);
 			 }
 		}

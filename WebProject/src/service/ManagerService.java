@@ -38,6 +38,48 @@ private ManagerDAO managerDAO;
 		}
 		return result;
 	}
+	
+	public ArrayList<Manager> searchUsersByName(String name){
+		
+		ArrayList<Manager> all = getAll();
+		ArrayList<Manager> result = new ArrayList<Manager>();
+		
+		for (Manager user : all) {
+			 if(user.getName().toLowerCase().contains(name.toLowerCase().trim())) {
+				 result.add(user);
+			 }
+		}
+		
+		return result;
+	}
+	
+	public ArrayList<Manager> searchUsersByLastName(String lastName){
+			
+			ArrayList<Manager> all = getAll();
+			ArrayList<Manager> result = new ArrayList<Manager>();
+			
+			for (Manager user : all) {
+				 if(user.getLastName().toLowerCase().contains(lastName.toLowerCase().trim())) {
+					 result.add(user);
+				 }
+			}
+			
+			return result;
+		}
+	
+	public ArrayList<Manager> searchUsersByUsername(String username){
+		
+		ArrayList<Manager> all = getAll();
+		ArrayList<Manager> result = new ArrayList<Manager>();
+		
+		for (Manager user : all) {
+			 if(user.getUsername().toLowerCase().contains(username.toLowerCase().trim())) {
+				 result.add(user);
+			 }
+		}
+		
+		return result;
+	}
 
 	public ArrayList<Manager> getAllAvailable(){
 		ArrayList<Manager> managers = getAll();

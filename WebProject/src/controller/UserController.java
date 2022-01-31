@@ -104,6 +104,9 @@ public class UserController {
 			res.type("application/json");
 			try {
 				ArrayList<User> users = userService.getUsersByName(req.params("name"));
+				users.addAll(customerService.searchUsersByName(req.params("name")));
+				users.addAll(managerService.searchUsersByName(req.params("name")));
+				users.addAll(delivererService.searchUsersByName(req.params("name")));
 				return gson.toJson(users);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -115,6 +118,9 @@ public class UserController {
 			res.type("application/json");
 			try {
 				ArrayList<User> users = userService.getUsersByLastName(req.params("lastName"));
+				users.addAll(customerService.searchUsersByLastName(req.params("lastName")));
+				users.addAll(managerService.searchUsersByLastName(req.params("lastName")));
+				users.addAll(delivererService.searchUsersByLastName(req.params("lastName")));
 				return gson.toJson(users);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -126,6 +132,9 @@ public class UserController {
 			res.type("application/json");
 			try {
 				ArrayList<User> users = userService.getUsersByUsername(req.params("username"));
+				users.addAll(customerService.searchUsersByUsername(req.params("username")));
+				users.addAll(managerService.searchUsersByUsername(req.params("username")));
+				users.addAll(delivererService.searchUsersByUsername(req.params("username")));
 				return gson.toJson(users);
 			} catch (Exception e) {
 				e.printStackTrace();
