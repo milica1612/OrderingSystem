@@ -19,10 +19,14 @@ Vue.component("ordersWithoutDeliverer", {
 	}
     },
 	mounted() {
-		axios.get('/orders/getWithoutDeliverer')
-          .then(response => {
-				 	this.orders = response.data
-		   })
+		if(localStorage.getItem("role") != 'DELIVERER'){
+			this.$router.push("/")
+		}else {
+			axios.get('/orders/getWithoutDeliverer')
+				.then(response => {
+					this.orders = response.data
+				})
+		}
 	},
 	methods: {	
 		deliverOrder(ord){

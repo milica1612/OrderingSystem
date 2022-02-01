@@ -21,13 +21,17 @@ Vue.component("cartOverview", {
 		}
     },
 	mounted() {
-		axios.get('/carts/getByCustomer')
-          .then(response => {
-				 	this.cart = response.data
-					let name = this.cart.customer 
+		if(localStorage.getItem("role") != 'CUSTOMER'){
+			this.$router.push("/")
+		}else {
+			axios.get('/carts/getByCustomer')
+				.then(response => {
+					this.cart = response.data
+					let name = this.cart.customer
 					localStorage.setItem("cart", name)
 					console.log(name);
-		   })
+				})
+		}
 	},
 	methods: {
 		setItem(cartItm){

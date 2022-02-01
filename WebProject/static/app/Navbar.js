@@ -16,6 +16,7 @@ Vue.component("navbar", {
 		logOut(){
 			localStorage.removeItem("role");
 			localStorage.removeItem("username");
+			localStorage.removeItem("cartRestaurant")
 			axios.get('users/logout')
 		}
 	},

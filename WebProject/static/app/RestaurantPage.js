@@ -325,7 +325,7 @@ Vue.component("restaurantPage", {
   										</div>
 										<div class="modal-footer">
 	                						<button type="button" class="btn_modal" data-bs-dismiss="modal">Close</button>
-	                						<button type="submit" class="btn_modal" @click="addToCart">Add to card</button>
+	                						<button type="submit" class="btn_modal" data-bs-dismiss="modal" @click="addToCart">Add to card</button>
 	              						</div>
               					</div>
               					

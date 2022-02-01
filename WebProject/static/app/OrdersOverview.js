@@ -19,15 +19,19 @@ Vue.component("ordersOverview", {
 	}
     },
 	mounted() {
-		axios.get('/orders/getByCustomer')
-          .then(response => {
-				 	this.orders = response.data
-		   })
-		axios.get('/restaurants/getTypes').then(
-				response =>{
+		if(localStorage.getItem("role") != 'CUSTOMER'){
+			this.$router.push("/")
+		}else {
+			axios.get('/orders/getByCustomer')
+				.then(response => {
+					this.orders = response.data
+				})
+			axios.get('/restaurants/getTypes').then(
+				response => {
 					this.types = response.data
 				}
 			).catch()
+		}
 	},
 	methods: {	
 		getUndelivered() {

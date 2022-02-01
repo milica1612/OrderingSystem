@@ -15,14 +15,18 @@ Vue.component("customerOverview", {
         }
     },
     mounted () {
-        axios.get('/managers/restaurant')
-            .then(response => {
-                this.restaurant = response.data
-                axios.get('/orders/getCustomers/' + this.restaurant.name)
-                    .then(response => {
-                        this.users = response.data
-                    })
-            })
+        if(localStorage.getItem("role") != 'MANAGER'){
+            this.$router.push("/")
+        }else {
+            axios.get('/managers/restaurant')
+                .then(response => {
+                    this.restaurant = response.data
+                    axios.get('/orders/getCustomers/' + this.restaurant.name)
+                        .then(response => {
+                            this.users = response.data
+                        })
+                })
+        }
     },
     computed: {
         sortedItems () {

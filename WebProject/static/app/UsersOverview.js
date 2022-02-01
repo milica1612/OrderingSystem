@@ -14,13 +14,17 @@ Vue.component("usersOverview", {
         }
 	},
 	mounted () {
-          axios.get('/users/getAllUsers')
-          	.then(response => {
-				 if (response.data != null) {
-					this.users = response.data
-				    console.log(this.users);
-			 }
-		   })
+		if(localStorage.getItem("role") != 'ADMIN'){
+			this.$router.push("/")
+		}else {
+			axios.get('/users/getAllUsers')
+				.then(response => {
+					if (response.data != null) {
+						this.users = response.data
+						console.log(this.users);
+					}
+				})
+		}
     },
 	computed: {
 		sortedItems () {

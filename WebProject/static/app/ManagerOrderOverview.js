@@ -20,6 +20,9 @@ Vue.component("managerOrderOverview", {
         }
     },
     mounted() {
+        if(localStorage.getItem("role") != 'MANAGER'){
+        this.$router.push("/")
+        }
         axios.get('/managers/restaurant')
             .then(response => {
                 this.restaurant = response.data

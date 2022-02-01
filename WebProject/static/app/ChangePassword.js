@@ -23,10 +23,14 @@ Vue.component("changePassword", {
         }
     },
     mounted() {
-        axios.get('/users/logged')
-            .then(response => {
-                this.user = response.data
-            })
+        if(localStorage.getItem("username") == null){
+            this.$router.push("/")
+        }else {
+            axios.get('/users/logged')
+                .then(response => {
+                    this.user = response.data
+                })
+        }
     },
     computed:{
         notFilled(){

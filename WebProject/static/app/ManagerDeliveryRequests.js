@@ -11,14 +11,18 @@ Vue.component("managerDeliveryRequests", {
         }
     },
     mounted() {
-        axios.get('/managers/restaurant')
-            .then(response => {
-                this.restaurant = response.data
-                axios.get('/deliverers/getAllRequests/' + this.restaurant.name)
-                    .then(response => {
-                        this.orders = response.data
-                    })
-            })
+        if(localStorage.getItem("role") != 'MANAGER'){
+            this.$router.push("/")
+        }else {
+            axios.get('/managers/restaurant')
+                .then(response => {
+                    this.restaurant = response.data
+                    axios.get('/deliverers/getAllRequests/' + this.restaurant.name)
+                        .then(response => {
+                            this.orders = response.data
+                        })
+                })
+        }
     },
     methods: {
         changeOrderStatusToInDelivery(o){
