@@ -3,19 +3,12 @@ package controller;
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.put;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import beans.CartItem;
 import beans.Customer;
 import beans.Order;
 import beans.OrderStatus;
-import beans.Restaurant;
 import beans.User;
 import dto.OrderRequest;
 import dto.OrderSearchDTO;

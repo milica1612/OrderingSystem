@@ -10,13 +10,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import beans.Deliverer;
 import beans.Gender;
-import beans.Manager;
 import beans.User;
 import dto.UserDTO;
 

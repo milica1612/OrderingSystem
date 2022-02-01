@@ -7,12 +7,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import beans.Comment;
-import beans.Customer;
 
 public class CommentDAO {
 	private String file;

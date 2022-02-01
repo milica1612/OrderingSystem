@@ -9,16 +9,11 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
-
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-
-import beans.Cart;
 import beans.CartItem;
 import beans.Order;
 import beans.OrderStatus;
-import beans.User;
 
 public class OrderDAO {
 

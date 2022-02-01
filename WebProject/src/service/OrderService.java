@@ -5,15 +5,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
-
 import beans.Customer;
 import beans.CustomerType;
 import beans.Deliverer;
 import beans.Cart;
-import beans.CartItem;
 import beans.Order;
 import beans.OrderStatus;
 import beans.Restaurant;

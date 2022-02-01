@@ -3,12 +3,8 @@ package main;
 import static spark.Spark.get;
 import static spark.Spark.port;
 import static spark.Spark.staticFiles;
-
 import java.io.File;
-import java.io.IOException;
-
 import com.google.gson.Gson;
-
 import controller.CommentController;
 import controller.CartController;
 import controller.CustomerController;
@@ -31,11 +27,7 @@ import service.ImageService;
 import service.ManagerService;
 import service.OrderService;
 import controller.RestaurantController;
-import controller.UserController;
-import dao.CustomerDAO;
 import dao.RestaurantDAO;
-import dao.UserDAO;
-import service.CustomerService;
 import service.RestaurantService;
 import service.UserService;
 

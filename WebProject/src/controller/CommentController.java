@@ -12,9 +12,7 @@ import com.google.gson.Gson;
 
 import beans.Comment;
 import beans.Customer;
-import beans.Item;
 import beans.Restaurant;
-import beans.User;
 import service.CommentService;
 import service.RestaurantService;
 import spark.Session;

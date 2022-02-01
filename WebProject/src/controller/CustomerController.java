@@ -2,13 +2,10 @@ package controller;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import beans.Comment;
 import beans.Customer;
 import beans.Deliverer;
 import beans.Gender;
 import beans.Manager;
-import beans.Order;
 import beans.User;
 import beans.UserType;
 import dto.RegistrationDTO;

@@ -2,14 +2,10 @@ package controller;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 import com.google.gson.Gson;
-
-import beans.Comment;
 import beans.Customer;
 import beans.Deliverer;
 import beans.Gender;

@@ -1,6 +1,5 @@
 package dto;
 
-
 public class RegistrationDTO {
 
 	private String username;

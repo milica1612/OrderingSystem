@@ -3,12 +3,9 @@ package service;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-
-import beans.Customer;
 import beans.Manager;
 import beans.Restaurant;
 import beans.User;
-import dao.CustomerDAO;
 import dao.ManagerDAO;
 import dto.LoginDTO;
 import dto.UserDTO;

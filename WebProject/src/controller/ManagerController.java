@@ -3,13 +3,10 @@ package controller;
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.put;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 import com.google.gson.Gson;
-
 import beans.Customer;
 import beans.Deliverer;
 import beans.Gender;
@@ -18,7 +15,6 @@ import beans.Restaurant;
 import beans.User;
 import beans.UserType;
 import dto.RegistrationDTO;
-import dto.UserDTO;
 import service.CustomerService;
 import service.DelivererService;
 import service.ManagerService;

@@ -3,10 +3,7 @@ package service;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import com.google.gson.JsonSyntaxException;
-
-import beans.Customer;
 import beans.Item;
 import beans.Restaurant;
 import dao.RestaurantDAO;

@@ -1,7 +1,5 @@
 package dto;
 
-import java.util.Date;
-
 public class OrderSearchDTO {
 
 	private double priceFrom;

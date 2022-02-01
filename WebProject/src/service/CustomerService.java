@@ -3,13 +3,9 @@ package service;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-
-import com.google.gson.JsonElement;
-
 import beans.Customer;
 import beans.Order;
 import beans.OrderStatus;
-import beans.Restaurant;
 import beans.User;
 import dao.CustomerDAO;
 import dto.LoginDTO;

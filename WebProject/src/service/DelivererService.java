@@ -3,16 +3,11 @@ package service;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-
-import beans.Customer;
 import beans.Deliverer;
-import beans.Manager;
 import beans.Order;
 import beans.OrderStatus;
 import beans.User;
-import dao.CustomerDAO;
 import dao.DelivererDAO;
-import dao.ManagerDAO;
 import dto.LoginDTO;
 import dto.OrderRequest;
 import dto.UserDTO;

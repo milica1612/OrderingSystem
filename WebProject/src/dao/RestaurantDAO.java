@@ -7,15 +7,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-
-import beans.Customer;
-import beans.Item;
 import beans.Restaurant;
-import beans.User;
 
 public class RestaurantDAO {
 	private String file;
