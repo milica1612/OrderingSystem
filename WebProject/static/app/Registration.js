@@ -40,7 +40,7 @@ Vue.component("registration", {
                         if (response.data == "Username taken") {
                             alert("Username taken")
                         } else {
-                            this.$router.push("#/login")
+                            this.$router.push("/login")
                         }
                     }).catch(err => {
                         console.log(err);

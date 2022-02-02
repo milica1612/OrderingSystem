@@ -94,6 +94,17 @@ public class OrderService {
 					for(Order o: orders) {
 						if(o.getCode().equals(order.getCode())){
 							c.setPoints(c.getPoints() - points);
+							if(c.getPoints() >= 200 && c.getPoints() < 400) {
+								c.setCustomerType(new CustomerType("Bronze", 0.95, 200));
+							}else if(c.getPoints() >= 400 && c.getPoints() < 650) {
+								c.setCustomerType(new CustomerType("Silver", 0.90, 400));
+							}
+							else if(c.getPoints() >= 650) {
+								c.setCustomerType(new CustomerType("Gold", 0.85, 650));
+							}
+							else {
+								c.setCustomerType(null);
+							}
 							o.setOrderStatus(OrderStatus.CANCELED);
 							if(c.getPoints() < 0) {
 								c.setPoints(0);
@@ -118,8 +129,10 @@ public class OrderService {
 
 	public ArrayList<Order> getByRestaurant(String restaurant, String username) {
 		Customer customer = customerDAO.getByUsername(username);
-		ArrayList<Order> allOrders = customer.getOrders();
 		ArrayList<Order> result = new ArrayList<Order>();
+		if(customer != null) {
+		ArrayList<Order> allOrders = customer.getOrders();
+		result = new ArrayList<Order>();
 		if(allOrders != null) {
 			for(Order order : allOrders) {
 				if(order.getRestaurant().toLowerCase().contains(restaurant.toLowerCase().trim())) {
@@ -127,7 +140,18 @@ public class OrderService {
 				}
 			}
 		}
-	
+		}else {
+			Deliverer deliverer = delivererDAO.getByUsername(username);	
+			ArrayList<Order> allOrders = deliverer.getOrders();
+			result = new ArrayList<Order>();
+			if(allOrders != null) {
+				for(Order order : allOrders) {
+					if(order.getRestaurant().toLowerCase().contains(restaurant.toLowerCase().trim())) {
+						result.add(order);
+					}
+				}
+			}
+		}
 		return result;
 	}
 
