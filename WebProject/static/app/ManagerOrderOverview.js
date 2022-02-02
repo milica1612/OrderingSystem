@@ -35,7 +35,7 @@ Vue.component("managerOrderOverview", {
     methods: {
         searchByDate(){
             if(this.searchDateFrom == "" && this.searchDateTo == ""){
-                axios.get('/orders/getByRestaurant/' + this.restaurant.name)
+                axios.get('/orders/getForRestaurant/' + this.restaurant.name)
                     .then(response => {
                         if (response.data != null) {
                             this.orders = response.data
@@ -87,7 +87,7 @@ Vue.component("managerOrderOverview", {
         },
         searchByPrice(){
             if(this.searchPriceFrom == "" && this.searchPriceTo == ""){
-                axios.get('/orders/getByRestaurant/' + this.restaurant.name)
+                axios.get('/orders/getForRestaurant/' + this.restaurant.name)
                     .then(response => {
                         if (response.data != null) {
                             this.orders = response.data
