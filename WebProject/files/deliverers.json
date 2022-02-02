@@ -1,1 +1,75 @@
-[{"orders":[{"code":"9VGXKRRX3L","cart":{"items":[{"item":{"name":"Vegan cake","price":280.0,"quantity":"1pcs","description":"","photo":"images/items/Vegan cakeYummy.jpg","restaurant":"Yummy"},"quantity":1}],"customer":"Customer","total":280.0},"restaurant":"Yummy","dateAndTime":"Jan 31, 2022, 5:26:09 PM","orderStatus":"DELIVERED","customer":"Ana Kojic","total":0.0},{"code":"FRUX52QLHV","cart":{"items":[{"item":{"name":"Cherry Pie","price":250.0,"quantity":"1pcs","description":"with nutella","photo":"images/items/Cherry PieYummy.jpg","restaurant":"Yummy"},"quantity":2}],"customer":"Customer","total":425.0},"restaurant":"Yummy","dateAndTime":"Jan 31, 2022, 6:13:02 PM","orderStatus":"DELIVERED","customer":"Ana Kojic","total":0.0}],"username":"Deliverer","password":"deliverer","name":"Goran","lastName":"Nikolic","gender":"MALE","dateOfBirth":"Mar 5, 1989, 12:00:00 AM","userType":"DELIVERER","isDeleted":false},{"orders":[],"username":"Nina","password":"nina","name":"Nina","lastName":"Savic","gender":"FEMALE","dateOfBirth":"Sep 9, 1999, 12:00:00 AM","userType":"DELIVERER","isDeleted":false}]
+[
+	{
+		"orders": [
+			{
+				"code": "9VGXKRRX3L",
+				"cart": {
+					"items": [
+						{
+							"item": {
+								"name": "Vegan cake",
+								"price": 280.0,
+								"quantity": "1pcs",
+								"description": "",
+								"photo": "images/items/Vegan cakeYummy.jpg",
+								"restaurant": "Yummy"
+							},
+							"quantity": 1
+						}
+					],
+					"customer": "Customer",
+					"total": 280.0
+				},
+				"restaurant": "Yummy",
+				"dateAndTime": "Jan 31, 2022, 5:26:09 PM",
+				"orderStatus": "DELIVERED",
+				"customer": "Ana Kojic",
+				"total": 280.0
+			},
+			{
+				"code": "FRUX52QLHV",
+				"cart": {
+					"items": [
+						{
+							"item": {
+								"name": "Cherry Pie",
+								"price": 250.0,
+								"quantity": "1pcs",
+								"description": "with nutella",
+								"photo": "images/items/Cherry PieYummy.jpg",
+								"restaurant": "Yummy"
+							},
+							"quantity": 2
+						}
+					],
+					"customer": "Customer",
+					"total": 425.0
+				},
+				"restaurant": "Yummy",
+				"dateAndTime": "Jan 31, 2022, 6:13:02 PM",
+				"orderStatus": "DELIVERED",
+				"customer": "Ana Kojic",
+				"total": 425.0
+			}
+		],
+		"username": "Deliverer",
+		"password": "deliverer",
+		"name": "Goran",
+		"lastName": "Nikolic",
+		"gender": "MALE",
+		"dateOfBirth": "Mar 5, 1989, 12:00:00 AM",
+		"userType": "DELIVERER",
+		"isDeleted": false
+	},
+	{
+		"orders": [],
+		"username": "Nina",
+		"password": "nina",
+		"name": "Nina",
+		"lastName": "Savic",
+		"gender": "FEMALE",
+		"dateOfBirth": "Sep 9, 1999, 12:00:00 AM",
+		"userType": "DELIVERER",
+		"isDeleted": false
+	}
+]

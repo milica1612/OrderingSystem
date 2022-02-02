@@ -37,6 +37,7 @@ Vue.component("ordersWithoutDeliverer", {
 					dateAndTime: ord.dateAndTime,
 					orderStatus: ord.orderStatus,
 					customer: ord.customer,
+					total: ord.total
 				}
 				axios.put('/orders/changeStatus/waitingForDeliveryApproval', JSON.stringify(params))
 				.then(response => {
